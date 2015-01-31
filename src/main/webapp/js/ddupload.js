@@ -10,13 +10,13 @@ var dropZone = new Dropzone("#file-dropzone", {
 		var images = imageIds.replace(replacer,"").split(',');
 		images.forEach(function(image){
 			if(image!=""){
-				$.post("/Skeleton/getImgUrl?id="+image,function( data ) {
+				$.post("/ecogame/getImgUrl?id="+image,function( data ) {
 					// Create the mock file:
 					
 					// get file Size
 					var xhr = new XMLHttpRequest();
 					var size = 0;
-					xhr.open('HEAD', '/Skeleton/img/ad/'+data, false);
+					xhr.open('HEAD', '/ecogame/img/ad/'+data, false);
 					xhr.onreadystatechange = function(){
 					  if ( xhr.readyState == 4 ) {
 					    if ( xhr.status == 200 ) {
@@ -32,7 +32,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 					// Call the default addedfile event handler
 					dropZone.emit("addedfile", mockFile);
 					// And optionally show the thumbnail of the file:
-					dropZone.emit("thumbnail", mockFile, '/Skeleton/img/ad/'+data);
+					dropZone.emit("thumbnail", mockFile, '/ecogame/img/ad/'+data);
 					dropZone.files.push( mockFile );
 					dropZone.emit("success", mockFile, image);
 				});
@@ -49,7 +49,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 			done("Please select an Image file"); 
 		}
 	},
-	url: "/Skeleton/upload?name=${loggedInUser.id}",
+	url: "/ecogame/upload?name=${loggedInUser.id}",
 	addRemoveLinks: true
 });
 	
@@ -75,6 +75,6 @@ dropZone.on("success", function(file, response) {
 		
 dropZone.on("removedfile", function(file) {
 	if (!file.serverId) { return; } // The file hasn't been uploaded
-	$.post("/Skeleton/removePicture?id=" + file.serverId); // Send the file id along
+	$.post("/ecogame/removePicture?id=" + file.serverId); // Send the file id along
 	refreshIds(dropZone.getAcceptedFiles());
 });

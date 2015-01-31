@@ -47,36 +47,36 @@ public class SearchController {
 	 *
 	 * @return search results for given template
 	 */
-	// @RequestMapping(value = {"", "/", "/search"} , method = RequestMethod.GET)
-	// public ModelAndView index(@RequestParam(value="searchId", required=false) String searchId) {
-	//
-	// //TODO: bugged: some attributes aren't displayed correctly
-	//
-	// ModelAndView model = new ModelAndView("search");
-	// model.addObject("searchForm", new SearchForm());
-	// model.addObject("loggedInUser", loginService.getLoggedInUser());
-	// updateService.updateNumberOfUnreadItems(model);
-	// Iterable<Ad> searchResults = null;
-	// Search searchAttributes;
-	//
-	// searchAttributes = new Search(new Long(0), new Long(0), new Long(3000), new Long(0),new
-	// Long(300), "", "", "");
-	// try{
-	// searchAttributes = searchDao.findOne(Long.parseLong(searchId));
-	// searchResults = searchService.computeSearchResults(searchToForm(searchAttributes));
-	// } catch(Exception e) {
-	// searchResults = adDao.findAll();
-	// System.out.println(e);
-	// }
-	// model.addObject("searchAttributes", searchAttributes);
-	// if(searchResults != null)
-	// {
-	// model.addObject("searchResults", searchResults);
-	// }
-	//
-	//
-	// return model;
-	// }
+	 @RequestMapping(value = {"/search"} , method = RequestMethod.GET)
+	 public ModelAndView index(@RequestParam(value="searchId", required=false) String searchId) {
+	
+	 //TODO: bugged: some attributes aren't displayed correctly
+	
+	 ModelAndView model = new ModelAndView("search");
+	 model.addObject("searchForm", new SearchForm());
+	 model.addObject("loggedInUser", loginService.getLoggedInUser());
+	 updateService.updateNumberOfUnreadItems(model);
+	 Iterable<Ad> searchResults = null;
+	 Search searchAttributes;
+	
+	 searchAttributes = new Search(new Long(0), new Long(0), new Long(3000), new Long(0),new
+	 Long(300), "", "", "");
+	 try{
+	 searchAttributes = searchDao.findOne(Long.parseLong(searchId));
+	 searchResults = searchService.computeSearchResults(searchToForm(searchAttributes));
+	 } catch(Exception e) {
+	 searchResults = adDao.findAll();
+	 System.out.println(e);
+	 }
+	 model.addObject("searchAttributes", searchAttributes);
+	 if(searchResults != null)
+	 {
+	 model.addObject("searchResults", searchResults);
+	 }
+	
+	
+	 return model;
+	 }
 
 	/**
 	 * Converts searchAttributes to a form

@@ -33,14 +33,14 @@ body > .container {
 
 /* Make Glyphicons working
 -------------------------------------------------- */
-@font-face {
+/*@font-face {
 	font-family: 'Glyphicons Halflings';
-	src: url('/Skeleton/fonts/glyphicons-halflings-regular.eot');
-	src: url('/Skeleton/fonts/glyphicons-halflings-regular.eot?#iefix')
+	src: url('/ecogame/fonts/glyphicons-halflings-regular.eot');
+	src: url('/ecogame/fonts/glyphicons-halflings-regular.eot?#iefix')
 		format('embedded- opentype'),
-		url('/Skeleton/fonts/glyphicons-halflings-regular.woff') format('woff'),
-		url('/Skeleton/fonts/glyphicons-halflings-regular.ttf')
+		url('/ecogame/fonts/glyphicons-halflings-regular.woff') format('woff'),
+		url('/ecogame/fonts/glyphicons-halflings-regular.ttf')
 		format('truetype'),
-		url('/Skeleton/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular')
+		url('/ecogame/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular')
 		format('svg');
-}
+}*/
