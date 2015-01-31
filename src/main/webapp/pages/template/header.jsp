@@ -3,23 +3,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="utf-8">
-		<title>Roomiez.</title>
+		<title>EcoGame</title>
 		
-		<link rel="shortcut icon" href="/Skeleton/img/favicon.ico" >
-		<link rel="icon" href="/Skeleton/img/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/ecogame/img/favicon.ico" >
 		
-		<link rel="stylesheet" type="text/css" href="/Skeleton/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/Skeleton/css/custom.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/ecogame/css/custom.css">
 		
 		<!-- jQuery at the beginning, otherwise e.g. sliders won't work -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script>
 			$(document).ready(
 					function() {
-						$('a[href="'+ this.location.pathname.replace('/Skeleton/', '') + '"]').parent().addClass('active');
+						$('a[href="'+ this.location.pathname.replace('/ecogame/', '') + '"]').parent().addClass('active');
 						});
 		</script>
 		
@@ -34,17 +33,17 @@
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						data-toggle="collapse" data-target="#navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="search"><span class="glyphicon glyphicon-home"></span> Roomiez.</a>
+					<a class="navbar-brand" href="index"><span class="glyphicon glyphicon-home"></span> EcoGame</a>
 				</div>
 	
 				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
 						<li><a href="search"><span class="glyphicon glyphicon-search"></span> Search</a></li>
 						<c:if test="${not empty loggedInUser}">
