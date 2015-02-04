@@ -1,6 +1,5 @@
 package ch.joelniklaus.ecogame.webapp.controller;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -19,25 +18,23 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/config/spring*.xml"})
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/spring*.xml" })
 public class IndexControllerIntegrationTest {
-
+	
 	@Autowired
-    private WebApplicationContext wac;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-    }
-    
-    @Test
-    public void testSecurityError() throws Exception {
-        this.mockMvc.perform(get("/security-error"))
-                .andExpect(status().isFound())
-                .andExpect(redirectedUrl("/"))
-                .andExpect(flash().attributeExists("page_error"));
-    }
-
+	private WebApplicationContext wac;
+	
+	private MockMvc mockMvc;
+	
+	@Before
+	public void setup() {
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+	}
+	
+	@Test
+	public void testSecurityError() throws Exception {
+		this.mockMvc.perform(get("/security-error")).andExpect(status().isFound())
+				.andExpect(redirectedUrl("/")).andExpect(flash().attributeExists("page_error"));
+	}
+	
 }

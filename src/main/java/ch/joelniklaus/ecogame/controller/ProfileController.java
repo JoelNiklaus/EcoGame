@@ -13,14 +13,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
-import ch.joelniklaus.ecogame.controller.service.LoginService;
+import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 import ch.joelniklaus.ecogame.model.User;
 
 @Controller
 public class ProfileController {
 	
 	@Autowired
-	LoginService loginService;
+	AuthenticationService loginService;
 	
 	/**
 	 * Displays the profile view of the user with the given id.

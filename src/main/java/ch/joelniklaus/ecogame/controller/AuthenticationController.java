@@ -23,15 +23,15 @@ import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
-import ch.joelniklaus.ecogame.controller.service.LoginService;
+import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 import ch.joelniklaus.ecogame.model.User;
 import ch.joelniklaus.ecogame.model.dao.UserDao;
 
 @Controller
-public class AuthentificationController {
+public class AuthenticationController {
 	
 	@Autowired
-	LoginService loginService;
+	AuthenticationService loginService;
 	
 	@Autowired
 	UserDao userRepositry;

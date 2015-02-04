@@ -59,8 +59,7 @@
                 hibernate.cache.use_query_cache = true
                 hibernate.generate_statistics = true
                 hibernate.hbm2ddl.auto = update
-            </value>
-  	      
+            </value> 
         </property>
     </bean>
     
@@ -70,9 +69,5 @@
 	</bean>
     
      <bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator"/>
-    
-     
-    
-
 	
 </beans>

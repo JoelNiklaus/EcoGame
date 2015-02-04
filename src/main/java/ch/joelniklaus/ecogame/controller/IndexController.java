@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ch.joelniklaus.ecogame.controller.service.LoginService;
+import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 
 @Controller
 public class IndexController {
 
 	@Autowired
-	LoginService loginService;
+	AuthenticationService loginService;
 
 	@RequestMapping(value = { "", "/" })
 	public String redirect() {

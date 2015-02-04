@@ -22,7 +22,7 @@
 
 	<!-- Declare an authentication-manager to use a custom userDetailsService -->
 	<security:authentication-manager id="authMgr">
-		<security:authentication-provider user-service-ref="loginServiceImpl">
+		<security:authentication-provider user-service-ref="authenticationServiceImpl">
 			<security:password-encoder hash="bcrypt" />
 		</security:authentication-provider>
 	</security:authentication-manager>

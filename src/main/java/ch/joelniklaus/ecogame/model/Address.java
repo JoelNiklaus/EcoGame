@@ -4,59 +4,56 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
 @Entity
 public class Address {
-	  @Id
-	    @GeneratedValue
-	    private Long id;
 
-	    private String street;
-	    private int houseNr;
-	    private String city;
-	    private int zip;
-	 
+	@Id
+	@GeneratedValue
+	private Long id;
 
-		public int getHouseNr() {
-			return houseNr;
-		}
+	private String street;
+	private int houseNr;
+	private String city;
+	private int zip;
 
-		public void setHouseNr(int houseNr) {
-			this.houseNr = houseNr;
-		}
+	public int getHouseNr() {
+		return houseNr;
+	}
 
-		public String getCity() {
-			return city;
-		}
+	public void setHouseNr(int houseNr) {
+		this.houseNr = houseNr;
+	}
 
-		public void setCity(String city) {
-			this.city = city;
-		}
+	public String getCity() {
+		return city;
+	}
 
-		public int getZip() {
-			return zip;
-		}
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-		public void setZip(int zip) {
-			this.zip = zip;
-		}
+	public int getZip() {
+		return zip;
+	}
 
-		public Long getId() {
-			return id;
-		}
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+	public Long getId() {
+		return id;
+	}
 
-		public String getStreet() {
-			return street;
-		}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-		public void setStreet(String street) {
-			this.street = street;
-		}
-	    
-	    
-	  
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
 }

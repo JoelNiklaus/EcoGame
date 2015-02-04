@@ -12,12 +12,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import ch.joelniklaus.ecogame.controller.IndexController;
-import ch.joelniklaus.ecogame.controller.service.LoginService;
+import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 
 public class IndexControllerTest {
 	
 	@Mock
-	LoginService loginService;
+	AuthenticationService loginService;
 	
 	@InjectMocks
 	IndexController indexController;
