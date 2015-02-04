@@ -185,9 +185,9 @@ public class LoginServiceImpl implements LoginService, UserDetailsService {
     	return user;
     }
 
-	public UserDetails loadUserByUsername(String arg0)
+	public UserDetails loadUserByUsername(String email)
 			throws UsernameNotFoundException {
-		User user = userDao.findByEmail(arg0);
+		User user = userDao.findByEmail(email);
 		
 		return user;
 	}
