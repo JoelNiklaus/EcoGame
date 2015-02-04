@@ -2,27 +2,23 @@ package ch.joelniklaus.ecogame.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -41,12 +37,8 @@ public class User implements UserDetails{
 	@OneToOne
 	private Picture profileImage;
 
-
-	@OneToOne(cascade = {CascadeType.ALL}) //TODO: @Silas: what does this do?
-	private Address address; 
-
-	@OneToMany(cascade = {CascadeType.ALL})
-	private Set<Search> searches = new HashSet<Search>(0);
+	@OneToOne(cascade = { CascadeType.ALL })
+	private Address address;
 
 	public Long getId() {
 		return id;
@@ -88,16 +80,16 @@ public class User implements UserDetails{
 		this.address = address;
 	}
 
-	public void setPassword(String password)
-	{
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getPassword()
-	{
+	@Override
+	public String getPassword() {
 		return password;
 	}
 
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -105,27 +97,31 @@ public class User implements UserDetails{
 		return authorities;
 	}
 
-
+	@Override
 	public String getUsername() {
 
 		return email;
 	}
 
+	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
@@ -135,8 +131,7 @@ public class User implements UserDetails{
 		
 	}
 
-	public User(Long id, String firstName, String lastName, String email,
-			String password) {
+	public User(Long id, String firstName, String lastName, String email, String password) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;

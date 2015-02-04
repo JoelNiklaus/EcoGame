@@ -6,26 +6,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ch.joelniklaus.ecogame.controller.service.LoginService;
-import ch.joelniklaus.ecogame.controller.service.UpdateService;
 
 @Controller
 public class IndexController {
-	
+
 	@Autowired
 	LoginService loginService;
-	@Autowired
-	UpdateService updateService;
-	
+
 	@RequestMapping(value = { "", "/" })
 	public String redirect() {
 		return "redirect:index";
 	}
-
+	
 	@RequestMapping(value = "index")
 	public void index(Model model) {
 		model.addAttribute("loggedInUser", loginService.getLoggedInUser());
 	}
-
+	
 	/**
 	 * Shows a 404 error page.
 	 *
@@ -35,7 +32,7 @@ public class IndexController {
 	public void notFound(Model model) {
 		model.addAttribute("loggedInUser", loginService.getLoggedInUser());
 	}
-	
+
 	// /**
 	// *
 	// * @param redirectAttributes
