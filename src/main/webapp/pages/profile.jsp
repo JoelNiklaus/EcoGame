@@ -7,7 +7,7 @@
 
 <c:import url="template/header.jsp" />  
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<link href="/Skeleton/css/dropzone.css" type="text/css" rel="stylesheet" /> 
+<link href="/ecogame/css/dropzone.css" type="text/css" rel="stylesheet" /> 
   <h1>My Profile</h1>
   
 	<c:if test="${not empty success}">
@@ -119,7 +119,7 @@
 			<label class="control-label col-sm-3" for="imageId">Profile Image</label>
 			<div class="col-sm-6">
 		 		<form:input class="form-control" path="imageId" type="hidden" name="file" id="file" value="${loggedInUser.profileImage.id}" />
-				<script src="/Skeleton/js/dropzone.min.js"></script>
+				<script src="/ecogame/js/dropzone.min.js"></script>
 				<div class="dropzone col-sm-6" id="file-dropzone">
 					<div class="dz-message" data-dz-message>
 						<span>Click or Drag and Drop to this field to upload images</span>
@@ -144,13 +144,13 @@ var dropZone = new Dropzone("#file-dropzone", {
 		var images = imageIds.replace(replacer,"").split(',');
 		images.forEach(function(image){
 			if(image!=""){
-				$.post("/Skeleton/getImgUrl?id="+image,function( data ) {
+				$.post("/ecogame/getImgUrl?id="+image,function( data ) {
 					// Create the mock file:
 					
 					// get file Size
 					var xhr = new XMLHttpRequest();
 					var size = 0;
-					xhr.open('HEAD', '/Skeleton/img/ad/'+data, false);
+					xhr.open('HEAD', '/ecogame/img/ad/'+data, false);
 					xhr.onreadystatechange = function(){
 					  if ( xhr.readyState == 4 ) {
 					    if ( xhr.status == 200 ) {
@@ -166,7 +166,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 					// Call the default addedfile event handler
 					dropZone.emit("addedfile", mockFile);
 					// And optionally show the thumbnail of the file:
-					dropZone.emit("thumbnail", mockFile, '/Skeleton/img/ad/'+data);
+					dropZone.emit("thumbnail", mockFile, '/ecogame/img/ad/'+data);
 					dropZone.files.push( mockFile );
 					dropZone.emit("success", mockFile, image);
 				});
@@ -183,7 +183,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 			done("Please select an Image file"); 
 		}
 	},
-	url: "/Skeleton/upload?name=${loggedInUser.id}",
+	url: "/ecogame/upload?name=${loggedInUser.id}",
 	addRemoveLinks: true
 });
 	
@@ -195,7 +195,7 @@ dropZone.on("success", function(file, response) {
 		
 dropZone.on("removedfile", function(file) {
 	if (!file.serverId) { return; } // The file hasn't been uploaded
-	$.post("/Skeleton/removePicture?id=" + file.serverId); // Send the file id along
+	$.post("/ecogame/removePicture?id=" + file.serverId); // Send the file id along
 	document.getElementById("file").value = "";
 });
 </script>
