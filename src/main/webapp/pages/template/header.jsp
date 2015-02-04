@@ -45,19 +45,9 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<li><a href="search"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+						<li><a href="game"><span class="glyphicon glyphicon-search"></span> Game</a></li>
 						<c:if test="${not empty loggedInUser}">
-							<li><a href="createAd"><span class="glyphicon glyphicon-tag"></span> Create Ad</a></li>
-							<li><a href="myAds"><span class="glyphicon glyphicon-tags"></span> My Ads</a></li>
-							<li><a href="enquiries"><span class="glyphicon glyphicon-calendar"></span> Enquiries 
-								<c:if test="${numUnreadEnquiries > 0}"><span class="badge">${numUnreadEnquiries}</span></c:if>
-							</a></li>
-							<li><a href="notifications"><span class="glyphicon glyphicon-envelope"></span> Notifications 
-								<c:if test="${numUnreadNotifications > 0}"><span class="badge">${numUnreadNotifications}</span></c:if>
-							</a></li>
-							<li><a href="bookmarks"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a> </li>
-							<li><a href="searches"><span class="glyphicon glyphicon-filter"></span> Searches</a></li>
-	
+
 						</c:if>
 					</ul>
 					<c:if test="${empty loggedInUser}">
