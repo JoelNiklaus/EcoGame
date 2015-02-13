@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<title>EcoGame</title>
@@ -45,7 +45,7 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<li><a href="game"><span class="glyphicon glyphicon-search"></span> Game</a></li>
+						<li><a href="hostGame"><span class="glyphicon glyphicon-search"></span> Game</a></li>
 						<c:if test="${not empty loggedInUser}">
 
 						</c:if>
