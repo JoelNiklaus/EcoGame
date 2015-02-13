@@ -2,10 +2,7 @@ package ch.joelniklaus.ecogame.controller;
 
 import javax.validation.Valid;
 
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,21 +21,24 @@ import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
+import ch.joelniklaus.ecogame.controller.service.MailService;
 import ch.joelniklaus.ecogame.model.User;
 import ch.joelniklaus.ecogame.model.dao.UserDao;
 
 @Controller
-public class AuthenticationController {
-	
+public class AuthenticationController extends ParentController {
+
 	@Autowired
-	AuthenticationService loginService;
-	
+	AuthenticationService authService;
+	@Autowired
+	MailService mailService;
+
 	@Autowired
 	UserDao userRepositry;
 	@Autowired
 	@Qualifier("authMgr")
 	private AuthenticationManager authMgr;
-	
+
 	/**
 	 * Creates a model for registering a new user.
 	 *
@@ -48,10 +48,9 @@ public class AuthenticationController {
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("register");
 		model.addObject("signupForm", new SignupForm());
-		model.addObject("loggedInUser", loginService.getLoggedInUser());
 		return model;
 	}
-	
+
 	/**
 	 * Submits registration and returns login model
 	 *
@@ -66,16 +65,16 @@ public class AuthenticationController {
 	public ModelAndView register(@Valid SignupForm signupForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("login");
-		
-		try {
-			
-			if (loginService.emailAlreadyExists(signupForm.getEmail()))
-				throw new InvalidUserException("Email already exists");
 
+		try {
+
+			if (authService.emailAlreadyExists(signupForm.getEmail()))
+				throw new InvalidUserException("Email already exists");
+			
 			if (!result.hasErrors())
 				try {
-					loginService.saveFrom(signupForm);
-					
+					authService.saveFrom(signupForm);
+
 					model.addObject(new LoginForm());
 				} catch (InvalidUserException e) {
 					model = new ModelAndView("register");
@@ -83,22 +82,22 @@ public class AuthenticationController {
 				}
 			else
 				model = new ModelAndView("register");
-			model.addObject("loggedInUser", loginService.getLoggedInUser());
+			model.addObject("loggedInUser", authService.getLoggedInUser());
 		} catch (InvalidUserException ex) {
 			model = new ModelAndView("register");
 			signupForm.setEmail("");
 			model.addObject("signupForm", signupForm);
 			model.addObject("emailExists", "This email address is already in use");
 		}
-		
+
 		// perform login authentication
-		
+
 		try {
 			User user = userRepositry.findByEmail(signupForm.getEmail());
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 					user, signupForm.getPassword(), user.getAuthorities());
 			authMgr.authenticate(auth);
-
+			
 			if (auth.isAuthenticated()) {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				return new ModelAndView("redirect:/");
@@ -106,13 +105,13 @@ public class AuthenticationController {
 		} catch (Exception e) {
 			System.out.println("Problem authenticating user" + signupForm.getEmail());
 		}
-
+		
 		return model;
 	}
-	
+
 	/**
 	 * Redirects the login to spring security
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -120,10 +119,10 @@ public class AuthenticationController {
 	public String login(ModelMap model) {
 		return "login";
 	}
-	
+
 	/**
 	 * Redirects accessdenied to spring security
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -132,10 +131,10 @@ public class AuthenticationController {
 		model.addAttribute("error", "true");
 		return "denied";
 	}
-	
+
 	/**
 	 * Redirects logout to spring security
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -143,7 +142,7 @@ public class AuthenticationController {
 	public String logout(ModelMap model) {
 		return "logout";
 	}
-	
+
 	/**
 	 * Displays an E-Mail input field for the user who forgot his password.
 	 */
@@ -151,10 +150,9 @@ public class AuthenticationController {
 	public ModelAndView forgot() {
 		ModelAndView model = new ModelAndView("forgot");
 		model.addObject("forgotPasswordForm", new ForgotPasswordForm());
-		model.addObject("loggedInUser", loginService.getLoggedInUser());
 		return model;
 	}
-	
+
 	/**
 	 * Sends users password to the entered E-Mail address.
 	 *
@@ -164,8 +162,8 @@ public class AuthenticationController {
 	public ModelAndView forgot(@Valid ForgotPasswordForm forgotPasswordForm) {
 		ModelAndView model = new ModelAndView("forgot");
 		try {
-			User user = loginService.getUser(forgotPasswordForm);
-			
+			User user = authService.getUser(forgotPasswordForm);
+
 			// compose E-Mail
 			String email = user.getEmail();
 			String password = user.getPassword();
@@ -173,44 +171,22 @@ public class AuthenticationController {
 			String lastName = user.getLastName();
 			String subject = "Sending Password";
 			String message = "Dear " + firstName + " " + lastName + "\n\n"
-					+ "You requested your password: " + password + "\n\nYours sincerely,\nteam7";
-			
+					+ "You requested your password: " + password
+					+ "\n\nYours sincerely,\nJoel Niklaus";
+
 			try {
-				sendMail(email, subject, message);
-				
+				mailService.sendMail(email, subject, message);
+
 				model.addObject("success", "Password successfully delivered");
 			} catch (EmailException e) {
 				model.addObject("error", "Password could not be sent: " + e.getMessage());
 				e.printStackTrace();
 			}
-			
+
 		} catch (InvalidUserException e) {
 			model.addObject("error", "No User with this E-Mail found: " + e.getMessage());
 		}
-		model.addObject("loggedInUser", loginService.getLoggedInUser());
 		return model;
 	}
-	
-	/**
-	 * Send an email using mailtrap.io
-	 * 
-	 * @param email
-	 * @param subject
-	 * @param message
-	 * @throws EmailException
-	 */
-	private void sendMail(String email, String subject, String message) throws EmailException {
-		Email simpleEmail = new SimpleEmail();
-		simpleEmail.setHostName("mailtrap.io");
-		simpleEmail.setSmtpPort(465);
-		simpleEmail
-				.setAuthenticator(new DefaultAuthenticator("25490b88e52ba93b3", "5f10b93f61b80f"));
-		simpleEmail.setSSLOnConnect(false);
-		simpleEmail.setFrom("demo@mailtrap.io");
-		simpleEmail.setSubject(subject);
-		simpleEmail.setMsg(message);
-		simpleEmail.addTo(email);
-		simpleEmail.send();
-	}
-	
+
 }
