@@ -54,11 +54,13 @@
 					<ul class="nav navbar-nav">
 						<c:if test="${not empty loggedInUser}">
 							<li class="dropdown">
-					          <a href="game/hostGame" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Game <span class="caret"></span></a>
+					          <a href="game/play" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Game <span class="caret"></span></a>
 					          <ul class="dropdown-menu" role="menu">
-					            <li><a href="game/hostGame">Host Game</a></li>
-					            <li><a href="game/editGame">Edit Game</a></li>
-					            <li><a href="game/joinGame">Join Game</a></li>
+					            <li><a href="game/host">Host Game</a></li>
+					            <li><a href="game/edit">Edit Game</a></li>
+					            <li><a href="game/join">Join Game</a></li>
+					            <li><a href="game/overview">Game Overview</a></li>
+					            <li><a href="game/play">Play Game</a></li>
 					          </ul>
 					        </li>
 						</c:if>

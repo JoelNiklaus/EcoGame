@@ -15,53 +15,72 @@ import ch.joelniklaus.ecogame.controller.service.GameService;
 @Controller
 @RequestMapping(value = "/game")
 public class GameController extends ParentController {
-	
+
 	@Autowired
 	GameService gameService;
-	
-	@RequestMapping(value = "/hostGame")
+
+	@RequestMapping(value = "/host")
 	public String hostGame(Model model) {
 		model.addAttribute("gameForm", new GameForm());
-
-		return "hostGame";
+		
+		return "game/host";
 	}
-
-	@RequestMapping(value = "/hostGame", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/host", method = RequestMethod.POST)
 	public String hostGame(Model model, @Valid GameForm gameForm, BindingResult result) {
 		if (result.hasErrors())
-			return "hostGame";
-		
+			return "game/host";
+
 		try {
 			gameService.addGame(gameForm);
 			model.addAttribute("success", "Game successfully created.");
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not create Game.");
 		}
-		return "editGame";
+		return "game/edit";
 	}
-	
-	@RequestMapping(value = "/editGame")
+
+	@RequestMapping(value = "/edit")
 	public String editGame(Model model) {
 		model.addAttribute("gameForm", new GameForm());
-
-		return "editGame";
+		
+		return "game/edit";
 	}
-	
-	@RequestMapping(value = "/editGame", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editGame(Model model, @Valid GameForm gameForm, BindingResult result) {
 		if (result.hasErrors())
-			return "editGame";
-		
+			return "game/edit";
+
 		try {
 			gameService.editGame(gameForm);
 			model.addAttribute("success", "Changes successfully saved.");
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not save changes.");
 		}
-		
-		model.addAttribute("loggedInUser", authService.getLoggedInUser());
-		
-		return "editGame";
+		return "game/edit";
 	}
 	
+	@RequestMapping(value = "/join")
+	public String joinGame(Model model) {
+		model.addAttribute("gameForm", new GameForm());
+		
+		return "game/join";
+	}
+
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String joinGame(Model model, @Valid GameForm gameForm, BindingResult result) {
+		if (result.hasErrors())
+			return "game/join";
+
+		try {
+			gameService.editGame(gameForm);
+			model.addAttribute("success", "Changes successfully saved.");
+		} catch (Exception e) {
+			model.addAttribute("error", "Could not save changes.");
+		}
+
+		return "game/join";
+	}
+
 }

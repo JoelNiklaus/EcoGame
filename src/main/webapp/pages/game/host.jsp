@@ -4,13 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 
-<c:import url="template/header.jsp" />
+<c:import url="../template/header.jsp" />
 
-<h1>Join a game</h1>
+<h1>Host a new game</h1>
 
-<c:import url="template/alerts.jsp" />
+<c:import url="../template/alerts.jsp" />
 
-<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="joinGame">
+<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/host">
 
 	<spring:bind path="name">
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
@@ -40,4 +40,4 @@
 	</div>
 </form:form>
 
-<c:import url="template/footer.jsp" />
+<c:import url="../template/footer.jsp" />
