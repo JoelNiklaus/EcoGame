@@ -6,25 +6,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController extends ParentController {
-
+	
 	@RequestMapping(value = { "", "/" })
 	public String redirect() {
 		return "index";
 	}
-	
+
 	@RequestMapping(value = "index")
-	public void index(Model model) {
+	public String index(Model model) {
+		return "index";
 	}
-	
+
 	/**
 	 * Shows a 404 error page.
 	 *
 	 * @return
 	 */
 	@RequestMapping(value = "notFound")
-	public void notFound(Model model) {
+	public String notFound(Model model) {
+		return "notFound";
 	}
-
+	
 	// /**
 	// *
 	// * @param redirectAttributes

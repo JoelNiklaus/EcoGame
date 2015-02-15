@@ -10,7 +10,7 @@
 
 <c:import url="template/alerts.jsp" />
 
-<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="hostGame">
+<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/hostGame">
 
 	<spring:bind path="name">
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">

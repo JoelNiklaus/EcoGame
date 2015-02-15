@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.model.Game;
-import ch.joelniklaus.ecogame.model.dao.AddressDao;
 import ch.joelniklaus.ecogame.model.dao.GameDao;
-import ch.joelniklaus.ecogame.model.dao.PictureDao;
-import ch.joelniklaus.ecogame.model.dao.UserDao;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -16,23 +13,29 @@ public class GameServiceImpl implements GameService {
 	@Autowired
 	GameDao gameDao;
 	@Autowired
-	UserDao userDao;
-	@Autowired
-	AddressDao addressDao;
-	@Autowired
-	PictureDao pictureDao;
+	AuthenticationService authService;
 
 	@Override
-	public GameForm saveFrom(GameForm gameForm) {
-		Game game = new Game();
+	public GameForm addGame(GameForm gameForm) {
+		Game game = setVariables(gameForm, new Game());
+		gameDao.save(game);
+		gameForm.setId(game.getId());
+		return gameForm;
+	}
+	
+	@Override
+	public GameForm editGame(GameForm gameForm) {
+		Game game = gameDao.findOne(gameForm.getId());
+		game = setVariables(gameForm, game);
+		gameDao.save(game);
+		return gameForm;
+	}
+	
+	private Game setVariables(GameForm gameForm, Game game) {
 		game.setName(gameForm.getName());
 		game.setNumberOfPlayers(gameForm.getNumberOfPlayers());
-		
-		gameDao.save(game);
-		
-		gameForm.setId(game.getId());
-
-		return gameForm;
+		game.setHoster(authService.getLoggedInUser());
+		return game;
 	}
 
 }

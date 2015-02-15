@@ -1,8 +1,13 @@
 package ch.joelniklaus.ecogame.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Game {
@@ -12,7 +17,22 @@ public class Game {
 	private Long id;
 	
 	private String name;
+	
 	private int numberOfPlayers;
+	
+	@OneToOne
+	private User hoster;
+	
+	@OneToMany
+	private List<User> players = new LinkedList<User>();
+	
+	public List<User> getPlayers() {
+		return players;
+	}
+	
+	public void setPlayers(List<User> players) {
+		this.players = players;
+	}
 	
 	public String getName() {
 		return name;
@@ -36,6 +56,14 @@ public class Game {
 	
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public User getHoster() {
+		return hoster;
+	}
+
+	public void setHoster(User hoster) {
+		this.hoster = hoster;
 	}
 
 }

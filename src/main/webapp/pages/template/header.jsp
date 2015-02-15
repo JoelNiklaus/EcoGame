@@ -2,16 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<title>EcoGame</title>
 		
-		<link rel="shortcut icon" href="/ecogame/img/favicon.ico" >
+		<!-- Set localhost/ecogame as base url -->
+		<c:set var="req" value="${pageContext.request}" />
+		<c:set var="url">${req.requestURL}</c:set>
+		<c:set var="uri" value="${req.requestURI}" />
+		<base href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/">
+		
+		<link rel="shortcut icon" href="img/favicon.ico" >
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/ecogame/css/custom.css">
+		<link rel="stylesheet" href="css/custom.css">
 		
 		<!-- jQuery at the beginning, otherwise e.g. sliders won't work -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -45,9 +52,15 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<li><a href="hostGame"><span class="glyphicon glyphicon-search"></span> Game</a></li>
 						<c:if test="${not empty loggedInUser}">
-
+							<li class="dropdown">
+					          <a href="game/hostGame" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Game <span class="caret"></span></a>
+					          <ul class="dropdown-menu" role="menu">
+					            <li><a href="game/hostGame">Host Game</a></li>
+					            <li><a href="game/editGame">Edit Game</a></li>
+					            <li><a href="game/joinGame">Join Game</a></li>
+					          </ul>
+					        </li>
 						</c:if>
 					</ul>
 					<c:if test="${empty loggedInUser}">
