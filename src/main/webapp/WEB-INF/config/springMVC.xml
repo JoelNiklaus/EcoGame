@@ -24,11 +24,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
  
- 	<!-- view controllers -->
- 	<mvc:view-controller path="/" view-name="index"/>
- 	<mvc:view-controller path="" view-name="index"/>
- 	<mvc:view-controller path="index" view-name="index"/>
- 	<mvc:view-controller path="notFound" view-name="notFound"/>
     
     <!-- resources  -->
     <mvc:resources mapping="/assets/**" location="classpath:/META-INF/resources/webjars/"/>
