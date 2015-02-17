@@ -1,15 +1,12 @@
 package ch.joelniklaus.ecogame.controller.pojos;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import ch.joelniklaus.ecogame.model.User;
+import ch.joelniklaus.ecogame.model.Game;
 
 public class GameForm {
 
@@ -22,8 +19,15 @@ public class GameForm {
 	@Min(5)
 	@Max(25)
 	private int numberOfPlayers;
-
-	private List<User> players = new LinkedList<User>();
+	
+	public GameForm() {
+		
+	}
+	
+	public GameForm(Game game) {
+		this.setName(game.getName());
+		this.setNumberOfPlayers(game.getNumberOfPlayers());
+	}
 
 	public int getNumberOfPlayers() {
 		return numberOfPlayers;
@@ -47,13 +51,5 @@ public class GameForm {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public List<User> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(List<User> players) {
-		this.players = players;
 	}
 }

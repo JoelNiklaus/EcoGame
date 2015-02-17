@@ -53,16 +53,7 @@
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
 						<c:if test="${not empty loggedInUser}">
-							<li class="dropdown">
-					          <a href="game/play" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Game <span class="caret"></span></a>
-					          <ul class="dropdown-menu" role="menu">
-					            <li><a href="game/host">Host Game</a></li>
-					            <li><a href="game/edit">Edit Game</a></li>
-					            <li><a href="game/join">Join Game</a></li>
-					            <li><a href="game/overview">Game Overview</a></li>
-					            <li><a href="game/play">Play Game</a></li>
-					          </ul>
-					        </li>
+							<li><a href="game/play">Play</a></li>
 						</c:if>
 					</ul>
 					<c:if test="${empty loggedInUser}">
@@ -92,7 +83,7 @@
 						<form class="navbar-form navbar-right" action="logout" method="get">
 							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
 						</form>
-						<p class="navbar-text navbar-right"><span class="glyphicon glyphicon-user"></span> Signed in as <a class="badge" href="profile">${loggedInUser.firstName }
+						<p class="navbar-text navbar-right"><a class="navbar-link" href="profile"><span class="glyphicon glyphicon-user"></span></a> Signed in as <a class="navbar-link" href="profile">${loggedInUser.firstName }
 									${loggedInUser.lastName }</a></p>
 					</c:if>
 				</div><!-- /.navbar-collapse -->

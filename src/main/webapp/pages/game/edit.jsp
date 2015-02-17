@@ -10,34 +10,44 @@
 
 <c:import url="../template/alerts.jsp" />
 
-<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/edit">
-
-	<spring:bind path="name">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="name">Name</label>
-			<div class="col-sm-9">
-				<form:input path="name" class="form-control" id="name" type="text" maxlength="45" placeholder="Name" />
-				<form:errors path="name" class="help-block" element="span" />
-				<c:out value="${nameExists}"></c:out>
-			</div>
-		</div>
-	</spring:bind>
+<div class="row">
+	<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/edit">
 	
-	<spring:bind path="numberOfPlayers">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="numberOfPlayers">Number of Players</label>
-			<div class="col-sm-9">
-				<form:input path="numberOfPlayers" class="form-control" id="numberOfPlayers" type="number" placeholder="Number of Players" />
-				<form:errors path="numberOfPlayers" class="help-block" element="span" />
-				<c:out value="${numberOfPlayersExists}"></c:out>
+		<spring:bind path="name">
+			<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+				<label class="control-label col-sm-3" for="name">Name</label>
+				<div class="col-sm-9">
+					<form:input path="name" class="form-control" id="name" type="text" maxlength="45" placeholder="Name" />
+					<form:errors path="name" class="help-block" element="span" />
+					<c:out value="${nameExists}"></c:out>
+				</div>
 			</div>
+		</spring:bind>
+		
+		<spring:bind path="numberOfPlayers">
+			<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+				<label class="control-label col-sm-3" for="numberOfPlayers">Number of Players</label>
+				<div class="col-sm-9">
+					<form:input path="numberOfPlayers" class="form-control" id="numberOfPlayers" type="number" placeholder="Number of Players" />
+					<form:errors path="numberOfPlayers" class="help-block" element="span" />
+					<c:out value="${numberOfPlayersExists}"></c:out>
+				</div>
+			</div>
+		</spring:bind>
+	
+		<div class="col-sm-3">
+			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Save Changes</button>
+			<button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
 		</div>
-	</spring:bind>
-
-	<div class="col-sm-3">
-		<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Host new Game</button>
-		<button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
-	</div>
-</form:form>
+	</form:form>
+</div>
+<br>
+<div class="row">
+	<ul class="list-group">
+		<c:forEach items="${players}" var="player">
+			<li class="list-group-item">player<button onclick="location.href='game/edit/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</button></li>
+		</c:forEach>
+	</ul>
+</div>
 
 <c:import url="../template/footer.jsp" />
