@@ -6,14 +6,14 @@
 <c:import url="template/header.jsp" />
 
 <div class="jumbotron">
-<h1>${otherUser.firstName } ${otherUser.lastName }</h1>
+<h1>${otherUser.firstName} ${otherUser.lastName}</h1>
 <div class="row">
 	<div class="col-sm-4">
 		<c:if test="${not empty otherUser.profileImage}">
-			<img width="300px" class="gallery" src="/Skeleton/img/ad/${otherUser.profileImage.fileName}" />
+			<img width="300px" class="gallery" src="/ecogame/img/ad/${otherUser.profileImage.fileName}" />
 		</c:if>
 		<c:if test="${empty otherUser.profileImage}">
-			<img width="300px" class="gallery" src="/Skeleton/img/Profile_Placeholder.jpg" />
+			<img width="300px" class="gallery" src="/ecogame/img/Profile_Placeholder.jpg" />
 		</c:if>
 	</div>
 	<div class="col-sm-4">

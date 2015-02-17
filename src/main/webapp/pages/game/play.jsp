@@ -6,11 +6,13 @@
 
 <c:import url="../template/header.jsp" />
 
-<h1>Play</h1>
+<h1>Play
+<c:if test="${game.hoster.id eq loggedInUser.id}">
+	<a href="game/edit" class="btn btn-info pull-right" role="button">edit</a>
+</c:if>
+</h1>
 
 <c:import url="../template/alerts.jsp" />
-
-
 
 
 <c:import url="../template/footer.jsp" />

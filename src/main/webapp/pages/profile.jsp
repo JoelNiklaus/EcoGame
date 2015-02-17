@@ -5,22 +5,15 @@
   <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>  
 
 
-<c:import url="template/header.jsp" />  
+<c:import url="template/header.jsp" />
+
+
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link href="/ecogame/css/dropzone.css" type="text/css" rel="stylesheet" /> 
-  <h1>My Profile</h1>
+<h1>My Profile</h1>
   
-	<c:if test="${not empty success}">
-		<div class="alert alert-success" role="alert">
-			${success}
-		</div>
-	</c:if>
-	
-	<c:if test="${not empty error}">
-		<div class="alert alert-danger" role="alert">
-			${error}
-		</div>
-	</c:if> 	
+<c:import url="template/alerts.jsp" />
+
  	
 <form:form class="form-horizontal" role="form" method="post" modelAttribute="profileForm" action="profile"
 	id="profileForm" autocomplete="on">

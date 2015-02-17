@@ -23,5 +23,11 @@ public interface GameService {
 	public List<User> getPlayersOfGameOfLoggedInUser();
 
 	public User kickPlayer(Long id);
+
+	public Game getJoinedGameOfLoggedInUser();
+
+	public Game getHostedGameOfLoggedInUser();
+	
+	public Game getGameOfLoggedInUser();
 	
 }

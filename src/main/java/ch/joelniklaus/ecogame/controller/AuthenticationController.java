@@ -32,9 +32,9 @@ public class AuthenticationController extends ParentController {
 	AuthenticationService authService;
 	@Autowired
 	MailService mailService;
-
 	@Autowired
 	UserDao userRepositry;
+	
 	@Autowired
 	@Qualifier("authMgr")
 	private AuthenticationManager authMgr;
@@ -159,7 +159,10 @@ public class AuthenticationController extends ParentController {
 	 * @param forgotPasswordForm
 	 */
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
-	public ModelAndView forgot(@Valid ForgotPasswordForm forgotPasswordForm) {
+	public ModelAndView forgot(@Valid ForgotPasswordForm forgotPasswordForm, BindingResult result) {
+		if (result.hasErrors())
+			return new ModelAndView("forgot");
+
 		ModelAndView model = new ModelAndView("forgot");
 		try {
 			User user = authService.getUser(forgotPasswordForm);

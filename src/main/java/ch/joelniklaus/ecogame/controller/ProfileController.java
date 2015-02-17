@@ -3,43 +3,44 @@ package ch.joelniklaus.ecogame.controller;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
-import ch.joelniklaus.ecogame.model.User;
 
 @Controller
 public class ProfileController extends ParentController {
-
+	
 	/**
 	 * Displays the profile view of the user with the given id.
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "/otherProfileView", method = RequestMethod.GET)
-	public ModelAndView loadOtherProfileView(@RequestParam String id) {
-		ModelAndView model = new ModelAndView("otherProfileView");
+	@RequestMapping(value = "/otherProfileView/{id}", method = RequestMethod.GET)
+	public String loadOtherProfileView(Model model, @PathVariable Long id) {
+		model.addAttribute("otherUser", authService.getUser(id));
 		
-		try {
-			User otherUser = authService.getUser(new Long(id));
+		// try {
+		//
+		//
+		// if (otherUser != null)
+		// model.addAttribute("otherUser", otherUser);
+		// else
+		// return "notFound";
+		// } catch (NumberFormatException e) {
+		// System.out.println(e.getMessage());
+		// return "notFound";
+		// }
 
-			if (otherUser != null)
-				model.addObject("otherUser", otherUser);
-			else
-				model = new ModelAndView("404");
-		} catch (NumberFormatException ex) {
-			model = new ModelAndView("404");
-		}
-		
-		return model;
+		return "otherProfileView";
 	}
-
+	
 	/**
 	 * Displays the profileForm which enables the user to change his profile information.
 	 *
@@ -49,10 +50,10 @@ public class ProfileController extends ParentController {
 	public ModelAndView loadProfilePage() {
 		ModelAndView model = new ModelAndView("profile");
 		model.addObject("profileForm", new SignupForm());
-		
+
 		return model;
 	}
-
+	
 	/**
 	 * Saves the changes made to the profile to the database.
 	 *
@@ -79,7 +80,7 @@ public class ProfileController extends ParentController {
 			}
 		else
 			model.addObject("error", "Please enter valid data.");
-
+		
 		return model;
 	}
 }

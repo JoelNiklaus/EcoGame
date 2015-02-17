@@ -14,14 +14,14 @@ import ch.joelniklaus.ecogame.model.dao.UserDao;
 
 @Service
 public class GameServiceImpl implements GameService {
-	
+
 	@Autowired
 	GameDao gameDao;
 	@Autowired
 	UserDao userDao;
 	@Autowired
 	AuthenticationService authService;
-	
+
 	@Override
 	public GameForm addGame(GameForm gameForm) {
 		Game game = setVariables(gameForm, new Game());
@@ -29,7 +29,7 @@ public class GameServiceImpl implements GameService {
 		gameForm.setId(game.getId());
 		return gameForm;
 	}
-
+	
 	@Override
 	public GameForm editGame(GameForm gameForm) {
 		Game game = gameDao.findOne(gameForm.getId());
@@ -37,7 +37,7 @@ public class GameServiceImpl implements GameService {
 		gameDao.save(game);
 		return gameForm;
 	}
-
+	
 	@Override
 	public Game joinGame(Long id) {
 		Game game = gameDao.findOne(id);
@@ -45,28 +45,28 @@ public class GameServiceImpl implements GameService {
 		gameDao.save(game);
 		return game;
 	}
-	
+
 	@Override
 	public List<User> getPlayersOfGameOfLoggedInUser() {
 		Game game = getHostedGameOfLoggedInUser();
 		return game.getPlayers();
 	}
-	
+
 	@Override
 	public boolean loggedInUserHasAlreadyHostedGame() {
 		return getHostedGameOfLoggedInUser() != null;
 	}
-
+	
 	@Override
 	public boolean loggedInUserHasAlreadyJoinedGame() {
 		return getJoinedGameOfLoggedInUser() != null;
 	}
-	
+
 	@Override
 	public GameForm getGameFormOfLoggedInUser() {
 		return new GameForm(getHostedGameOfLoggedInUser());
 	}
-	
+
 	@Override
 	@Transactional
 	public User kickPlayer(Long id) {
@@ -76,16 +76,29 @@ public class GameServiceImpl implements GameService {
 		gameDao.save(game);
 		return player;
 	}
-	
-	private Game getJoinedGameOfLoggedInUser() {
+
+	@Override
+	public Game getJoinedGameOfLoggedInUser() {
 		for (Game game : gameDao.findAll())
 			if (game.getPlayers().contains(authService.getLoggedInUser()))
 				return game;
 		return null;
 	}
-
-	private Game getHostedGameOfLoggedInUser() {
+	
+	@Override
+	public Game getHostedGameOfLoggedInUser() {
 		return gameDao.findByHoster(authService.getLoggedInUser());
+	}
+
+	@Override
+	public Game getGameOfLoggedInUser() {
+		Game game = getHostedGameOfLoggedInUser();
+		if (game != null)
+			return game;
+		game = getJoinedGameOfLoggedInUser();
+		if (game != null)
+			return game;
+		return null;
 	}
 	
 	private Game setVariables(GameForm gameForm, Game game) {

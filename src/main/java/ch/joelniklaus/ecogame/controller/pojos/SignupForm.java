@@ -38,8 +38,9 @@ public class SignupForm {
 	@Pattern(regexp = "[a-zA-ZäöüÄÖÜ.,;:0-9()\\s]+", message = "Please write something about you")
 	private String description;
 
+	@Min(0)
 	private int houseNr;
-
+	
 	@Pattern(regexp = "[a-zA-Z\\s]+", message = "Enter your city")
 	private String city;
 

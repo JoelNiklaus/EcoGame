@@ -45,7 +45,8 @@
 <div class="row">
 	<ul class="list-group">
 		<c:forEach items="${players}" var="player">
-			<li class="list-group-item">player<button onclick="location.href='game/edit/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</button></li>
+			<li class="list-group-item"><a href="otherProfileView/${player.id}">${player.firstName} ${player.lastName}</a>
+			<button onclick="location.href='game/edit/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</button></li>
 		</c:forEach>
 	</ul>
 </div>

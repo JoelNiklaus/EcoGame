@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
   <h1>Welcome to the EcoGame!</h1>
-  <p>You can either <a href="game/join">join</a> an existing game or <a href="game/join">host</a> your own.</p>
+  <p>You can either <a href="game/join">join</a> an existing game or <a href="game/host">host</a> your own.</p>
   <p><a class="btn btn-primary btn-lg pull-left" href="game/join" role="button">Join Game</a><a class="btn btn-primary btn-lg pull-right" href="game/host" role="button">Host Game</a><br></p>
 </div>
 
