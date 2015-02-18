@@ -99,7 +99,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="description">Description</label>
 			<div class="col-sm-9">
-				<form:textarea path="description" class="form-control" id="description" type="text" maxlength="1000" placeholder="Description" value="${loggedInUser.description}"/>
+				<form:textarea path="description" class="form-control" id="description" type="text" maxlength="1000" placeholder="Description"/>
 				<form:errors path="description" class="help-block" element="span" />
 			</div>
 		</div>
@@ -108,7 +108,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="imageId">Profile Image</label>
 			<div class="col-sm-6">
-		 		<form:input class="form-control" path="imageId" type="hidden" name="file" id="file" value="${loggedInUser.profileImage.id}" />
+		 		<form:input class="form-control" path="imageId" type="hidden" name="file" id="file"/>
 				<script src="/ecogame/js/dropzone.min.js"></script>
 				<div class="dropzone col-sm-6" id="file-dropzone">
 					<div class="dz-message" data-dz-message>

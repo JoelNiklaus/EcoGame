@@ -9,6 +9,8 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import ch.joelniklaus.ecogame.model.User;
+
 public class SignupForm {
 	
 	private Long id;
@@ -33,11 +35,6 @@ public class SignupForm {
 	@Pattern(regexp = "[a-zA-Z\\s]+", message = "Enter your street")
 	private String street;
 
-	@Lob
-	@NotNull
-	@Pattern(regexp = "[a-zA-ZäöüÄÖÜ.,;:0-9()\\s]+", message = "Please write something about you")
-	private String description;
-
 	@Min(0)
 	private int houseNr;
 	
@@ -48,7 +45,28 @@ public class SignupForm {
 	@Max(99999)
 	private int zip;
 
+	@Lob
+	@NotNull
+	@Pattern(regexp = "[a-zA-ZäöüÄÖÜ.,;:0-9()\\s]+", message = "Please write something about you")
+	private String description;
+
 	private String imageId;
+
+	public SignupForm() {
+
+	}
+
+	public SignupForm(User user) {
+		this.setId(user.getId());
+		this.setFirstName(user.getFirstName());
+		this.setLastName(user.getLastName());
+		this.setEmail(user.getEmail());
+		this.setStreet(user.getAddress().getStreet());
+		this.setHouseNr(user.getAddress().getHouseNr());
+		this.setCity(user.getAddress().getCity());
+		this.setZip(user.getAddress().getZip());
+		this.setDescription(user.getDescription());
+	}
 
 	public String getStreet() {
 		return street;
