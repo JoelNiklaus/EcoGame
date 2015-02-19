@@ -9,8 +9,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,18 +30,18 @@ import ch.joelniklaus.ecogame.model.dao.UserDao;
 
 @Controller
 public class AuthenticationController extends ParentController {
-
+	
 	@Autowired
 	AuthenticationService authService;
 	@Autowired
 	MailService mailService;
 	@Autowired
 	UserDao userRepositry;
-	
+
 	@Autowired
 	@Qualifier("authMgr")
 	private AuthenticationManager authMgr;
-
+	
 	/**
 	 * Creates a model for registering a new user.
 	 *
@@ -50,7 +53,7 @@ public class AuthenticationController extends ParentController {
 		model.addObject("signupForm", new SignupForm());
 		return model;
 	}
-
+	
 	/**
 	 * Submits registration and returns login model
 	 *
@@ -65,16 +68,16 @@ public class AuthenticationController extends ParentController {
 	public ModelAndView register(@Valid SignupForm signupForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("login");
-
+		
 		try {
-
+			
 			if (authService.emailAlreadyExists(signupForm.getEmail()))
 				throw new InvalidUserException("Email already exists");
-			
+
 			if (!result.hasErrors())
 				try {
 					authService.createProfile(signupForm);
-
+					
 					model.addObject(new LoginForm());
 				} catch (InvalidUserException e) {
 					model = new ModelAndView("register");
@@ -89,15 +92,15 @@ public class AuthenticationController extends ParentController {
 			model.addObject("signupForm", signupForm);
 			model.addObject("emailExists", "This email address is already in use");
 		}
-
+		
 		// perform login authentication
-
+		
 		try {
 			User user = userRepositry.findByEmail(signupForm.getEmail());
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 					user, signupForm.getPassword(), user.getAuthorities());
 			authMgr.authenticate(auth);
-			
+
 			if (auth.isAuthenticated()) {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				return new ModelAndView("redirect:/");
@@ -105,10 +108,10 @@ public class AuthenticationController extends ParentController {
 		} catch (Exception e) {
 			System.out.println("Problem authenticating user" + signupForm.getEmail());
 		}
-		
+
 		return model;
 	}
-
+	
 	/**
 	 * Redirects the login to spring security
 	 *
@@ -119,7 +122,7 @@ public class AuthenticationController extends ParentController {
 	public String login(ModelMap model) {
 		return "login";
 	}
-
+	
 	/**
 	 * Redirects accessdenied to spring security
 	 *
@@ -131,7 +134,7 @@ public class AuthenticationController extends ParentController {
 		model.addAttribute("error", "true");
 		return "denied";
 	}
-
+	
 	/**
 	 * Redirects logout to spring security
 	 *
@@ -142,7 +145,7 @@ public class AuthenticationController extends ParentController {
 	public String logout(ModelMap model) {
 		return "logout";
 	}
-
+	
 	/**
 	 * Displays an E-Mail input field for the user who forgot his password.
 	 */
@@ -152,7 +155,7 @@ public class AuthenticationController extends ParentController {
 		model.addObject("forgotPasswordForm", new ForgotPasswordForm());
 		return model;
 	}
-
+	
 	/**
 	 * Sends users password to the entered E-Mail address.
 	 *
@@ -162,11 +165,11 @@ public class AuthenticationController extends ParentController {
 	public ModelAndView forgot(@Valid ForgotPasswordForm forgotPasswordForm, BindingResult result) {
 		if (result.hasErrors())
 			return new ModelAndView("forgot");
-
+		
 		ModelAndView model = new ModelAndView("forgot");
 		try {
 			User user = authService.getUser(forgotPasswordForm);
-
+			
 			// compose E-Mail
 			String email = user.getEmail();
 			String password = user.getPassword();
@@ -176,20 +179,84 @@ public class AuthenticationController extends ParentController {
 			String message = "Dear " + firstName + " " + lastName + "\n\n"
 					+ "You requested your password: " + password
 					+ "\n\nYours sincerely,\nJoel Niklaus";
-
+			
 			try {
 				mailService.sendMail(email, subject, message);
-
+				
 				model.addObject("success", "Password successfully delivered");
 			} catch (EmailException e) {
 				model.addObject("error", "Password could not be sent: " + e.getMessage());
 				e.printStackTrace();
 			}
-
+			
 		} catch (InvalidUserException e) {
 			model.addObject("error", "No User with this E-Mail found: " + e.getMessage());
 		}
 		return model;
 	}
 
+	/**
+	 * Displays the profile view of the user with the given id.
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/otherProfileView/{id}", method = RequestMethod.GET)
+	public String otherProfileView(Model model, @PathVariable Long id) {
+		model.addAttribute("otherUser", authService.getUser(id));
+
+		// try {
+		//
+		//
+		// if (otherUser != null)
+		// model.addAttribute("otherUser", otherUser);
+		// else
+		// return "notFound";
+		// } catch (NumberFormatException e) {
+		// System.out.println(e.getMessage());
+		// return "notFound";
+		// }
+		
+		return "otherProfileView";
+	}
+
+	/**
+	 * Displays the profileForm which enables the user to change his profile information.
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String profile(Model model) {
+		model.addAttribute("profileForm", new SignupForm(authService.getLoggedInUser()));
+		
+		return "profile";
+	}
+
+	/**
+	 * Saves the changes made to the profile to the database.
+	 *
+	 * @param profileForm
+	 * @param result
+	 * @return the profileForm for further changes.
+	 */
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	public String profile(Model model,
+			@ModelAttribute("profileForm") @Valid SignupForm profileForm, BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("error", "Please enter valid data.");
+			model.addAttribute("profileForm", profileForm);
+			return "profile";
+		}
+
+		try {
+			authService.updateProfile(profileForm);
+			model.addAttribute("success", "Profile changes successfully saved");
+		} catch (InvalidUserException e) {
+			model.addAttribute("error", "Profile changes could not be saved: " + e.getMessage());
+		} catch (NullPointerException e) {
+			model.addAttribute("error", "Profile changes could not be saved: " + e.getMessage());
+		}
+		
+		return "profile";
+	}
+	
 }
