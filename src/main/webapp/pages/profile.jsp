@@ -22,7 +22,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="email">E-Mail</label>
 			<div class="col-sm-9">
-				<form:input path="email" class="form-control" id="email" type="email" maxlength="45" placeholder="E-Mail" value="${loggedInUser.email}"/>
+				<form:input path="email" class="form-control" id="email" type="email" maxlength="45" placeholder="E-Mail"/>
 				<form:errors path="email" class="help-block" element="span" />
 			</div>
 		</div>
@@ -31,7 +31,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="firstName">First Name</label>
 			<div class="col-sm-9">
-				<form:input path="firstName" class="form-control" id="firstName" type="text" maxlength="45" placeholder="First Name" value="${loggedInUser.firstName}"/>
+				<form:input path="firstName" class="form-control" id="firstName" type="text" maxlength="45" placeholder="First Name"/>
 				<form:errors path="firstName" class="help-block" element="span" />
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="lastName">Last Name</label>
 			<div class="col-sm-9">
-				<form:input path="lastName" class="form-control" id="lastName" type="text" maxlength="45" placeholder="Last Name" value="${loggedInUser.lastName}"/>
+				<form:input path="lastName" class="form-control" id="lastName" type="text" maxlength="45" placeholder="Last Name"/>
 				<form:errors path="lastName" class="help-block" element="span" />
 			</div>
 		</div>
@@ -67,7 +67,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="street">Street</label>
 			<div class="col-sm-9">
-				<form:input path="street" class="form-control" id="street" type="text" maxlength="45" placeholder="Street" value="${loggedInUser.address.street}"/>
+				<form:input path="street" class="form-control" id="street" type="text" maxlength="45" placeholder="Street"/>
 				<form:errors path="street" class="help-block" element="span" />
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="houseNr">House Number</label>
 			<div class="col-sm-9">
-				<form:input path="houseNr" class="form-control" id="houseNr" type="number" maxlength="45" placeholder="House Number" value="${loggedInUser.address.houseNr}"/>
+				<form:input path="houseNr" class="form-control" id="houseNr" type="number" maxlength="45" placeholder="House Number"/>
 				<form:errors path="houseNr" class="help-block" element="span" />
 			</div>
 		</div>
@@ -85,7 +85,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="zip">ZIP-Code</label>
 			<div class="col-sm-9">
-				<form:input path="zip" class="form-control" id="zip" type="number" maxlength="45" placeholder="ZIP-Code" value="${loggedInUser.address.zip}"/>
+				<form:input path="zip" class="form-control" id="zip" type="number" maxlength="45" placeholder="ZIP-Code"/>
 				<form:errors path="zip" class="help-block" element="span" />
 			</div>
 		</div>
@@ -94,7 +94,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="city">City</label>
 			<div class="col-sm-9">
-				<form:input path="city" class="form-control" id="city" type="text" maxlength="45" placeholder="City" value="${loggedInUser.address.city}"/>
+				<form:input path="city" class="form-control" id="city" type="text" maxlength="45" placeholder="City"/>
 				<form:errors path="city" class="help-block" element="span" />
 			</div>
 		</div>
@@ -103,7 +103,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="description">Description</label>
 			<div class="col-sm-9">
-				<form:textarea path="description" class="form-control" id="description" type="text" maxlength="1000" placeholder="Description" value="${loggedInUser.description}"/>
+				<form:textarea path="description" class="form-control" id="description" type="text" maxlength="1000" placeholder="Description"/>
 				<form:errors path="description" class="help-block" element="span" />
 			</div>
 		</div>

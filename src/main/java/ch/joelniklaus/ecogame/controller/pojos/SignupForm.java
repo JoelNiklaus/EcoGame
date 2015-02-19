@@ -168,16 +168,16 @@ public class SignupForm {
 		this.imageId = imageId;
 	}
 	
-	/**
-	 * Checks if one of the mandatory properties (email, password...) is null
-	 *
-	 * @return true if at least one mandatory property is null, false else
-	 */
-	public boolean hasNull() {
-		boolean hasNull = email.equals("") || firstName.equals("") || lastName.equals("")
-				|| password.equals("") || street.equals("") || houseNr == 0 || city.equals("")
-				|| zip == 0;
-		return hasNull;
-	}
+	// /**
+	// * Checks if one of the mandatory properties (email, password...) is null
+	// *
+	// * @return true if at least one mandatory property is null, false else
+	// */
+	// public boolean hasNull() {
+	// boolean hasNull = email.equals("") || firstName.equals("") || lastName.equals("")
+	// || password.equals("") || street.equals("") || houseNr == 0 || city.equals("")
+	// || zip == 0;
+	// return hasNull;
+	// }
 	
 }

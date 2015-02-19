@@ -17,7 +17,7 @@ public interface AuthenticationService {
 	 * @throws InvalidUserException
 	 *             if first name is "ESE"
 	 */
-	public SignupForm saveFrom(SignupForm signupForm) throws InvalidUserException;
+	public SignupForm createProfile(SignupForm signupForm) throws InvalidUserException;
 	
 	/**
 	 * Updates a users profile based on the signupForm submitted.

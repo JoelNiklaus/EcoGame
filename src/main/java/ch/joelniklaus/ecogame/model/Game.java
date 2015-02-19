@@ -19,7 +19,7 @@ public class Game {
 
 	private String name;
 
-	private int numberOfPlayers;
+	private int maxNumberOfPlayers;
 
 	@OneToOne
 	private User hoster;
@@ -51,12 +51,12 @@ public class Game {
 		this.name = name;
 	}
 
-	public int getNumberOfPlayers() {
-		return numberOfPlayers;
+	public int getMaxNumberOfPlayers() {
+		return maxNumberOfPlayers;
 	}
 
-	public void setNumberOfPlayers(int numberOfPlayers) {
-		this.numberOfPlayers = numberOfPlayers;
+	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
+		this.maxNumberOfPlayers = maxNumberOfPlayers;
 	}
 	
 	public Long getId() {

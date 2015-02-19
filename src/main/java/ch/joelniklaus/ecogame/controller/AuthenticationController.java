@@ -73,7 +73,7 @@ public class AuthenticationController extends ParentController {
 			
 			if (!result.hasErrors())
 				try {
-					authService.saveFrom(signupForm);
+					authService.createProfile(signupForm);
 
 					model.addObject(new LoginForm());
 				} catch (InvalidUserException e) {

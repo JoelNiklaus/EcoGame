@@ -103,7 +103,7 @@ public class GameServiceImpl implements GameService {
 	
 	private Game setVariables(GameForm gameForm, Game game) {
 		game.setName(gameForm.getName());
-		game.setNumberOfPlayers(gameForm.getNumberOfPlayers());
+		game.setMaxNumberOfPlayers(gameForm.getMaxNumberOfPlayers());
 		game.setHoster(authService.getLoggedInUser());
 		return game;
 	}

@@ -24,7 +24,7 @@ public class LoginServiceTest {
 		signupForm.setFirstName("ESE");
 		signupForm.setEmail("form@test.com");
 		
-		loginServiceImpl.saveFrom(signupForm);
+		loginServiceImpl.createProfile(signupForm);
 	}
 	
 }

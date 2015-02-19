@@ -18,7 +18,7 @@ public class GameForm {
 
 	@Min(5)
 	@Max(25)
-	private int numberOfPlayers;
+	private int maxNumberOfPlayers;
 	
 	public GameForm() {
 		
@@ -26,15 +26,15 @@ public class GameForm {
 	
 	public GameForm(Game game) {
 		this.setName(game.getName());
-		this.setNumberOfPlayers(game.getNumberOfPlayers());
+		this.setMaxNumberOfPlayers(game.getMaxNumberOfPlayers());
 	}
 
-	public int getNumberOfPlayers() {
-		return numberOfPlayers;
+	public int getMaxNumberOfPlayers() {
+		return maxNumberOfPlayers;
 	}
 	
-	public void setNumberOfPlayers(int numberOfPlayers) {
-		this.numberOfPlayers = numberOfPlayers;
+	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
+		this.maxNumberOfPlayers = maxNumberOfPlayers;
 	}
 	
 	public String getName() {

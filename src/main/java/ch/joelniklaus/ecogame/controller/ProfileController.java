@@ -15,7 +15,7 @@ import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
 
 @Controller
 public class ProfileController extends ParentController {
-
+	
 	/**
 	 * Displays the profile view of the user with the given id.
 	 *
@@ -24,7 +24,7 @@ public class ProfileController extends ParentController {
 	@RequestMapping(value = "/otherProfileView/{id}", method = RequestMethod.GET)
 	public String otherProfileView(Model model, @PathVariable Long id) {
 		model.addAttribute("otherUser", authService.getUser(id));
-
+		
 		// try {
 		//
 		//
@@ -36,10 +36,10 @@ public class ProfileController extends ParentController {
 		// System.out.println(e.getMessage());
 		// return "notFound";
 		// }
-		
+
 		return "otherProfileView";
 	}
-
+	
 	/**
 	 * Displays the profileForm which enables the user to change his profile information.
 	 *
@@ -48,10 +48,10 @@ public class ProfileController extends ParentController {
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile(Model model) {
 		model.addAttribute("profileForm", new SignupForm(authService.getLoggedInUser()));
-		
+
 		return "profile";
 	}
-
+	
 	/**
 	 * Saves the changes made to the profile to the database.
 	 *
@@ -67,7 +67,7 @@ public class ProfileController extends ParentController {
 			model.addAttribute("profileForm", profileForm);
 			return "profile";
 		}
-
+		
 		try {
 			authService.updateProfile(profileForm);
 			model.addAttribute("success", "Profile changes successfully saved");
@@ -76,7 +76,7 @@ public class ProfileController extends ParentController {
 		} catch (NullPointerException e) {
 			model.addAttribute("error", "Profile changes could not be saved: " + e.getMessage());
 		}
-		
+
 		return "profile";
 	}
 }

@@ -24,13 +24,13 @@
 			</div>
 		</spring:bind>
 		
-		<spring:bind path="numberOfPlayers">
+		<spring:bind path="maxNumberOfPlayers">
 			<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-				<label class="control-label col-sm-3" for="numberOfPlayers">Number of Players</label>
+				<label class="control-label col-sm-3" for="maxNumberOfPlayers">Number of Players</label>
 				<div class="col-sm-9">
-					<form:input path="numberOfPlayers" class="form-control" id="numberOfPlayers" type="number" placeholder="Number of Players" />
-					<form:errors path="numberOfPlayers" class="help-block" element="span" />
-					<c:out value="${numberOfPlayersExists}"></c:out>
+					<form:input path="maxNumberOfPlayers" class="form-control" id="maxNumberOfPlayers" type="number" placeholder="Number of Players" />
+					<form:errors path="maxNumberOfPlayers" class="help-block" element="span" />
+					<c:out value="${maxNumberOfPlayersExists}"></c:out>
 				</div>
 			</div>
 		</spring:bind>
