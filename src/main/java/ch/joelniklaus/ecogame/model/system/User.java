@@ -1,4 +1,4 @@
-package ch.joelniklaus.ecogame.model;
+package ch.joelniklaus.ecogame.model.system;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import ch.joelniklaus.ecogame.model.Player;
 
 @Entity
 public class User implements UserDetails {

@@ -1,29 +1,37 @@
 package ch.joelniklaus.ecogame.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Player {
+public class Company {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	private String userName;
+	private String name;
 
 	@OneToOne
 	private BankAccount bankAccount;
 	
-	@OneToOne
-	private Company company;
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Machine> machines = new LinkedList<Machine>();
 	
-	public Player(String userName, BankAccount bankAccount, Company company) {
-		this.userName = userName;
+	public void pay(Double amount) {
+		bankAccount.charge(amount);
+	}
+	
+	public Company(String name, BankAccount bankAccount) {
+		this.name = name;
 		this.bankAccount = bankAccount;
-		this.company = company;
 	}
 	
 	public Long getId() {
@@ -34,12 +42,12 @@ public class Player {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public BankAccount getBankAccount() {
@@ -48,14 +56,6 @@ public class Player {
 
 	public void setBankAccount(BankAccount bankAccount) {
 		this.bankAccount = bankAccount;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
 	}
 	
 }

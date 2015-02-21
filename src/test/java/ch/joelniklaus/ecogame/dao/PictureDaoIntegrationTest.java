@@ -11,8 +11,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.joelniklaus.ecogame.model.Picture;
-import ch.joelniklaus.ecogame.model.dao.PictureDao;
+import ch.joelniklaus.ecogame.model.dao.system.PictureDao;
+import ch.joelniklaus.ecogame.model.system.Picture;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

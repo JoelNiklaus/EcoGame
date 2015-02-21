@@ -13,6 +13,18 @@ public class BankAccount {
 
 	private Double balance;
 
+	public void charge(Double amount) {
+		balance -= amount;
+	}
+
+	public void deposit(Double amount) {
+		balance += amount;
+	}
+
+	public BankAccount(Double balance) {
+		this.balance = balance;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
-import ch.joelniklaus.ecogame.model.User;
+import ch.joelniklaus.ecogame.model.system.User;
 
 /**
  * Has to be extended by every Controller.

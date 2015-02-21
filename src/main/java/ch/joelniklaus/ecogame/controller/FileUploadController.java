@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import ch.joelniklaus.ecogame.model.Picture;
-import ch.joelniklaus.ecogame.model.dao.PictureDao;
+import ch.joelniklaus.ecogame.model.dao.system.PictureDao;
+import ch.joelniklaus.ecogame.model.system.Picture;
 
 @Controller
 @EnableWebMvc

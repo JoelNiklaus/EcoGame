@@ -4,7 +4,7 @@ import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
-import ch.joelniklaus.ecogame.model.User;
+import ch.joelniklaus.ecogame.model.system.User;
 
 public interface AuthenticationService {
 	

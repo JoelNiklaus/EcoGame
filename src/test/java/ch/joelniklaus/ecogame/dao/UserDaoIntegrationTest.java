@@ -9,9 +9,10 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.joelniklaus.ecogame.model.Address;
-import ch.joelniklaus.ecogame.model.User;
-import ch.joelniklaus.ecogame.model.dao.UserDao;
+import ch.joelniklaus.ecogame.model.dao.system.UserDao;
+import ch.joelniklaus.ecogame.model.system.Address;
+import ch.joelniklaus.ecogame.model.system.User;
+
 import static org.junit.Assert.*;
 
 

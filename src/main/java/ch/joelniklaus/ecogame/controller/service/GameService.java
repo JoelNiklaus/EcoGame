@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.model.Game;
-import ch.joelniklaus.ecogame.model.User;
+import ch.joelniklaus.ecogame.model.system.User;
 
 public interface GameService {
 	

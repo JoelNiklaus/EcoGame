@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import ch.joelniklaus.ecogame.model.system.User;
+
 @Entity
 public class Game {
 

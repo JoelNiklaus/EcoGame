@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.model.Game;
-import ch.joelniklaus.ecogame.model.User;
 import ch.joelniklaus.ecogame.model.dao.GameDao;
-import ch.joelniklaus.ecogame.model.dao.UserDao;
+import ch.joelniklaus.ecogame.model.dao.system.UserDao;
+import ch.joelniklaus.ecogame.model.system.User;
 
 @Service
 public class GameServiceImpl implements GameService {

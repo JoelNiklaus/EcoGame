@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import ch.joelniklaus.ecogame.model.User;
+import ch.joelniklaus.ecogame.model.system.User;
 
 public class SignupForm {
 	

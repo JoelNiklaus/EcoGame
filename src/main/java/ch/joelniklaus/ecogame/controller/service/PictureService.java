@@ -1,6 +1,6 @@
 package ch.joelniklaus.ecogame.controller.service;
 
-import ch.joelniklaus.ecogame.model.Picture;
+import ch.joelniklaus.ecogame.model.system.Picture;
 
 
 public interface PictureService {

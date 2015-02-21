@@ -25,8 +25,8 @@ import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 import ch.joelniklaus.ecogame.controller.service.MailService;
-import ch.joelniklaus.ecogame.model.User;
-import ch.joelniklaus.ecogame.model.dao.UserDao;
+import ch.joelniklaus.ecogame.model.dao.system.UserDao;
+import ch.joelniklaus.ecogame.model.system.User;
 
 @Controller
 public class AuthenticationController extends ParentController {
