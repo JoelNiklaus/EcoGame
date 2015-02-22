@@ -14,5 +14,6 @@
 
 <c:import url="../template/alerts.jsp" />
 
+<a href="game/initPlayer" class="btn btn-primary">create Player</a>
 
 <c:import url="../template/footer.jsp" />

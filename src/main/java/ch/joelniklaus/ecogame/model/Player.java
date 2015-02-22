@@ -1,61 +1,28 @@
 package ch.joelniklaus.ecogame.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Player {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	private String userName;
+public class Player extends Controllable {
 
-	@OneToOne
-	private BankAccount bankAccount;
-	
 	@OneToOne
 	private Company company;
-	
-	public Player(String userName, BankAccount bankAccount, Company company) {
-		this.userName = userName;
-		this.bankAccount = bankAccount;
-		this.company = company;
+
+	public Player() {
+
 	}
-	
-	public Long getId() {
-		return id;
+
+	public Player(String name, BankAccount bankAccount) {
+		super(name, bankAccount);
 	}
 	
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public BankAccount getBankAccount() {
-		return bankAccount;
-	}
-
-	public void setBankAccount(BankAccount bankAccount) {
-		this.bankAccount = bankAccount;
-	}
-
 	public Company getCompany() {
 		return company;
 	}
-
+	
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-	
+
 }

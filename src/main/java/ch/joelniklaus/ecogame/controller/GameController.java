@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.controller.service.GameService;
+import ch.joelniklaus.ecogame.controller.service.PlayerService;
+import ch.joelniklaus.ecogame.model.Player;
 import ch.joelniklaus.ecogame.model.dao.GameDao;
 
 @Controller
@@ -22,6 +24,8 @@ public class GameController extends ParentController {
 	GameService gameService;
 	@Autowired
 	GameDao gameDao;
+	@Autowired
+	PlayerService playerService;
 	
 	@RequestMapping(value = "start")
 	public String start(Model model) {
@@ -119,6 +123,21 @@ public class GameController extends ParentController {
 		if (!gameService.loggedInUserHasAlreadyHostedGame()
 				&& !gameService.loggedInUserHasAlreadyJoinedGame())
 			return "redirect:start";
+
+		model.addAttribute("game", gameService.getGameOfLoggedInUser());
+		
+		return "game/play";
+	}
+
+	@RequestMapping(value = "/initPlayer")
+	public String initPlayer(Model model) {
+		try {
+			Player player = playerService.initPlayer(authService.getLoggedInUser());
+			model.addAttribute("success", "Player successfully created.");
+			model.addAttribute("player", player);
+		} catch (Exception e) {
+			model.addAttribute("error", "Could not create player.");
+		}
 
 		model.addAttribute("game", gameService.getGameOfLoggedInUser());
 		
