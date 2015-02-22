@@ -14,7 +14,7 @@ import ch.joelniklaus.ecogame.model.system.User;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
-	
+
 	@Autowired
 	PlayerDao playerDao;
 	@Autowired
@@ -23,13 +23,17 @@ public class PlayerServiceImpl implements PlayerService {
 	CompanyDao companyDao;
 	@Autowired
 	UserDao userDao;
-	
+
+	public static final Double STARTING_BALANCE = 1000000.00;
+
 	@Override
 	public Player initPlayer(User user) {
-		BankAccount bankAccount = new BankAccount(1000000.0);
+		BankAccount bankAccount = new BankAccount(STARTING_BALANCE);
 		bankAccountDao.save(bankAccount);
 		Company company = new Company("Novartis", bankAccount);
 		companyDao.save(company);
+		bankAccount = new BankAccount(STARTING_BALANCE);
+		bankAccountDao.save(bankAccount);
 		Player player = new Player(user.getFirstName() + user.getLastName(), bankAccount);
 		player.setCompany(company);
 		playerDao.save(player);

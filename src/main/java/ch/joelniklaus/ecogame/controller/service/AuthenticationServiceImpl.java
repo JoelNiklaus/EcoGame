@@ -13,6 +13,7 @@ import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
+import ch.joelniklaus.ecogame.model.Player;
 import ch.joelniklaus.ecogame.model.dao.system.AddressDao;
 import ch.joelniklaus.ecogame.model.dao.system.PictureDao;
 import ch.joelniklaus.ecogame.model.dao.system.UserDao;
@@ -29,6 +30,8 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	AddressDao addressDao;
 	@Autowired
 	PictureDao pictureDao;
+	@Autowired
+	PlayerService playerService;
 
 	private User setVariables(SignupForm signupForm, User user) {
 		Picture picture = null;
@@ -69,6 +72,9 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 		user.setAddress(address);
 
 		userDao.save(user);
+
+		playerService.initPlayer(user);
+
 		signupForm.setId(user.getId());
 		return signupForm;
 	}
@@ -149,5 +155,10 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	public User getLoggedInUser() {
 		return userDao
 				.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
+	
+	@Override
+	public Player getLoggedInPlayer() {
+		return getLoggedInUser().getPlayer();
 	}
 }

@@ -21,7 +21,7 @@
 			    Panel content
 			  </div>
 			  <div class="panel-footer">
-			    Hoster: ${game.hoster.firstName} ${game.hoster.lastName}, Maximum number of Players: ${game.numberOfPlayers}
+			    Hoster: ${game.hoster.name}, Maximum number of Players: ${game.maxNumberOfPlayers}
 			  </div>
 			</div>
 		</div>

@@ -10,71 +10,69 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import ch.joelniklaus.ecogame.model.system.User;
-
 @Entity
 public class Game {
-
+	
 	@Id
 	@GeneratedValue
 	private Long id;
-
+	
 	private String name;
-
+	
 	private int maxNumberOfPlayers;
-
+	
 	@OneToOne
-	private User hoster;
-
+	private Player hoster;
+	
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<User> players = new LinkedList<User>();
+	private List<Player> players = new LinkedList<Player>();
+	
+	public void addPlayer(Player Player) {
+		players.add(Player);
+	}
 
-	public void addPlayer(User user) {
-		players.add(user);
+	public void kickPlayer(Player Player) {
+		players.remove(Player);
 	}
 	
-	public void kickPlayer(User user) {
-		players.remove(user);
-	}
-
-	public List<User> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
-
-	public void setPlayers(List<User> players) {
+	
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public int getMaxNumberOfPlayers() {
 		return maxNumberOfPlayers;
 	}
-
+	
 	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 		this.maxNumberOfPlayers = maxNumberOfPlayers;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public User getHoster() {
+
+	public Player getHoster() {
 		return hoster;
 	}
-	
-	public void setHoster(User hoster) {
+
+	public void setHoster(Player hoster) {
 		this.hoster = hoster;
 	}
-	
+
 }
