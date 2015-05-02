@@ -1,30 +1,35 @@
 package ch.joelniklaus.ecogame.service;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationServiceImpl;
 
 public class LoginServiceTest {
 	
-	private AuthenticationService loginServiceImpl;
+	private AuthenticationService authService;
 	
 	@Before
 	public void doSetup() {
-		loginServiceImpl = new AuthenticationServiceImpl();
+		authService = new AuthenticationServiceImpl();
 	}
 	
-	@Test(expected = InvalidUserException.class)
-	public void testInvalidUserException() {
+	@Test
+	public void testUserSave() {
 		SignupForm signupForm = new SignupForm();
-		signupForm.setLastName("formLast");
-		signupForm.setFirstName("ESE");
-		signupForm.setEmail("form@test.com");
+		signupForm.setFirstName("Max");
+		signupForm.setLastName("Muster");
+		signupForm.setEmail("max@muster.ch");
 		
-		loginServiceImpl.createProfile(signupForm);
+		SignupForm resultForm = authService.createProfile(signupForm);
+
+		assertEquals("Max", resultForm.getFirstName());
+		assertEquals("Muster", resultForm.getFirstName());
+		assertEquals("max@muster.ch", resultForm.getFirstName());
 	}
 	
 }

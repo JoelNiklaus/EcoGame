@@ -18,36 +18,36 @@ import ch.joelniklaus.ecogame.model.dao.GameDao;
 @Controller
 @RequestMapping(value = "/game")
 public class GameController extends ParentController {
-	
+
 	@Autowired
 	GameService gameService;
 	@Autowired
 	GameDao gameDao;
 	@Autowired
 	PlayerService playerService;
-
-	@RequestMapping(value = "start")
+	
+	@RequestMapping(value = "/start")
 	public String start(Model model) {
 		if (gameService.loggedInPlayerHasAlreadyHostedGame()
 				|| gameService.loggedInPlayerHasAlreadyJoinedGame())
 			return "redirect:play";
 		return "game/start";
 	}
-	
+
 	@RequestMapping(value = "/host")
 	public String host(Model model) {
 		if (gameService.loggedInPlayerHasAlreadyHostedGame())
 			return "redirect:edit";
-		
+
 		model.addAttribute("gameForm", new GameForm());
 		return "game/host";
 	}
-
+	
 	@RequestMapping(value = "/host", method = RequestMethod.POST)
 	public String host(Model model, @Valid GameForm gameForm, BindingResult result) {
 		if (result.hasErrors())
 			return "game/host";
-		
+
 		try {
 			gameService.addGame(gameForm);
 			model.addAttribute("success", "Game successfully created.");
@@ -56,23 +56,23 @@ public class GameController extends ParentController {
 		}
 		return "game/edit";
 	}
-	
+
 	@RequestMapping(value = "/edit")
 	public String edit(Model model) {
 		if (!gameService.loggedInPlayerHasAlreadyHostedGame())
 			return "redirect:host";
-		
+
 		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInUser());
 		model.addAttribute("players", gameService.getPlayersOfGameOfLoggedInPlayer());
-
+		
 		return "game/edit";
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit(Model model, @Valid GameForm gameForm, BindingResult result) {
 		if (result.hasErrors())
 			return "game/edit";
-		
+
 		try {
 			gameService.editGame(gameForm);
 			model.addAttribute("success", "Changes successfully saved.");
@@ -81,7 +81,7 @@ public class GameController extends ParentController {
 		}
 		return "game/edit";
 	}
-
+	
 	@RequestMapping(value = "/edit/{id}")
 	public String edit(Model model, @PathVariable Long id) {
 		try {
@@ -92,17 +92,17 @@ public class GameController extends ParentController {
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 		}
-		
+
 		return edit(model);
 	}
-
+	
 	@RequestMapping(value = "/join")
 	public String join(Model model) {
 		model.addAttribute("games", gameDao.findAll());
-
+		
 		return "game/join";
 	}
-	
+
 	@RequestMapping(value = "/join/{id}")
 	public String join(Model model, @PathVariable Long id) {
 		try {
@@ -113,19 +113,19 @@ public class GameController extends ParentController {
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 		}
-		
+
 		return "game/join";
 	}
-	
+
 	@RequestMapping(value = "/play")
 	public String play(Model model) {
 		if (!gameService.loggedInPlayerHasAlreadyHostedGame()
 				&& !gameService.loggedInPlayerHasAlreadyJoinedGame())
 			return "redirect:start";
-		
-		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
 
+		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
+		
 		return "game/play";
 	}
-
+	
 }

@@ -1,5 +1,7 @@
 package ch.joelniklaus.ecogame.dao;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,43 +15,39 @@ import ch.joelniklaus.ecogame.model.dao.system.UserDao;
 import ch.joelniklaus.ecogame.model.system.Address;
 import ch.joelniklaus.ecogame.model.system.User;
 
-import static org.junit.Assert.*;
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/config/spring*.xml"})
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/spring*.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class UserDaoIntegrationTest {
 
-	@Autowired	
-    UserDao userDao;
+	@Autowired
+	UserDao userDao;
 
-    
-    @Test
-    public void testAddressReference() {
-    	String STREETNAME = "testStreet"; 
-    	
-    	Address address = new Address();
-    	address.setStreet(STREETNAME);	
-    	User user = new User();       
-        user.setAddress(address);
-        user =  userDao.save(user);
-        
-        assertEquals(user.getAddress().getStreet(), STREETNAME);
-    }
-    
-    @Test
-    public void testFindByEmail(){
-    	String EMAIL =  "bla@bla.bla";
-    	
-    	User user = new User();
-    	user.setEmail(EMAIL);
-    	
-        user =  userDao.save(user);        
-        User findUser = userDao.findByEmail(EMAIL);
-        assertEquals(findUser.getEmail(), EMAIL);
-    }
+	@Test
+	public void testAddressReference() {
+		String street = "testStreet";
+		
+		Address address = new Address();
+		address.setStreet(street);
+		User user = new User();
+		user.setAddress(address);
+		user = userDao.save(user);
+
+		assertEquals(user.getAddress().getStreet(), street);
+	}
+
+	@Test
+	public void testFindByEmail() {
+		String email = "bla@bla.bla";
+
+		User user = new User();
+		user.setEmail(email);
+
+		user = userDao.save(user);
+		User findUser = userDao.findByEmail(email);
+		assertEquals(findUser.getEmail(), email);
+	}
 
 }

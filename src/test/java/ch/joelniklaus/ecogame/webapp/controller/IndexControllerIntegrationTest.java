@@ -2,8 +2,10 @@ package ch.joelniklaus.ecogame.webapp.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +37,28 @@ public class IndexControllerIntegrationTest {
 	public void testSecurityError() throws Exception {
 		this.mockMvc.perform(get("/security-error")).andExpect(status().isFound())
 				.andExpect(redirectedUrl("/")).andExpect(flash().attributeExists("page_error"));
+	}
+
+	@Test
+	public void testPath() throws Exception {
+		this.mockMvc.perform(get("/ecogame/")).andExpect(status().isOk())
+		.andExpect(forwardedUrl("/ecogame/game/start"));
+	}
+
+	@Test
+	public void testNotFound() throws Exception {
+		this.mockMvc.perform(get("/ecogame/notFound")).andExpect(status().isOk())
+		.andExpect(view().name("/ecogame/notFound"));
+	}
+	
+	@Test
+	public void testLogin() throws Exception {
+		this.mockMvc
+		.perform(
+				get("/ecogame/login").param("j_username", "test%40test.ch").param(
+						"j_password", "test")).andExpect(status().isOk())
+						.andExpect(forwardedUrl("/ecogame/game/start"))
+				.andExpect(view().name("game/start"));
 	}
 	
 }

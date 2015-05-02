@@ -1,27 +1,23 @@
 package ch.joelniklaus.ecogame.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import ch.joelniklaus.ecogame.controller.service.GameService;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class IndexController extends ParentController {
-
-	@Autowired
-	GameService gameService;
 	
-	@RequestMapping(value = { "", "/" })
-	public String redirect() {
-		return "redirect:index";
-	}
-
-	@RequestMapping(value = "index")
-	public String index(Model model) {
+	@RequestMapping(value = { "", "/", "index" })
+	public String index() {
 		return "redirect:game/start";
 	}
+
+	// @RequestMapping(value = "index")
+	// public String index(Model model) {
+	// return "redirect:game/start";
+	// }
 
 	/**
 	 * Shows a 404 error page.
@@ -32,17 +28,17 @@ public class IndexController extends ParentController {
 	public String notFound(Model model) {
 		return "notFound";
 	}
-	
-	// /**
-	// *
-	// * @param redirectAttributes
-	// * @return
-	// */
-	// @RequestMapping(value = "/security-error", method = RequestMethod.GET)
-	// public String securityError(RedirectAttributes redirectAttributes) {
-	// redirectAttributes.addFlashAttribute("page_error",
-	// "You do have have permission to do that!");
-	//
-	// return "redirect:/";
-	// }
+
+	/**
+	 *
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "/security-error", method = RequestMethod.GET)
+	public String securityError(RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("page_error",
+				"You do have have permission to do that!");
+
+		return "redirect:/";
+	}
 }
