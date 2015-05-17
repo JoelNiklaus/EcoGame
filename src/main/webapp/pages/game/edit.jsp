@@ -17,7 +17,7 @@
 			<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 				<label class="control-label col-sm-3" for="name">Name</label>
 				<div class="col-sm-9">
-					<form:input path="name" class="form-control" id="name" type="text" maxlength="45" placeholder="Name" />
+					<form:input path="name" class="form-control" id="name" type="text" maxlength="45" placeholder="Name" autofocus="true"/>
 					<form:errors path="name" class="help-block" element="span" />
 					<c:out value="${nameExists}"></c:out>
 				</div>
@@ -35,18 +35,19 @@
 			</div>
 		</spring:bind>
 	
-		<div class="col-sm-3">
+		<div class="col-sm-12">
 			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Save Changes</button>
 			<button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+			<a onclick="location.href='game/edit/delete/${game.id}'" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
 		</div>
 	</form:form>
 </div>
 <br>
 <div class="row">
 	<ul class="list-group">
-		<c:forEach items="${players}" var="player">
+		<c:forEach items="${game.players}" var="player">
 			<li class="list-group-item"><a href="otherProfileView/${player.id}">${player.name}</a>
-			<button onclick="location.href='game/edit/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</button></li>
+			<a onclick="location.href='game/edit/kickPlayer/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</a></li>
 		</c:forEach>
 	</ul>
 </div>

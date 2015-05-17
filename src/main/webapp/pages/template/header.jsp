@@ -63,7 +63,7 @@
 								<div class="input-group">
 									<div class="input-group-addon">@</div>
 									<input type="email" class="form-control" id="j_username"
-										name="j_username" placeholder="E-Mail">
+										name="j_username" placeholder="E-Mail" autofocus="true">
 								</div>
 							</div>
 							<div class="form-group">

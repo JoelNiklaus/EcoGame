@@ -17,7 +17,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-2" for="email">E-Mail</label>
 			<div class="col-sm-7">
-				<form:input path="email" class="form-control" id="email" type="email" maxlength="45" placeholder="E-Mail" />
+				<form:input path="email" class="form-control" id="email" type="email" maxlength="45" placeholder="E-Mail" autofocus="true"/>
 				<form:errors path="email" class="help-block" element="span" />
 			</div>
 			<div class="col-sm-3">

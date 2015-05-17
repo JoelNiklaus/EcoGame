@@ -10,6 +10,13 @@
 
 <c:import url="../template/alerts.jsp" />
 
+<c:if test="${empty games}">
+	<div class="jumbotron">
+  <h3>No games by other players hosted yet!</h3>
+  <p><a class="btn btn-primary btn-lg" href="game/host" role="button">Host</a> your own game.</p>
+</div>
+</c:if>
+
 <div class="row">
 	<c:forEach items="${games}" var="game">
 		<div class="col-sm-4 col-md-3">

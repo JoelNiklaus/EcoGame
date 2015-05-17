@@ -16,7 +16,7 @@
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
 			<label class="control-label col-sm-3" for="name">Name</label>
 			<div class="col-sm-9">
-				<form:input path="name" class="form-control" id="name" type="text" maxlength="45" placeholder="Name" />
+				<form:input path="name" class="form-control" id="name" type="text" maxlength="45" placeholder="Name" autofocus="true"/>
 				<form:errors path="name" class="help-block" element="span" />
 				<c:out value="${nameExists}"></c:out>
 			</div>

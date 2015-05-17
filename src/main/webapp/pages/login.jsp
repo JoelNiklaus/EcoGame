@@ -21,7 +21,7 @@
 						<label class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
 							<input class="form-control" type="email" placeholder="E-Mail" id="j_username"
-								name="j_username">
+								name="j_username" autofocus="true">
 						</div>
 					</div>
 					<div class="form-group">

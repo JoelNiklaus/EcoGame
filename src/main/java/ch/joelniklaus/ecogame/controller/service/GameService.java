@@ -30,4 +30,8 @@ public interface GameService {
 
 	public Game getGameOfLoggedInPlayer();
 
+	public List<Game> getJoinableGames();
+	
+	Game deleteGame(Long id);
+
 }
