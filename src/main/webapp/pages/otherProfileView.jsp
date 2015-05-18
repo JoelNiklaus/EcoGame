@@ -10,7 +10,7 @@
 <div class="row">
 	<div class="col-sm-4">
 		<c:if test="${not empty otherUser.profileImage}">
-			<img width="300px" class="gallery" src="/ecogame/img/ad/${otherUser.profileImage.fileName}" />
+			<img width="300px" class="gallery" src="/ecogame/img/pictures/${otherUser.profileImage.fileName}" />
 		</c:if>
 		<c:if test="${empty otherUser.profileImage}">
 			<img width="300px" class="gallery" src="/ecogame/img/Profile_Placeholder.jpg" />

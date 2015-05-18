@@ -10,10 +10,10 @@
 
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link href="/ecogame/css/dropzone.css" type="text/css" rel="stylesheet" /> 
-<h1>My Profile</h1>
+<h1>My Profile <a href="otherProfileView/${player.id}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-user"></span> View Profile</a></h1>
+
   
 <c:import url="template/alerts.jsp" />
-
  	
 <form:form class="form-horizontal" role="form" method="post" modelAttribute="profileForm" action="profile"
 	id="profileForm" autocomplete="on">
@@ -143,7 +143,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 					// get file Size
 					var xhr = new XMLHttpRequest();
 					var size = 0;
-					xhr.open('HEAD', '/ecogame/img/ad/'+data, false);
+					xhr.open('HEAD', '/ecogame/img/pictures/'+data, false);
 					xhr.onreadystatechange = function(){
 					  if ( xhr.readyState == 4 ) {
 					    if ( xhr.status == 200 ) {
@@ -159,7 +159,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 					// Call the default addedfile event handler
 					dropZone.emit("addedfile", mockFile);
 					// And optionally show the thumbnail of the file:
-					dropZone.emit("thumbnail", mockFile, '/ecogame/img/ad/'+data);
+					dropZone.emit("thumbnail", mockFile, '/ecogame/img/pictures/'+data);
 					dropZone.files.push( mockFile );
 					dropZone.emit("success", mockFile, image);
 				});
