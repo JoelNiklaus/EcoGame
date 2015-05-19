@@ -10,7 +10,7 @@
 
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link href="/ecogame/css/dropzone.css" type="text/css" rel="stylesheet" /> 
-<h1>My Profile <a href="otherProfileView/${player.id}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-user"></span> View Profile</a></h1>
+<h1>My Profile <a href="otherProfileView/${loggedInUser.id}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-user"></span> View Profile</a></h1>
 
   
 <c:import url="template/alerts.jsp" />
@@ -27,21 +27,12 @@
 			</div>
 		</div>
 	</spring:bind>
-	<spring:bind path="firstName">
+	<spring:bind path="username">
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="firstName">First Name</label>
+			<label class="control-label col-sm-3" for="username">User Name</label>
 			<div class="col-sm-9">
-				<form:input path="firstName" class="form-control" id="firstName" type="text" maxlength="45" placeholder="First Name"/>
-				<form:errors path="firstName" class="help-block" element="span" />
-			</div>
-		</div>
-	</spring:bind>
-	<spring:bind path="lastName">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="lastName">Last Name</label>
-			<div class="col-sm-9">
-				<form:input path="lastName" class="form-control" id="lastName" type="text" maxlength="45" placeholder="Last Name"/>
-				<form:errors path="lastName" class="help-block" element="span" />
+				<form:input path="username" class="form-control" id="username" type="text" maxlength="45" placeholder="User Name" />
+				<form:errors path="username" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
@@ -63,48 +54,12 @@
 			</div>
 		</div>
 	</spring:bind>
-	<spring:bind path="street">
+	<spring:bind path="status">
 		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="street">Street</label>
+			<label class="control-label col-sm-3" for="description">Status</label>
 			<div class="col-sm-9">
-				<form:input path="street" class="form-control" id="street" type="text" maxlength="45" placeholder="Street"/>
-				<form:errors path="street" class="help-block" element="span" />
-			</div>
-		</div>
-	</spring:bind>
-	<spring:bind path="houseNr">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="houseNr">House Number</label>
-			<div class="col-sm-9">
-				<form:input path="houseNr" class="form-control" id="houseNr" type="number" maxlength="45" placeholder="House Number"/>
-				<form:errors path="houseNr" class="help-block" element="span" />
-			</div>
-		</div>
-	</spring:bind>	
-	<spring:bind path="zip">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="zip">ZIP-Code</label>
-			<div class="col-sm-9">
-				<form:input path="zip" class="form-control" id="zip" type="number" maxlength="45" placeholder="ZIP-Code"/>
-				<form:errors path="zip" class="help-block" element="span" />
-			</div>
-		</div>
-	</spring:bind>
-	<spring:bind path="city">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="city">City</label>
-			<div class="col-sm-9">
-				<form:input path="city" class="form-control" id="city" type="text" maxlength="45" placeholder="City"/>
-				<form:errors path="city" class="help-block" element="span" />
-			</div>
-		</div>
-	</spring:bind>
-	<spring:bind path="description">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
-			<label class="control-label col-sm-3" for="description">Description</label>
-			<div class="col-sm-9">
-				<form:textarea path="description" class="form-control" id="description" type="text" maxlength="1000" placeholder="Description"/>
-				<form:errors path="description" class="help-block" element="span" />
+				<form:textarea path="status" class="form-control" id="status" type="text" maxlength="1000" placeholder="Status"/>
+				<form:errors path="status" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
@@ -124,6 +79,7 @@
 			<br>
 				<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
 				<button class="btn btn-warning" type="reset"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+				<a onclick="location.href='profile/delete/${loggedInUser.id}'" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
 			</div>
 		</div>
  </form:form>

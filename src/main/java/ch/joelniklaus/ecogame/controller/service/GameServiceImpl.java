@@ -14,7 +14,6 @@ import ch.joelniklaus.ecogame.model.Game;
 import ch.joelniklaus.ecogame.model.Player;
 import ch.joelniklaus.ecogame.model.dao.GameDao;
 import ch.joelniklaus.ecogame.model.dao.PlayerDao;
-import ch.joelniklaus.ecogame.model.dao.system.UserDao;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -22,15 +21,14 @@ public class GameServiceImpl implements GameService {
 	@Autowired
 	GameDao gameDao;
 	@Autowired
-	UserDao userDao;
-	@Autowired
 	PlayerDao playerDao;
 	@Autowired
 	AuthenticationService authService;
 
 	@Override
 	public GameForm addGame(GameForm gameForm) {
-		Game game = setVariables(gameForm, new Game());
+		Game game = new Game(gameForm);
+		game.setHoster(authService.getLoggedInPlayer());
 		gameDao.save(game);
 		gameForm.setId(game.getId());
 		return gameForm;
@@ -38,8 +36,10 @@ public class GameServiceImpl implements GameService {
 	
 	@Override
 	public GameForm editGame(GameForm gameForm) {
-		Game game = gameDao.findOne(gameForm.getId());
-		game = setVariables(gameForm, game);
+		Game game = gameDao.findByHoster(authService.getLoggedInPlayer());
+		game.setName(gameForm.getName());
+		game.setMaxNumberOfPlayers(gameForm.getMaxNumberOfPlayers());
+		game.setHoster(authService.getLoggedInPlayer());
 		gameDao.save(game);
 		return gameForm;
 	}
@@ -134,10 +134,10 @@ public class GameServiceImpl implements GameService {
 		return null;
 	}
 	
-	private Game setVariables(GameForm gameForm, Game game) {
-		game.setName(gameForm.getName());
-		game.setMaxNumberOfPlayers(gameForm.getMaxNumberOfPlayers());
-		game.setHoster(authService.getLoggedInPlayer());
-		return game;
+	@Override
+	public boolean nameAlreadyExists(String name) {
+		if (gameDao.findByName(name) != null)
+			return true;
+		return false;
 	}
 }

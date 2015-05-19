@@ -1,4 +1,4 @@
-package ch.joelniklaus.ecogame.model.system;
+package ch.joelniklaus.ecogame.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

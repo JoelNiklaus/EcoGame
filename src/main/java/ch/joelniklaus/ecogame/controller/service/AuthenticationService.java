@@ -5,10 +5,9 @@ import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
 import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
 import ch.joelniklaus.ecogame.model.Player;
-import ch.joelniklaus.ecogame.model.system.User;
 
 public interface AuthenticationService {
-
+	
 	/**
 	 * Saves Data from SignupForm to DB.
 	 *
@@ -19,7 +18,7 @@ public interface AuthenticationService {
 	 *             if first name is "ESE"
 	 */
 	public SignupForm createProfile(SignupForm signupForm) throws InvalidUserException;
-
+	
 	/**
 	 * Updates a users profile based on the signupForm submitted.
 	 *
@@ -28,7 +27,7 @@ public interface AuthenticationService {
 	 * @throws InvalidUserException
 	 */
 	public SignupForm updateProfile(SignupForm signupForm) throws InvalidUserException;
-
+	
 	/**
 	 * Fetches a user from the DB based on his login credentials.
 	 *
@@ -36,8 +35,8 @@ public interface AuthenticationService {
 	 * @return
 	 * @throws InvalidUserException
 	 */
-	public User getUser(LoginForm loginForm) throws InvalidUserException;
-
+	public Player getPlayer(LoginForm loginForm) throws InvalidUserException;
+	
 	/**
 	 * Fetches user from DB by email.
 	 *
@@ -48,8 +47,8 @@ public interface AuthenticationService {
 	 * @throws InvalidUserException
 	 *             if no user with this email exists.
 	 */
-	public User getUser(ForgotPasswordForm forgotPasswordForm) throws InvalidUserException;
-
+	public Player getPlayer(ForgotPasswordForm forgotPasswordForm) throws InvalidUserException;
+	
 	/**
 	 * Checks if email already exists in DB.
 	 *
@@ -58,22 +57,23 @@ public interface AuthenticationService {
 	 * @return true if address already exists in DB, false else
 	 */
 	public boolean emailAlreadyExists(String email);
-
+	
 	/**
 	 * Return active user
 	 *
 	 * @return User
 	 */
-	public User getLoggedInUser();
-
+	public Player getLoggedInPlayer();
+	
 	/**
 	 * Fetches a User by id.
 	 *
 	 * @param id
 	 * @return
 	 */
-	public User getUser(Long id) throws InvalidUserException;
-	
-	public Player getLoggedInPlayer();
+	public Player getPlayer(Long id) throws InvalidUserException;
 
+	public boolean usernameAlreadyExists(String username);
+	
+	public void deletePlayer(Long id);
 }

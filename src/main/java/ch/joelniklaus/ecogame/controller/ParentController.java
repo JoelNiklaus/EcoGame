@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
-import ch.joelniklaus.ecogame.model.system.User;
+import ch.joelniklaus.ecogame.model.Player;
 
 /**
  * Has to be extended by every Controller.
@@ -20,7 +20,7 @@ public class ParentController {
 	 * Adds the loggedInUser as a model attribute before the view is rendered.
 	 */
 	@ModelAttribute("loggedInUser")
-	public User getVersion() {
-		return authService.getLoggedInUser();
+	public Player getLoggedInPlayer() {
+		return authService.getLoggedInPlayer();
 	}
 }

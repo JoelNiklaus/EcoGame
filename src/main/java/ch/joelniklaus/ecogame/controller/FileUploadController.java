@@ -14,32 +14,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import ch.joelniklaus.ecogame.model.dao.system.PictureDao;
-import ch.joelniklaus.ecogame.model.system.Picture;
+import ch.joelniklaus.ecogame.model.Picture;
+import ch.joelniklaus.ecogame.model.dao.PictureDao;
 
 @Controller
-@EnableWebMvc
 public class FileUploadController {
-	
+
 	@Autowired
 	private ServletContext servletContext;
 	@Autowired
 	private PictureDao pictureDao;
-	
+
 	/**
-	 * 
+	 *
 	 * @return dummy page
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public @ResponseBody String provideUploadInfo() {
 		return "You can upload a file by posting to this same URL.";
 	}
-	
+
 	/**
 	 * Upload an Image to /img/ad/
-	 * 
+	 *
 	 * @param name
 	 *            of the file
 	 * @param file
@@ -49,7 +47,7 @@ public class FileUploadController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
 			@RequestParam("file") MultipartFile file) {
-		
+
 		String fileName = new Date().getTime() + "_" + file.getOriginalFilename();
 		String path = servletContext.getRealPath("/") + "/img/pictures/";
 		String fullPath = path + fileName;
@@ -60,15 +58,15 @@ public class FileUploadController {
 						new File(fullPath)));
 				stream.write(bytes);
 				stream.close();
-				
+
 				// Save the picture
 				Picture picture = new Picture();
 				picture.setFilePath(path);
 				picture.setFileName(fileName);
-				
+
 				pictureDao.save(picture);
 				picture = pictureDao.findByFileName(picture.getFileName());
-				
+
 				return picture.getId().toString();
 			} catch (Exception e) {
 				return "";
@@ -76,10 +74,10 @@ public class FileUploadController {
 		else
 			return "";
 	}
-	
+
 	/**
 	 * Removes the picture with the given id
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -92,10 +90,10 @@ public class FileUploadController {
 		pictureDao.delete(new Long(id));
 		return "";
 	}
-	
+
 	/**
 	 * Returns the filename from a picture by id
-	 * 
+	 *
 	 * @param id
 	 *            of the picture
 	 * @return filename
@@ -108,5 +106,5 @@ public class FileUploadController {
 		else
 			return "";
 	}
-	
+
 }

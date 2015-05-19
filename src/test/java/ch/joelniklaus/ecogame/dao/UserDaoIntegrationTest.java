@@ -11,9 +11,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.joelniklaus.ecogame.model.dao.system.UserDao;
-import ch.joelniklaus.ecogame.model.system.Address;
-import ch.joelniklaus.ecogame.model.system.User;
+import ch.joelniklaus.ecogame.model.Player;
+import ch.joelniklaus.ecogame.model.dao.PlayerDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -21,33 +20,20 @@ import ch.joelniklaus.ecogame.model.system.User;
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class UserDaoIntegrationTest {
-
+	
 	@Autowired
-	UserDao userDao;
-
-	@Test
-	public void testAddressReference() {
-		String street = "testStreet";
-		
-		Address address = new Address();
-		address.setStreet(street);
-		User user = new User();
-		user.setAddress(address);
-		user = userDao.save(user);
-
-		assertEquals(user.getAddress().getStreet(), street);
-	}
-
+	PlayerDao userDao;
+	
 	@Test
 	public void testFindByEmail() {
 		String email = "bla@bla.bla";
-
-		User user = new User();
+		
+		Player user = new Player();
 		user.setEmail(email);
-
+		
 		user = userDao.save(user);
-		User findUser = userDao.findByEmail(email);
+		Player findUser = userDao.findByEmail(email);
 		assertEquals(findUser.getEmail(), email);
 	}
-
+	
 }

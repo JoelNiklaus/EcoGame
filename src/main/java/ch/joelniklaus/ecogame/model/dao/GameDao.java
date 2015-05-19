@@ -7,4 +7,6 @@ import ch.joelniklaus.ecogame.model.Player;
 
 public interface GameDao extends CrudRepository<Game, Long> {
 	public Game findByHoster(Player player);
+	
+	public Game findByName(String name);
 }

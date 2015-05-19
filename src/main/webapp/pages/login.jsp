@@ -7,6 +7,7 @@
 
 <c:import url="template/header.jsp" />
 
+<c:import url="template/alerts.jsp" />
 
 <div class="col-md-12">
 	<div class="modal-dialog" style="margin-bottom: 0">
@@ -15,7 +16,7 @@
 				<h1>Sign In</h1>
 			</div>
 			<div class="panel-body">
-				<form class="form-horizontal" role="form" name="f" action="<c:url value="/j_spring_security_check"/>"
+				<form class="form-horizontal" role="form" name="login" action="<c:url value="/j_spring_security_check"/>"
 					method="post">
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Email</label>

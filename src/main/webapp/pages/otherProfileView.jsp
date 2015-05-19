@@ -6,7 +6,7 @@
 <c:import url="template/header.jsp" />
 
 <div class="jumbotron">
-<h1>${otherUser.firstName} ${otherUser.lastName}</h1>
+<h1>${otherUser.username}</h1>
 <div class="row">
 	<div class="col-sm-4">
 		<c:if test="${not empty otherUser.profileImage}">
@@ -18,12 +18,11 @@
 	</div>
 	<div class="col-sm-4">
 		<p>
-			<a href="mailto:${otherUser.email }">${otherUser.email }</a><br> ${otherUser.address.street }
-			${otherUser.address.houseNr }<br> ${otherUser.address.zip } ${otherUser.address.city }<br>
+			<a href="mailto:${otherUser.email }">${otherUser.email }</a><br>
 		</p>
 	</div>
 	<div class="col-sm-4">
-		<p>${otherUser.description }</p>
+		<p>${otherUser.status }</p>
 	</div>
 </div>
 </div>

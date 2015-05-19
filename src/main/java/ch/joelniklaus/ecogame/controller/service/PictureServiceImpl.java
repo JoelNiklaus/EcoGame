@@ -5,8 +5,8 @@ import java.io.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.joelniklaus.ecogame.model.dao.system.PictureDao;
-import ch.joelniklaus.ecogame.model.system.Picture;
+import ch.joelniklaus.ecogame.model.Picture;
+import ch.joelniklaus.ecogame.model.dao.PictureDao;
 
 @Service
 public class PictureServiceImpl implements PictureService{

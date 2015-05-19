@@ -57,7 +57,7 @@
 						</c:if>
 					</ul>
 					<c:if test="${empty loggedInUser}">
-						<form class="navbar-form navbar-right" name="f"
+						<form class="navbar-form navbar-right" name="login"
 							action="<c:url value="/j_spring_security_check"/>" method="post">
 							<div class="form-group">
 								<div class="input-group">
@@ -83,8 +83,7 @@
 						<form class="navbar-form navbar-right" action="logout" method="get">
 							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
 						</form>
-						<p class="navbar-text navbar-right"><a class="navbar-link" href="profile"><span class="glyphicon glyphicon-user"></span></a> Signed in as <a class="navbar-link" href="profile">${loggedInUser.firstName }
-									${loggedInUser.lastName }</a></p>
+						<p class="navbar-text navbar-right"><a class="navbar-link" href="profile"><span class="glyphicon glyphicon-user"></span></a> Signed in as <a class="navbar-link" href="profile">${loggedInUser.username}</a></p>
 					</c:if>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->

@@ -32,6 +32,8 @@ public interface GameService {
 
 	public List<Game> getJoinableGames();
 	
-	Game deleteGame(Long id);
+	public Game deleteGame(Long id);
+
+	public boolean nameAlreadyExists(String name);
 
 }

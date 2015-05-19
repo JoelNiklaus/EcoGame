@@ -10,69 +10,80 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import ch.joelniklaus.ecogame.controller.pojos.GameForm;
+
 @Entity
 public class Game {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String name;
-	
+
 	private int maxNumberOfPlayers;
-	
+
 	@OneToOne
 	private Player hoster;
-	
+
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Player> players = new LinkedList<Player>();
-	
+
+	public Game() {
+
+	}
+
+	public Game(GameForm gameForm) {
+		this.name = gameForm.getName();
+		this.maxNumberOfPlayers = gameForm.getMaxNumberOfPlayers();
+	}
+
 	public void addPlayer(Player Player) {
 		players.add(Player);
 	}
-
+	
 	public void kickPlayer(Player Player) {
 		players.remove(Player);
 	}
-	
+
 	public List<Player> getPlayers() {
 		return players;
 	}
-	
+
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public int getMaxNumberOfPlayers() {
 		return maxNumberOfPlayers;
 	}
-	
+
 	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 		this.maxNumberOfPlayers = maxNumberOfPlayers;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public Player getHoster() {
 		return hoster;
 	}
-
+	
 	public void setHoster(Player hoster) {
 		this.hoster = hoster;
 	}
-
+	
 }

@@ -36,7 +36,7 @@
 		</spring:bind>
 	
 		<div class="col-sm-12">
-			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Save Changes</button>
+			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Save</button>
 			<button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
 			<a onclick="location.href='game/edit/delete/${game.id}'" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
 		</div>
@@ -46,7 +46,7 @@
 <div class="row">
 	<ul class="list-group">
 		<c:forEach items="${game.players}" var="player">
-			<li class="list-group-item"><a href="otherProfileView/${player.id}">${player.name}</a>
+			<li class="list-group-item"><a href="otherProfileView/${player.id}">${player.username}</a>
 			<a onclick="location.href='game/edit/kickPlayer/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</a></li>
 		</c:forEach>
 	</ul>
