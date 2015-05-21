@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
+import ch.joelniklaus.ecogame.controller.pojos.RegisterForm;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationServiceImpl;
 
@@ -20,11 +20,11 @@ public class LoginServiceTest {
 	
 	@Test
 	public void testUserSave() {
-		SignupForm signupForm = new SignupForm();
+		RegisterForm signupForm = new RegisterForm();
 		signupForm.setUsername("Max");
 		signupForm.setEmail("max@muster.ch");
 		
-		SignupForm resultForm = authService.createProfile(signupForm);
+		RegisterForm resultForm = authService.createProfile(signupForm);
 
 		assertEquals("Max", resultForm.getUsername());
 		assertEquals("max@muster.ch", resultForm.getEmail());

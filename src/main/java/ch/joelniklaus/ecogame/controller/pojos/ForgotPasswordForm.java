@@ -1,7 +1,5 @@
 package ch.joelniklaus.ecogame.controller.pojos;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,9 +7,8 @@ public class ForgotPasswordForm {
 	
 	private Long id;
 	
-	@NotNull
-	@Email(message = "Please enter a valid E-Mail address")
-	@NotEmpty(message = "Please enter your E-Mail address")
+	@NotEmpty
+	@Email
 	private String email;
 	
 	public String getEmail() {

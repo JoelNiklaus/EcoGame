@@ -3,9 +3,10 @@
  */
 
 Dropzone.autoDiscover = false;
-var dropZone = new Dropzone("#file-dropzone", { 			
+var dropZone = new Dropzone("#file-dropzone", { 
+	maxFiles: 1,
 	init: function() {
-		imageIds = document.getElementById("files").value;
+		imageIds = document.getElementById("file").value;
 		var replacer = new RegExp(" ", "g");
 		var images = imageIds.replace(replacer,"").split(',');
 		images.forEach(function(image){
@@ -16,7 +17,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 					// get file Size
 					var xhr = new XMLHttpRequest();
 					var size = 0;
-					xhr.open('HEAD', '/ecogame/img/ad/'+data, false);
+					xhr.open('HEAD', '/ecogame/img/pictures/'+data, false);
 					xhr.onreadystatechange = function(){
 					  if ( xhr.readyState == 4 ) {
 					    if ( xhr.status == 200 ) {
@@ -32,7 +33,7 @@ var dropZone = new Dropzone("#file-dropzone", {
 					// Call the default addedfile event handler
 					dropZone.emit("addedfile", mockFile);
 					// And optionally show the thumbnail of the file:
-					dropZone.emit("thumbnail", mockFile, '/ecogame/img/ad/'+data);
+					dropZone.emit("thumbnail", mockFile, '/ecogame/img/pictures/'+data);
 					dropZone.files.push( mockFile );
 					dropZone.emit("success", mockFile, image);
 				});
@@ -54,27 +55,13 @@ var dropZone = new Dropzone("#file-dropzone", {
 });
 	
 		
-function refreshIds(files){
-	var imageIds = "";
-			
-	files.forEach(function(file){
-		if(imageIds==""){
-			imageIds = file.serverId;
-		} else {
-			imageIds += ", " + file.serverId;
-		}
-	});
-			
-	document.getElementById("files").value = imageIds;
-}
-		
 dropZone.on("success", function(file, response) {
 	file.serverId = response; // If you just return the ID when storing the file
-	refreshIds(dropZone.getAcceptedFiles());
+	document.getElementById("file").value = file.serverId;
 });
 		
 dropZone.on("removedfile", function(file) {
 	if (!file.serverId) { return; } // The file hasn't been uploaded
 	$.post("/ecogame/removePicture?id=" + file.serverId); // Send the file id along
-	refreshIds(dropZone.getAcceptedFiles());
+	document.getElementById("file").value = "";
 });

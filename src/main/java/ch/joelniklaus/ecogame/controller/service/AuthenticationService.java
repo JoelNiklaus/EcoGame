@@ -3,7 +3,7 @@ package ch.joelniklaus.ecogame.controller.service;
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
-import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
+import ch.joelniklaus.ecogame.controller.pojos.RegisterForm;
 import ch.joelniklaus.ecogame.model.Player;
 
 public interface AuthenticationService {
@@ -17,7 +17,7 @@ public interface AuthenticationService {
 	 * @throws InvalidUserException
 	 *             if first name is "ESE"
 	 */
-	public SignupForm createProfile(SignupForm signupForm) throws InvalidUserException;
+	public RegisterForm createProfile(RegisterForm signupForm) throws InvalidUserException;
 	
 	/**
 	 * Updates a users profile based on the signupForm submitted.
@@ -26,7 +26,7 @@ public interface AuthenticationService {
 	 * @return
 	 * @throws InvalidUserException
 	 */
-	public SignupForm updateProfile(SignupForm signupForm) throws InvalidUserException;
+	public RegisterForm updateProfile(RegisterForm signupForm) throws InvalidUserException;
 	
 	/**
 	 * Fetches a user from the DB based on his login credentials.

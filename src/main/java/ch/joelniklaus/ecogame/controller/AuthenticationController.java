@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
-import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
+import ch.joelniklaus.ecogame.controller.pojos.RegisterForm;
 import ch.joelniklaus.ecogame.controller.service.AuthenticationService;
 import ch.joelniklaus.ecogame.controller.service.MailService;
 import ch.joelniklaus.ecogame.model.Player;
@@ -28,18 +28,18 @@ import ch.joelniklaus.ecogame.model.dao.PlayerDao;
 
 @Controller
 public class AuthenticationController extends ParentController {
-	
+
 	@Autowired
 	AuthenticationService authService;
 	@Autowired
 	MailService mailService;
 	@Autowired
 	PlayerDao playerDao;
-
+	
 	@Autowired
 	@Qualifier("authMgr")
 	private AuthenticationManager authMgr;
-	
+
 	/**
 	 * Creates a model for registering a new user.
 	 *
@@ -47,14 +47,14 @@ public class AuthenticationController extends ParentController {
 	 */
 	@RequestMapping(value = "/register")
 	public String register(Model model) {
-		model.addAttribute("signupForm", new SignupForm());
+		model.addAttribute("registerForm", new RegisterForm());
 		return "register";
 	}
-	
+
 	/**
 	 * Submits registration and returns login model
 	 *
-	 * @param signupForm
+	 * @param registerForm
 	 *            completed registration form
 	 * @param result
 	 * @param redirectAttributes
@@ -62,50 +62,50 @@ public class AuthenticationController extends ParentController {
 	 * @return login model, registration model if signup form invalid
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(Model model, @Valid SignupForm signupForm, BindingResult result) {
+	public String register(Model model, @Valid RegisterForm registerForm, BindingResult result) {
 		if (result.hasErrors()) {
-			model.addAttribute("signupForm", signupForm);
+			model.addAttribute("registerForm", registerForm);
 			return "register";
 		}
-		
-		if (authService.emailAlreadyExists(signupForm.getEmail())) {
+
+		if (authService.emailAlreadyExists(registerForm.getEmail())) {
 			result.rejectValue("email", "error.email", "This email already exists.");
 			return "register";
 		}
-
-		if (authService.usernameAlreadyExists(signupForm.getUsername())) {
+		
+		if (authService.usernameAlreadyExists(registerForm.getUsername())) {
 			result.rejectValue("username", "error.username", "This username already exists.");
 			return "register";
 		}
-
+		
 		try {
-			authService.createProfile(signupForm);
+			authService.createProfile(registerForm);
 		} catch (InvalidUserException e) {
 			model.addAttribute("page_error", e.getMessage());
 		}
-
-		model.addAttribute("loggedInUser", authService.getLoggedInPlayer());
-
-		// perform login authentication
 		
-		try {
-			Player player = playerDao.findByEmail(signupForm.getEmail());
-			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-					player.getUsername(), signupForm.getPassword(), player.getAuthorities());
-			authMgr.authenticate(auth);
+		model.addAttribute("loggedInUser", authService.getLoggedInPlayer());
+		
+		// perform login authentication
 
+		try {
+			Player player = playerDao.findByEmail(registerForm.getEmail());
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+					player.getUsername(), registerForm.getPassword(), player.getAuthorities());
+			authMgr.authenticate(auth);
+			
 			if (auth.isAuthenticated()) {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				return "redirect:/";
 			}
 		} catch (Exception e) {
-			System.out.println("Problem authenticating user " + signupForm.getUsername());
+			System.out.println("Problem authenticating user " + registerForm.getUsername());
 			System.out.println(e.getMessage());
-
+			
 		}
 		return "register";
 	}
-	
+
 	/**
 	 * Redirects the login to spring security
 	 *
@@ -116,7 +116,7 @@ public class AuthenticationController extends ParentController {
 	public String login(Model model) {
 		return "login";
 	}
-	
+
 	/**
 	 * Redirects accessdenied to spring security
 	 *
@@ -128,7 +128,7 @@ public class AuthenticationController extends ParentController {
 		model.addAttribute("error", "true");
 		return "denied";
 	}
-	
+
 	/**
 	 * Redirects logout to spring security
 	 *
@@ -139,7 +139,7 @@ public class AuthenticationController extends ParentController {
 	public String logout(Model model) {
 		return "logout";
 	}
-	
+
 	/**
 	 * Displays an E-Mail input field for the user who forgot his password.
 	 */
@@ -149,7 +149,7 @@ public class AuthenticationController extends ParentController {
 		model.addObject("forgotPasswordForm", new ForgotPasswordForm());
 		return model;
 	}
-	
+
 	/**
 	 * Sends users password to the entered E-Mail address.
 	 *
@@ -159,11 +159,11 @@ public class AuthenticationController extends ParentController {
 	public ModelAndView forgot(@Valid ForgotPasswordForm forgotPasswordForm, BindingResult result) {
 		if (result.hasErrors())
 			return new ModelAndView("forgot");
-		
+
 		ModelAndView model = new ModelAndView("forgot");
 		try {
 			Player user = authService.getPlayer(forgotPasswordForm);
-			
+
 			// compose E-Mail
 			String email = user.getEmail();
 			String username = user.getUsername();
@@ -171,22 +171,22 @@ public class AuthenticationController extends ParentController {
 			String subject = "Sending Password";
 			String message = "Howdy " + username + "\n\n" + "You requested your password: "
 					+ password + "\n\nYours sincerely,\nJoel Niklaus";
-			
+
 			try {
 				mailService.sendMail(email, subject, message);
-				
+
 				model.addObject("success", "Password successfully delivered");
 			} catch (EmailException e) {
 				model.addObject("error", "Password could not be sent: " + e.getMessage());
 				e.printStackTrace();
 			}
-			
+
 		} catch (InvalidUserException e) {
 			model.addObject("error", "No User with this E-Mail found: " + e.getMessage());
 		}
 		return model;
 	}
-
+	
 	/**
 	 * Displays the profile view of the user with the given id.
 	 *
@@ -195,10 +195,10 @@ public class AuthenticationController extends ParentController {
 	@RequestMapping(value = "/otherProfileView/{id}", method = RequestMethod.GET)
 	public String otherProfileView(Model model, @PathVariable Long id) {
 		model.addAttribute("otherUser", authService.getPlayer(id));
-		
+
 		return "otherProfileView";
 	}
-
+	
 	/**
 	 * Displays the profileForm which enables the user to change his profile information.
 	 *
@@ -206,11 +206,11 @@ public class AuthenticationController extends ParentController {
 	 */
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile(Model model) {
-		model.addAttribute("profileForm", new SignupForm(authService.getLoggedInPlayer()));
-		
+		model.addAttribute("profileForm", new RegisterForm(authService.getLoggedInPlayer()));
+
 		return "profile";
 	}
-
+	
 	/**
 	 * Saves the changes made to the profile to the database.
 	 *
@@ -220,14 +220,14 @@ public class AuthenticationController extends ParentController {
 	 */
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public String profile(Model model,
-			@ModelAttribute("profileForm") @Valid SignupForm profileForm, BindingResult result,
+			@ModelAttribute("profileForm") @Valid RegisterForm profileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model.addAttribute("error", "Please enter valid data.");
 			model.addAttribute("profileForm", profileForm);
 			return "profile";
 		}
-
+		
 		try {
 			authService.updateProfile(profileForm);
 			redirectAttributes.addFlashAttribute("success", "Profile changes successfully saved");
@@ -237,10 +237,10 @@ public class AuthenticationController extends ParentController {
 		} catch (NullPointerException e) {
 			model.addAttribute("error", "Profile changes could not be saved: " + e.getMessage());
 		}
-		
+
 		return "profile";
 	}
-	
+
 	@RequestMapping(value = "/profile/delete/{id}")
 	public String deletePlayer(Model model, @PathVariable Long id,
 			RedirectAttributes redirectAttributes) {
@@ -250,9 +250,9 @@ public class AuthenticationController extends ParentController {
 			return "redirect:/logout";
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not delete account.");
-
+			
 			return "profile";
 		}
 	}
-	
+
 }

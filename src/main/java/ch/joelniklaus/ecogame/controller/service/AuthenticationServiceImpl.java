@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.ForgotPasswordForm;
 import ch.joelniklaus.ecogame.controller.pojos.LoginForm;
-import ch.joelniklaus.ecogame.controller.pojos.SignupForm;
+import ch.joelniklaus.ecogame.controller.pojos.RegisterForm;
 import ch.joelniklaus.ecogame.model.Picture;
 import ch.joelniklaus.ecogame.model.Player;
 import ch.joelniklaus.ecogame.model.dao.PictureDao;
@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	@Autowired
 	GameService gameService;
 	
-	private Player setVariables(SignupForm signupForm, Player user) {
+	private Player setVariables(RegisterForm signupForm, Player user) {
 		Picture picture = null;
 		try {
 			picture = pictureDao.findOne(new Long(signupForm.getImageId()));
@@ -52,7 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 
 	@Override
 	@Transactional
-	public SignupForm createProfile(SignupForm signupForm) throws InvalidUserException {
+	public RegisterForm createProfile(RegisterForm signupForm) throws InvalidUserException {
 		Player user = setVariables(signupForm, new Player());
 		
 		playerDao.save(user);
@@ -65,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 
 	@Override
 	@Transactional
-	public SignupForm updateProfile(SignupForm profileForm) throws InvalidUserException {
+	public RegisterForm updateProfile(RegisterForm profileForm) throws InvalidUserException {
 		Player user = setVariables(profileForm, playerDao.findByEmail(profileForm.getEmail()));
 		
 		playerDao.save(user);
