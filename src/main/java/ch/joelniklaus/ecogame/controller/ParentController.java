@@ -17,9 +17,9 @@ public class ParentController {
 	AuthenticationService authService;
 	
 	/**
-	 * Adds the loggedInUser as a model attribute before the view is rendered.
+	 * Adds the loggedInPlayer as a model attribute before the view is rendered.
 	 */
-	@ModelAttribute("loggedInUser")
+	@ModelAttribute("loggedInPlayer")
 	public Player getLoggedInPlayer() {
 		return authService.getLoggedInPlayer();
 	}

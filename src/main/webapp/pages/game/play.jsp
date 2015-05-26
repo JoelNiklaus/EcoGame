@@ -7,7 +7,7 @@
 <c:import url="../template/header.jsp" />
 
 <h1>Play
-<c:if test="${game.hoster.id eq loggedInUser.id}">
+<c:if test="${game.hoster.id eq loggedInPlayer.id}">
 	<a href="game/edit" class="btn btn-info pull-right" role="button">edit</a>
 </c:if>
 </h1>

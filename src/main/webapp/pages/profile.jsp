@@ -7,58 +7,60 @@
 
 <c:import url="template/header.jsp" />
 
-
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link href="/ecogame/css/dropzone.css" type="text/css" rel="stylesheet" /> 
-<h1>My Profile <a href="otherProfileView/${loggedInUser.id}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-user"></span> View Profile</a></h1>
 
-  
+<h1>My Profile <a href="otherProfileView/${loggedInPlayer.id}" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-user"></span> View Profile</a></h1>
 <c:import url="template/alerts.jsp" />
- 	
+
 <form:form class="form-horizontal" role="form" method="post" modelAttribute="profileForm" action="profile"
 	id="profileForm" autocomplete="on">
 	
 	<spring:bind path="email">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="email">E-Mail</label>
 			<div class="col-sm-9">
 				<form:input path="email" class="form-control" id="email" type="email" maxlength="45" placeholder="E-Mail" autofocus="true"/>
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="email" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="username">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="username">User Name</label>
 			<div class="col-sm-9">
 				<form:input path="username" class="form-control" id="username" type="text" maxlength="45" placeholder="User Name" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="username" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="password">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="password">Password</label>
 			<div class="col-sm-9">
 				<form:password path="password" class="form-control" id="password" maxlength="45" placeholder="Password" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="password" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="passwordConfirm">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="passwordConfirm">Confirm Password</label>
 			<div class="col-sm-9">
 				<form:password path="passwordConfirm" class="form-control" id="passwordConfirm" maxlength="45" placeholder="Confirm Password" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="passwordConfirm" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="status">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="description">Status</label>
 			<div class="col-sm-9">
 				<form:textarea path="status" class="form-control" id="status" type="text" maxlength="1000" placeholder="Status"/>
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="status" class="help-block" element="span" />
 			</div>
 		</div>
@@ -66,7 +68,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="imageId">Profile Image</label>
 			<div class="col-sm-6">
-		 		<form:input class="form-control" path="imageId" type="hidden" name="file" id="file" value="${loggedInUser.profileImage.id}" />	
+		 		<form:input class="form-control" path="imageId" type="hidden" name="file" id="file" value="${loggedInPlayer.profileImage.id}" />	
 				<div class="dropzone col-sm-6" id="file-dropzone">
 					<div class="dz-message" data-dz-message>
 						<span>Click or Drag and Drop to this field to upload images</span>
@@ -80,7 +82,7 @@
 			<br>
 				<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
 				<button class="btn btn-warning" type="reset"><span class="glyphicon glyphicon-remove"></span> Reset</button>
-				<a onclick="location.href='profile/delete/${loggedInUser.id}'" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+<%-- 				<a onclick="location.href='profile/delete/${loggedInPlayer.id}'" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a> --%>
 			</div>
 		</div>
  </form:form>

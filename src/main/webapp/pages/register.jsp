@@ -7,9 +7,6 @@
 
 <c:import url="template/header.jsp" />
 
-
-	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-	<link href="/ecogame/css/dropzone.css" type="text/css" rel="stylesheet" /> 
 	<h1>Create new account</h1>
 
 <c:import url="template/alerts.jsp" />
@@ -18,37 +15,41 @@
 	id="registerForm" autocomplete="on">
 	
 	<spring:bind path="email">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="email">E-Mail</label>
 			<div class="col-sm-9">
 				<form:input path="email" class="form-control" id="email" type="email" maxlength="45" placeholder="E-Mail" autofocus="true"/>
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="email" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="username">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="username">User Name</label>
 			<div class="col-sm-9">
 				<form:input path="username" class="form-control" id="username" type="text" maxlength="45" placeholder="User Name" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="username" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="password">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="password">Password</label>
 			<div class="col-sm-9">
 				<form:password path="password" class="form-control" id="password" maxlength="45" placeholder="Password" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="password" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
 	<spring:bind path="passwordConfirm">
-		<div class="form-group ${status.error ? 'has-error has-feedback' : ''}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
 			<label class="control-label col-sm-3" for="passwordConfirm">Confirm Password</label>
 			<div class="col-sm-9">
 				<form:password path="passwordConfirm" class="form-control" id="passwordConfirm" maxlength="45" placeholder="Confirm Password" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
 				<form:errors path="passwordConfirm" class="help-block" element="span" />
 			</div>
 		</div>
@@ -61,11 +62,11 @@
 			</div>
 		</div>
 </form:form>
-<c:if test="${page_error != null }">
+<%-- <c:if test="${page_error != null }">
 	<div class="alert alert-error">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<h4>Error!</h4>
 		${page_error}
 	</div>
-</c:if>
+</c:if> --%>
 <c:import url="template/footer.jsp" />

@@ -31,6 +31,17 @@ body > .container {
   padding-left: 15px;
 }
 
+/* css fix to align feedback icons correctly */
+.form-control-feedback {
+    position: absolute;
+    right: 25px !important;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+}
+
 /* Make Glyphicons working
 -------------------------------------------------- */
 /*@font-face {

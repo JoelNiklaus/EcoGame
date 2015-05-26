@@ -15,6 +15,9 @@
 		<c:set var="uri" value="${req.requestURI}" />
 		<base href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/">
 		
+		<!-- Used in forms to check if it was already submitted at least once -->
+		<c:set var="submitted" scope="request" value="${pageContext.request.method == 'POST'}" />
+		
 		<link rel="shortcut icon" href="img/favicon.ico" >
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -52,18 +55,18 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<c:if test="${not empty loggedInUser}">
+						<c:if test="${not empty loggedInPlayer}">
 							<li><a href="game/play">Play</a></li>
 						</c:if>
 					</ul>
-					<c:if test="${empty loggedInUser}">
+					<c:if test="${empty loggedInPlayer}">
 						<form class="navbar-form navbar-right" name="login"
 							action="<c:url value="/j_spring_security_check"/>" method="post">
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">@</div>
-									<input type="email" class="form-control" id="j_username"
-										name="j_username" placeholder="E-Mail" autofocus="true">
+									<input type="text" class="form-control" id="j_username"
+										name="j_username" placeholder="User Name" autofocus="true">
 								</div>
 							</div>
 							<div class="form-group">
@@ -79,11 +82,11 @@
 								class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Register</button>
 						</form>
 					</c:if>
-					<c:if test="${not empty loggedInUser}">
+					<c:if test="${not empty loggedInPlayer}">
 						<form class="navbar-form navbar-right" action="logout" method="get">
 							<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
 						</form>
-						<p class="navbar-text navbar-right"><a class="navbar-link" href="profile"><span class="glyphicon glyphicon-user"></span></a> Signed in as <a class="navbar-link" href="profile">${loggedInUser.username}</a></p>
+						<p class="navbar-text navbar-right"><a class="navbar-link" href="profile"><span class="glyphicon glyphicon-user"></span></a> Signed in as <a class="navbar-link" href="profile">${loggedInPlayer.username}</a></p>
 					</c:if>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
