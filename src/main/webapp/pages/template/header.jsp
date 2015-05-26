@@ -64,14 +64,17 @@
 							action="<c:url value="/j_spring_security_check"/>" method="post">
 							<div class="form-group">
 								<div class="input-group">
-									<div class="input-group-addon">@</div>
+									<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
 									<input type="text" class="form-control" id="j_username"
 										name="j_username" placeholder="User Name" autofocus="true">
 								</div>
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" id="j_password"
-									name="j_password" placeholder="Password">
+								<div class="input-group">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+									<input type="password" class="form-control" id="j_password"
+										name="j_password" placeholder="Password">
+								</div>
 							</div>
 							<div class="checkbox">
 								<label> <input type="checkbox" name="_spring_security_remember_me"> Remember me
