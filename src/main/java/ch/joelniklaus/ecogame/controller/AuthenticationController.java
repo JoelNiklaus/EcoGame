@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
@@ -144,10 +143,9 @@ public class AuthenticationController extends ParentController {
 	 * Displays an E-Mail input field for the user who forgot his password.
 	 */
 	@RequestMapping(value = "/forgot", method = RequestMethod.GET)
-	public ModelAndView forgot() {
-		ModelAndView model = new ModelAndView("forgot");
-		model.addObject("forgotPasswordForm", new ForgotPasswordForm());
-		return model;
+	public String forgot(Model model) {
+		model.addAttribute("forgotPasswordForm", new ForgotPasswordForm());
+		return "forgot";
 	}
 
 	/**
@@ -156,18 +154,18 @@ public class AuthenticationController extends ParentController {
 	 * @param forgotPasswordForm
 	 */
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
-	public ModelAndView forgot(@Valid ForgotPasswordForm forgotPasswordForm, BindingResult result) {
+	public String forgot(Model model, @Valid ForgotPasswordForm forgotPasswordForm,
+			BindingResult result) {
 		if (result.hasErrors())
-			return new ModelAndView("forgot");
+			return "forgot";
 
-		ModelAndView model = new ModelAndView("forgot");
 		try {
-			Player user = authService.getPlayer(forgotPasswordForm);
+			Player player = authService.getPlayer(forgotPasswordForm);
 
 			// compose E-Mail
-			String email = user.getEmail();
-			String username = user.getUsername();
-			String password = user.getPassword();
+			String email = player.getEmail();
+			String username = player.getUsername();
+			String password = player.getPassword();
 			String subject = "Sending Password";
 			String message = "Howdy " + username + "\n\n" + "You requested your password: "
 					+ password + "\n\nYours sincerely,\nJoel Niklaus";
@@ -175,16 +173,16 @@ public class AuthenticationController extends ParentController {
 			try {
 				mailService.sendMail(email, subject, message);
 
-				model.addObject("success", "Password successfully delivered");
+				model.addAttribute("success", "Password successfully delivered");
 			} catch (EmailException e) {
-				model.addObject("error", "Password could not be sent: " + e.getMessage());
+				model.addAttribute("error", "Password could not be sent: " + e.getMessage());
 				e.printStackTrace();
 			}
 
 		} catch (InvalidUserException e) {
-			model.addObject("error", "No User with this E-Mail found: " + e.getMessage());
+			model.addAttribute("error", e.getMessage());
 		}
-		return model;
+		return "forgot";
 	}
 	
 	/**
