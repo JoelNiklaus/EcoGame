@@ -57,8 +57,10 @@
 		<div class="form-group">			
 			<div class="col-sm-3">
 			<br>
-				<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+				<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-new-window"></span> Register</button>
 				<button class="btn btn-warning" type="reset"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+				<button type="button" onclick="window.location.href='register'"
+								class="btn btn-info"><span class="glyphicon glyphicon-log-in"></span> Login</button>
 			</div>
 		</div>
 </form:form>

@@ -56,6 +56,8 @@
 						<div class="col-sm-offset-3 col-sm-9">
 							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span> Login</button>
 							<button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+							<button type="button" onclick="window.location.href='register'"
+								class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Register</button>
 							<a href="forgot">Forgot Password?</a>
 							<%-- <input type="hidden" id="${_csrf.parameterName}" name="${_csrf.parameterName}"
 							value="${_csrf.token}" /> --%>

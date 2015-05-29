@@ -11,6 +11,7 @@
 <c:import url="../template/alerts.jsp" />
 
 <div class="row">
+	<h2>Game</h2>
 	<c:set var="submitted" value="${pageContext.request.method == 'POST'}" />
 	<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/edit">
 	
@@ -25,6 +26,7 @@
 </div>
 <br>
 <div class="row">
+	<h2>Players</h2>
 	<ul class="list-group">
 		<c:forEach items="${game.players}" var="player">
 			<li class="list-group-item"><a href="otherProfileView/${player.id}">${player.username}</a>
