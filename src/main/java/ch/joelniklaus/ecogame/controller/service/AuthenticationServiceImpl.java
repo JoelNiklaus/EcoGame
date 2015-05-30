@@ -53,34 +53,34 @@ public class AuthenticationServiceImpl implements AuthenticationService, UserDet
 	@Override
 	@Transactional
 	public RegisterForm createProfile(RegisterForm signupForm) throws InvalidUserException {
-		Player user = setVariables(signupForm, new Player());
+		Player player = setVariables(signupForm, new Player());
 		
-		playerDao.save(user);
+		playerDao.save(player);
 		
-		playerService.initPlayer(user);
+		playerService.initPlayer(player);
 		
-		signupForm.setId(user.getId());
+		signupForm.setId(player.getId());
 		return signupForm;
 	}
 
 	@Override
 	@Transactional
 	public RegisterForm updateProfile(RegisterForm profileForm) throws InvalidUserException {
-		Player user = setVariables(profileForm, playerDao.findByEmail(profileForm.getEmail()));
+		Player player = setVariables(profileForm, playerDao.findByEmail(profileForm.getEmail()));
 		
-		playerDao.save(user);
-		profileForm.setId(user.getId());
+		playerDao.save(player);
+		profileForm.setId(player.getId());
 		return profileForm;
 	}
 
 	@Override
 	public Player getPlayer(ForgotPasswordForm forgotPasswordForm) {
-		Player user = playerDao.findByEmail(forgotPasswordForm.getEmail());
+		Player player = playerDao.findByEmail(forgotPasswordForm.getEmail());
 
-		if (user == null)
+		if (player == null)
 			throw new InvalidUserException("No User with this E-Mail exists.");
 
-		return user;
+		return player;
 	}
 
 	@Override

@@ -5,19 +5,13 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 
 @Entity
-public class Game {
-
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class Game extends DataBaseObject {
+	
 	private String name;
 
 	private int maxNumberOfPlayers;
@@ -64,14 +58,6 @@ public class Game {
 
 	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 		this.maxNumberOfPlayers = maxNumberOfPlayers;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 	
 }

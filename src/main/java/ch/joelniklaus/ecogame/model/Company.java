@@ -6,17 +6,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Company {
-	
-	@Id
-	@GeneratedValue
-	protected Long id;
+public class Company extends DataBaseObject {
 	
 	protected String name;
 
@@ -25,6 +19,18 @@ public class Company {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Machine> machines = new LinkedList<Machine>();
+	
+	public void buyResources(int number) {
+		
+	}
+	
+	public void produce(int number) {
+		
+	}
+	
+	public void sellProducts(int number) {
+		
+	}
 	
 	public void pay(Double amount) {
 		bankAccount.charge(amount);
