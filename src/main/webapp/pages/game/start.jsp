@@ -10,8 +10,8 @@
 
 <div class="jumbotron">
   <h1>Welcome to the EcoGame!</h1>
-  <p>You can either <a href="game/join">join</a> an existing game or <a href="game/host">host</a> your own.</p>
-  <p><a class="btn btn-primary btn-lg pull-left" href="game/join" role="button">Join Game</a><a class="btn btn-primary btn-lg pull-right" href="game/host" role="button">Host Game</a><br></p>
+  <p>You can either <a href="game/join">join</a> an existing game or <a href="game/create">create</a> a new one.</p>
+  <p><a class="btn btn-primary btn-lg pull-left" href="game/join" role="button">Join Game</a><a class="btn btn-primary btn-lg pull-right" href="game/create" role="button">Create Game</a><br></p>
 </div>
 
 <c:import url="../template/footer.jsp" />

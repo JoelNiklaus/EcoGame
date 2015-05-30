@@ -12,8 +12,8 @@
 
 <c:if test="${empty games}">
 	<div class="jumbotron">
-  <h3>No games by other players hosted yet!</h3>
-  <p><a class="btn btn-primary btn-lg" href="game/host" role="button">Host</a> your own game.</p>
+  <h3>No games by other players created yet!</h3>
+  <p><a class="btn btn-primary btn-lg" href="game/create" role="button">Create</a> a new game.</p>
 </div>
 </c:if>
 
@@ -28,7 +28,7 @@
 			    Panel content
 			  </div>
 			  <div class="panel-footer">
-			    Hoster: ${game.hoster.username}, Maximum number of Players: ${game.maxNumberOfPlayers}
+			    Maximum number of Players: ${game.maxNumberOfPlayers}
 			  </div>
 			</div>
 		</div>

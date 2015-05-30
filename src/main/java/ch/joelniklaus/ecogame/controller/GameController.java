@@ -19,63 +19,62 @@ import ch.joelniklaus.ecogame.model.dao.GameDao;
 @Controller
 @RequestMapping(value = "/game")
 public class GameController extends ParentController {
-
+	
 	@Autowired
 	GameService gameService;
 	@Autowired
 	GameDao gameDao;
 	@Autowired
 	PlayerService playerService;
-	
+
 	@RequestMapping(value = "/start")
 	public String start(Model model) {
-		if (gameService.loggedInPlayerHasAlreadyHostedGame()
-				|| gameService.loggedInPlayerHasAlreadyJoinedGame())
+		if (gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:play";
 		return "game/start";
 	}
-
-	@RequestMapping(value = "/host")
-	public String host(Model model) {
-		if (gameService.loggedInPlayerHasAlreadyHostedGame())
-			return "redirect:edit";
-
-		model.addAttribute("gameForm", new GameForm());
-		return "game/host";
-	}
 	
-	@RequestMapping(value = "/host", method = RequestMethod.POST)
-	public String host(Model model, @Valid GameForm gameForm, BindingResult result,
+	@RequestMapping(value = "/create")
+	public String create(Model model) {
+		if (gameService.loggedInPlayerIsAlreadyPartOfGame())
+			return "redirect:edit";
+		
+		model.addAttribute("gameForm", new GameForm());
+		return "game/create";
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String create(Model model, @Valid GameForm gameForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors())
-			return "game/host";
-		
+			return "game/create";
+
 		try {
-			gameService.addGame(gameForm);
+			gameService.createGame(gameForm);
 			redirectAttributes.addFlashAttribute("success", "Game successfully created.");
 			return "redirect:edit";
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not create Game.");
 		}
-		return "game/host";
+		return "game/create";
 	}
-
+	
 	@RequestMapping(value = "/edit")
 	public String edit(Model model) {
-		if (!gameService.loggedInPlayerHasAlreadyHostedGame())
-			return "redirect:host";
-
-		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInUser());
-		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
+		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
+			return "redirect:start";
 		
+		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
+		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
+
 		return "game/edit";
 	}
-
+	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit(Model model, @Valid GameForm gameForm, BindingResult result) {
 		if (result.hasErrors())
 			return "game/edit";
-
+		
 		try {
 			gameService.editGame(gameForm);
 			model.addAttribute("success", "Changes successfully saved.");
@@ -84,7 +83,7 @@ public class GameController extends ParentController {
 		}
 		return "game/edit";
 	}
-	
+
 	@RequestMapping(value = "/edit/kickPlayer/{id}")
 	public String kickPlayer(Model model, @PathVariable Long id) {
 		try {
@@ -95,13 +94,27 @@ public class GameController extends ParentController {
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 		}
-
-		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInUser());
+		
+		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
 		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
-
+		
 		return "game/edit";
 	}
-	
+
+	@RequestMapping(value = "/edit/leaveGame")
+	public String leaveGame(Model model, RedirectAttributes redirectAttributes) {
+		try {
+			gameService.leaveGame();
+			redirectAttributes.addFlashAttribute("success", "Successfully left game.");
+			return "redirect:/game/start";
+		} catch (Exception e) {
+			model.addAttribute("error", "Could not leave game.");
+			model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
+			model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
+			return "game/edit";
+		}
+	}
+
 	@RequestMapping(value = "/edit/delete/{id}")
 	public String deleteGame(Model model, @PathVariable Long id,
 			RedirectAttributes redirectAttributes) {
@@ -111,20 +124,20 @@ public class GameController extends ParentController {
 			return "redirect:/game/start";
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not delete game.");
-			model.addAttribute("gameForm", gameService.getGameFormOfLoggedInUser());
+			model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
 			model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
-
+			
 			return "game/edit";
 		}
 	}
-	
+
 	@RequestMapping(value = "/join")
 	public String join(Model model) {
 		model.addAttribute("games", gameService.getJoinableGames());
-		
+
 		return "game/join";
 	}
-
+	
 	@RequestMapping(value = "/join/{id}")
 	public String join(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes) {
 		try {
@@ -136,18 +149,15 @@ public class GameController extends ParentController {
 			return "game/join";
 		}
 	}
-
+	
 	@RequestMapping(value = "/play")
 	public String play(Model model, RedirectAttributes redirectAttributes) {
-		if (!gameService.loggedInPlayerHasAlreadyHostedGame()
-				&& !gameService.loggedInPlayerHasAlreadyJoinedGame()) {
-			System.out.println("test");
+		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:/game/start";
-		}
-
-		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
 		
+		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
+
 		return "game/play";
 	}
-	
+
 }

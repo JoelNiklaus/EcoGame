@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidIdException;
-import ch.joelniklaus.ecogame.controller.exceptions.InvalidUserException;
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.model.Game;
 import ch.joelniklaus.ecogame.model.Player;
@@ -26,9 +25,9 @@ public class GameServiceImpl implements GameService {
 	AuthenticationService authService;
 
 	@Override
-	public GameForm addGame(GameForm gameForm) {
+	public GameForm createGame(GameForm gameForm) {
 		Game game = new Game(gameForm);
-		game.setHoster(authService.getLoggedInPlayer());
+		game.addPlayer(authService.getLoggedInPlayer());
 		gameDao.save(game);
 		gameForm.setId(game.getId());
 		return gameForm;
@@ -36,10 +35,9 @@ public class GameServiceImpl implements GameService {
 	
 	@Override
 	public GameForm editGame(GameForm gameForm) {
-		Game game = gameDao.findByHoster(authService.getLoggedInPlayer());
+		Game game = getGameOfLoggedInPlayer();
 		game.setName(gameForm.getName());
 		game.setMaxNumberOfPlayers(gameForm.getMaxNumberOfPlayers());
-		game.setHoster(authService.getLoggedInPlayer());
 		gameDao.save(game);
 		return gameForm;
 	}
@@ -52,8 +50,6 @@ public class GameServiceImpl implements GameService {
 		if (game == null)
 			throw new InvalidIdException("Could not find game to join.");
 		Player loggedInPlayer = authService.getLoggedInPlayer();
-		if (game.getHoster().equals(loggedInPlayer))
-			throw new InvalidUserException("You cannot join your own hosted game.");
 		game.addPlayer(loggedInPlayer);
 		gameDao.save(game);
 		return game;
@@ -77,60 +73,47 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public List<Player> getPlayersOfGameOfLoggedInPlayer() {
-		Game game = getHostedGameOfLoggedInPlayer();
+		Game game = getGameOfLoggedInPlayer();
 		return game.getPlayers();
-	}
-
-	@Override
-	public boolean loggedInPlayerHasAlreadyHostedGame() {
-		return getHostedGameOfLoggedInPlayer() != null;
 	}
 	
 	@Override
-	public boolean loggedInPlayerHasAlreadyJoinedGame() {
-		return getJoinedGameOfLoggedInPlayer() != null;
+	public boolean loggedInPlayerIsAlreadyPartOfGame() {
+		return getGameOfLoggedInPlayer() != null;
 	}
 
 	@Override
-	public GameForm getGameFormOfLoggedInUser() {
-		return new GameForm(getHostedGameOfLoggedInPlayer());
+	public GameForm getGameFormOfLoggedInPlayer() {
+		return new GameForm(getGameOfLoggedInPlayer());
 	}
 
 	@Override
 	@Transactional
 	public Player kickPlayer(Long id) {
-		Game game = getHostedGameOfLoggedInPlayer();
+		Game game = getGameOfLoggedInPlayer();
 		Player player = playerDao.findOne(id);
 		game.kickPlayer(player);
 		game = gameDao.save(game);
 		return player;
 	}
-
-	@Override
-	public Game getJoinedGameOfLoggedInPlayer() {
-		for (Game game : gameDao.findAll())
-			for (Player player : game.getPlayers())
-				if (player.getId() == authService.getLoggedInPlayer().getId())
-					return game;
-		// only possible if equals method works properly:
-		// if (game.getPlayers().contains(authService.getLoggedInPlayer()))
-		// return game;
-		return null;
-	}
 	
 	@Override
-	public Game getHostedGameOfLoggedInPlayer() {
-		return gameDao.findByHoster(authService.getLoggedInPlayer());
+	@Transactional
+	public Game leaveGame() {
+		Game game = getGameOfLoggedInPlayer();
+		Player player = authService.getLoggedInPlayer();
+		game.kickPlayer(player);
+		game = gameDao.save(game);
+		if (game.getPlayers().isEmpty())
+			gameDao.delete(game);
+		return game;
 	}
 
 	@Override
 	public Game getGameOfLoggedInPlayer() {
-		Game game = getHostedGameOfLoggedInPlayer();
-		if (game != null)
-			return game;
-		game = getJoinedGameOfLoggedInPlayer();
-		if (game != null)
-			return game;
+		for (Game game : gameDao.findAll())
+			if (game.getPlayers().contains(authService.getLoggedInPlayer()))
+				return game;
 		return null;
 	}
 	

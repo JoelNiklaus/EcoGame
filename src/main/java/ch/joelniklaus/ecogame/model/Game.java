@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 
@@ -22,9 +21,6 @@ public class Game {
 	private String name;
 
 	private int maxNumberOfPlayers;
-
-	@OneToOne
-	private Player hoster;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Player> players = new LinkedList<Player>();
@@ -76,14 +72,6 @@ public class Game {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public Player getHoster() {
-		return hoster;
-	}
-	
-	public void setHoster(Player hoster) {
-		this.hoster = hoster;
 	}
 	
 }

@@ -12,7 +12,6 @@
 
 <div class="row">
 	<h2>Game</h2>
-	<c:set var="submitted" value="${pageContext.request.method == 'POST'}" />
 	<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/edit">
 	
 		<c:import url="../formInputs/gameFormInputs.jsp" />
@@ -29,8 +28,17 @@
 	<h2>Players</h2>
 	<ul class="list-group">
 		<c:forEach items="${game.players}" var="player">
-			<li class="list-group-item"><a href="otherProfileView/${player.id}">${player.username}</a>
-			<a onclick="location.href='game/edit/kickPlayer/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</a></li>
+			<li class="list-group-item">
+				<a href="otherProfileView/${player.id}">${player.username}</a>
+				<c:choose>
+					<c:when test="${player != loggedInPlayer}">
+						<a onclick="location.href='game/edit/kickPlayer/${player.id}'" class="btn btn-xs btn-danger pull-right">Kick Player</a>
+					</c:when>
+					<c:otherwise>
+						<a onclick="location.href='game/edit/leaveGame'" class="btn btn-xs btn-danger pull-right">Leave Game</a>
+					</c:otherwise>
+				</c:choose>
+			</li>
 		</c:forEach>
 	</ul>
 </div>

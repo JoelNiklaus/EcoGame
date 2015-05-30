@@ -8,32 +8,28 @@ import ch.joelniklaus.ecogame.model.Player;
 
 public interface GameService {
 
-	public GameForm addGame(GameForm gameForm);
+	public GameForm createGame(GameForm gameForm);
 
 	public GameForm editGame(GameForm gameForm);
 	
 	public Game joinGame(Long id);
-
-	public GameForm getGameFormOfLoggedInUser();
-
-	public boolean loggedInPlayerHasAlreadyHostedGame();
 	
-	public boolean loggedInPlayerHasAlreadyJoinedGame();
-	
-	public List<Player> getPlayersOfGameOfLoggedInPlayer();
+	public Game deleteGame(Long id);
 	
 	public Player kickPlayer(Long id);
-	
-	public Game getJoinedGameOfLoggedInPlayer();
-	
-	public Game getHostedGameOfLoggedInPlayer();
 
 	public Game getGameOfLoggedInPlayer();
 
-	public List<Game> getJoinableGames();
+	public GameForm getGameFormOfLoggedInPlayer();
+
+	public boolean loggedInPlayerIsAlreadyPartOfGame();
 	
-	public Game deleteGame(Long id);
+	public List<Player> getPlayersOfGameOfLoggedInPlayer();
+
+	public List<Game> getJoinableGames();
 
 	public boolean nameAlreadyExists(String name);
+
+	public Game leaveGame();
 
 }

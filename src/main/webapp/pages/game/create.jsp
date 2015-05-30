@@ -6,16 +6,16 @@
 
 <c:import url="../template/header.jsp" />
 
-<h1>Host a new game</h1>
+<h1>Create a new game</h1>
 
 <c:import url="../template/alerts.jsp" />
 
-<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/host">
+<form:form class="form-horizontal" role="form" method="post" modelAttribute="gameForm" action="game/create">
 
 	<c:import url="../formInputs/gameFormInputs.jsp" />
 
 	<div class="col-sm-3">
-		<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Host new Game</button>
+		<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Create new Game</button>
 		<button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
 	</div>
 </form:form>
