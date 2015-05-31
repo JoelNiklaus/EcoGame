@@ -1,26 +1,24 @@
-package ch.joelniklaus.ecogame.model;
+package ch.joelniklaus.ecogame.model.building;
 
 import javax.persistence.MappedSuperclass;
 
+import ch.joelniklaus.ecogame.model.DataBaseObject;
+
 @MappedSuperclass
 public abstract class Building extends DataBaseObject {
-
-	private Double value;
-
+	
+	protected Double value;
+	
 	public Building() {
-		
+
 	}
 	
-	public Building(double value) {
-		this.value = value;
-	}
-
 	public Double getValue() {
 		return value;
 	}
-
+	
 	public void setValue(Double value) {
 		this.value = value;
 	}
-
+	
 }

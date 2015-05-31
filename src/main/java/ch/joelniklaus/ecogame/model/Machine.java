@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+import ch.joelniklaus.ecogame.model.good.Product;
+
 @Entity
 public class Machine extends DataBaseObject {
 	
