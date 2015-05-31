@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.joelniklaus.ecogame.controller.pojos.BudgetForm;
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.controller.service.GameService;
 import ch.joelniklaus.ecogame.controller.service.PlayerService;
@@ -19,36 +20,36 @@ import ch.joelniklaus.ecogame.model.dao.GameDao;
 @Controller
 @RequestMapping(value = "/game")
 public class GameController extends ParentController {
-	
+
 	@Autowired
 	GameService gameService;
 	@Autowired
 	GameDao gameDao;
 	@Autowired
 	PlayerService playerService;
-
+	
 	@RequestMapping(value = "/start")
 	public String start(Model model) {
 		if (gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:play";
 		return "game/start";
 	}
-	
+
 	@RequestMapping(value = "/create")
 	public String create(Model model) {
 		if (gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:edit";
-		
+
 		model.addAttribute("gameForm", new GameForm());
 		return "game/create";
 	}
-
+	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(Model model, @Valid GameForm gameForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors())
 			return "game/create";
-
+		
 		try {
 			gameService.createGame(gameForm);
 			redirectAttributes.addFlashAttribute("success", "Game successfully created.");
@@ -58,23 +59,23 @@ public class GameController extends ParentController {
 		}
 		return "game/create";
 	}
-	
+
 	@RequestMapping(value = "/edit")
 	public String edit(Model model) {
 		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:start";
-		
+
 		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
 		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
-
+		
 		return "game/edit";
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit(Model model, @Valid GameForm gameForm, BindingResult result) {
 		if (result.hasErrors())
 			return "game/edit";
-		
+
 		try {
 			gameService.editGame(gameForm);
 			model.addAttribute("success", "Changes successfully saved.");
@@ -83,7 +84,7 @@ public class GameController extends ParentController {
 		}
 		return "game/edit";
 	}
-
+	
 	@RequestMapping(value = "/edit/kickPlayer/{id}")
 	public String kickPlayer(Model model, @PathVariable Long id) {
 		try {
@@ -94,13 +95,13 @@ public class GameController extends ParentController {
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 		}
-		
+
 		model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
 		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
-		
+
 		return "game/edit";
 	}
-
+	
 	@RequestMapping(value = "/edit/leaveGame")
 	public String leaveGame(Model model, RedirectAttributes redirectAttributes) {
 		try {
@@ -114,7 +115,7 @@ public class GameController extends ParentController {
 			return "game/edit";
 		}
 	}
-
+	
 	@RequestMapping(value = "/edit/delete/{id}")
 	public String deleteGame(Model model, @PathVariable Long id,
 			RedirectAttributes redirectAttributes) {
@@ -126,18 +127,18 @@ public class GameController extends ParentController {
 			model.addAttribute("error", "Could not delete game.");
 			model.addAttribute("gameForm", gameService.getGameFormOfLoggedInPlayer());
 			model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
-			
+
 			return "game/edit";
 		}
 	}
-
+	
 	@RequestMapping(value = "/join")
 	public String join(Model model) {
 		model.addAttribute("games", gameService.getJoinableGames());
-
+		
 		return "game/join";
 	}
-	
+
 	@RequestMapping(value = "/join/{id}")
 	public String join(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes) {
 		try {
@@ -149,15 +150,52 @@ public class GameController extends ParentController {
 			return "game/join";
 		}
 	}
-	
+
 	@RequestMapping(value = "/play")
-	public String play(Model model, RedirectAttributes redirectAttributes) {
+	public String play(Model model) {
 		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:/game/start";
-		
-		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
 
+		model.addAttribute("game", gameService.getGameOfLoggedInPlayer());
+		
 		return "game/play";
 	}
 
+	@RequestMapping(value = "/budget")
+	public String budget(Model model) {
+		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
+			return "redirect:/game/start";
+
+		model.addAttribute("budgetForm", new BudgetForm());
+		
+		return "game/budget";
+	}
+	
+	@RequestMapping(value = "/budget", method = RequestMethod.POST)
+	public String budget(Model model, @Valid BudgetForm budgetForm) {
+		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
+			return "redirect:/game/start";
+
+		try {
+			gameService.saveBudget(budgetForm);
+			model.addAttribute("success", "Changes successfully saved.");
+		} catch (Exception e) {
+			model.addAttribute("error", "Could not save changes.");
+		}
+		
+		model.addAttribute("budgetForm", new BudgetForm());
+		
+		return "game/budget";
+	}
+
+	@RequestMapping(value = "/statistics")
+	public String statistics(Model model, RedirectAttributes redirectAttributes) {
+		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
+			return "redirect:/game/start";
+
+		model.addAttribute("company", authService.getLoggedInPlayer().getCompany());
+		
+		return "game/statistics";
+	}
+	
 }

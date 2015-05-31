@@ -1,34 +1,33 @@
 package ch.joelniklaus.ecogame.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Company extends DataBaseObject {
-	
-	protected String name;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	protected BankAccount bankAccount;
+	private BankAccount bankAccount;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Machine> machines = new LinkedList<Machine>();
+	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	// private List<ResourceWareHouse> resourceWareHouses = new LinkedList<ResourceWareHouse>();
+	//
+	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	// private List<Machine> machines = new LinkedList<Machine>();
+	//
+	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	// private List<ProductWareHouse> productWareHouses = new LinkedList<ProductWareHouse>();
 	
-	public void buyResources(int number) {
+	public void buyResources(Long number) {
 		
 	}
 	
-	public void produce(int number) {
+	public void produce(Long number) {
 		
 	}
 	
-	public void sellProducts(int number) {
+	public void sellProducts(Long number) {
 		
 	}
 	
@@ -44,11 +43,18 @@ public class Company extends DataBaseObject {
 
 	}
 
-	public Company(Long id, String name, BankAccount bankAccount, List<Machine> machines) {
+	public Company(Long id, String name, BankAccount bankAccount) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.bankAccount = bankAccount;
-		this.machines = machines;
 	}
+
+	public BankAccount getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+
 }

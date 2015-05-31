@@ -26,10 +26,7 @@
 		<!-- jQuery at the beginning, otherwise e.g. sliders won't work -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script>
-			$(document).ready(
-					function() {
-						$('a[href="'+ this.location.pathname.replace('/ecogame/', '') + '"]').parent().addClass('active');
-						});
+			$(document).ready(function() {$('a[href="'+ this.location.pathname.replace('/ecogame/', '') + '"]').parent().addClass('active');});
 		</script>
 		
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -56,7 +53,8 @@
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
 						<c:if test="${not empty loggedInPlayer}">
-							<li><a href="game/play">Play</a></li>
+							<li><a href="game/budget">Budget</a></li>
+							<li><a href="game/statistics">Statistics</a></li>
 						</c:if>
 					</ul>
 					<c:if test="${empty loggedInPlayer}">
