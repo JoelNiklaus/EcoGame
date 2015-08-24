@@ -1,114 +1,74 @@
-package ch.joelniklaus.ecogame.controller.pojos;
+package ch.joelniklaus.ecogame.model;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
 
-import ch.joelniklaus.ecogame.model.Budget;
+import ch.joelniklaus.ecogame.controller.pojos.BudgetForm;
 
-public class BudgetForm {
+@Entity
+public class Budget extends DataBaseObject {
 	
-	private Long id;
-	
-	@Min(0)
-	@NotNull
 	private Long resourceQuality;
 	
-	@Min(0)
-	@NotNull
 	private Long productPrice;
 	
-	@Min(0)
-	@NotNull
 	private Long productionVolume;
 	
-	@Min(0)
-	@NotNull
 	private Long machines;
 	
-	@Min(0)
-	@NotNull
 	private Long productionHalls;
 	
-	@Min(0)
-	@NotNull
 	private Long resourceWareHouses;
 
-	@Min(0)
-	@NotNull
 	private Long productWareHouses;
 	
-	@Min(0)
-	@NotNull
 	private Long marketing;
 	
-	@Min(0)
-	@NotNull
 	private Long dividend;
 	
-	@Min(0)
-	@NotNull
 	private Long research;
 	
-	@Min(0)
-	@NotNull
 	private Long specialFaculties;
 	
-	@Min(0)
-	@NotNull
 	private Long productionPersonnel;
-
-	@Min(0)
-	@NotNull
-	private Long productionPersonnelTraining;
-
-	@Min(0)
-	@NotNull
+	
 	private Long productionPersonnelWage;
 	
-	@Min(0)
-	@NotNull
+	private Long productionPersonnelTraining;
+	
 	private Long representative;
 	
-	@Min(0)
-	@NotNull
 	private Long representativeTraining;
 	
-	@Min(0)
-	@NotNull
 	private Long representativeWage;
 
-	public BudgetForm() {
-
+	public Budget(BudgetForm budgetForm) {
+		setVariables(budgetForm);
 	}
 	
-	public BudgetForm(Budget budget) {
-		this.dividend = budget.getDividend();
-		this.machines = budget.getMachines();
-		this.marketing = budget.getMarketing();
-		this.productionHalls = budget.getProductionHalls();
-		this.productionPersonnel = budget.getProductionPersonnel();
-		this.productionPersonnelTraining = budget.getProductionPersonnelTraining();
-		this.productionPersonnelWage = budget.getProductionPersonnelWage();
-		this.productionVolume = budget.getProductionVolume();
-		this.productPrice = budget.getProductPrice();
-		this.productWareHouses = budget.getProductWareHouses();
-		this.representative = budget.getRepresentative();
-		this.representativeTraining = budget.getRepresentativeTraining();
-		this.representativeWage = budget.getRepresentativeWage();
-		this.research = budget.getResearch();
-		this.resourceQuality = budget.getResourceQuality();
-		this.resourceWareHouses = budget.getResourceWareHouses();
-		this.specialFaculties = budget.getSpecialFaculties();
+	public Budget() {
+		
 	}
 
-	public Long getId() {
-		return id;
+	public void setVariables(BudgetForm budgetForm) {
+		this.dividend = budgetForm.getDividend();
+		this.machines = budgetForm.getMachines();
+		this.marketing = budgetForm.getMarketing();
+		this.productionHalls = budgetForm.getProductionHalls();
+		this.productionPersonnel = budgetForm.getProductionPersonnel();
+		this.productionPersonnelTraining = budgetForm.getProductionPersonnelTraining();
+		this.productionPersonnelWage = budgetForm.getProductionPersonnelWage();
+		this.productionVolume = budgetForm.getProductionVolume();
+		this.productPrice = budgetForm.getProductPrice();
+		this.productWareHouses = budgetForm.getProductWareHouses();
+		this.representative = budgetForm.getRepresentative();
+		this.representativeTraining = budgetForm.getRepresentativeTraining();
+		this.representativeWage = budgetForm.getRepresentativeWage();
+		this.research = budgetForm.getResearch();
+		this.resourceQuality = budgetForm.getResourceQuality();
+		this.resourceWareHouses = budgetForm.getResourceWareHouses();
+		this.specialFaculties = budgetForm.getSpecialFaculties();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	public Long getResourceQuality() {
 		return resourceQuality;
 	}
@@ -243,5 +203,19 @@ public class BudgetForm {
 
 	public void setRepresentativeWage(Long representativeWage) {
 		this.representativeWage = representativeWage;
+	}
+	
+	@Override
+	public String toString() {
+		return "Budget [resourceQuality=" + resourceQuality + ", productPrice=" + productPrice
+				+ ", productionVolume=" + productionVolume + ", machines=" + machines
+				+ ", productionHalls=" + productionHalls + ", resourceWareHouses="
+				+ resourceWareHouses + ", productWareHouses=" + productWareHouses + ", marketing="
+				+ marketing + ", dividend=" + dividend + ", research=" + research
+				+ ", specialFaculties=" + specialFaculties + ", productionPersonnel="
+				+ productionPersonnel + ", productionPersonnelWage=" + productionPersonnelWage
+				+ ", productionPersonnelTraining=" + productionPersonnelTraining
+				+ ", representative=" + representative + ", representativeTraining="
+				+ representativeTraining + ", representativeWage=" + representativeWage + "]";
 	}
 }

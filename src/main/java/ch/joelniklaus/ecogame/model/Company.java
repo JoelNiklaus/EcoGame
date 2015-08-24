@@ -1,7 +1,12 @@
 package ch.joelniklaus.ecogame.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -10,14 +15,11 @@ public class Company extends DataBaseObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private BankAccount bankAccount;
 	
-	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	// private List<ResourceWareHouse> resourceWareHouses = new LinkedList<ResourceWareHouse>();
-	//
-	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	// private List<Machine> machines = new LinkedList<Machine>();
-	//
-	// @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	// private List<ProductWareHouse> productWareHouses = new LinkedList<ProductWareHouse>();
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Budget> yearlyBudgets = new ArrayList<Budget>();
+	
+	@OneToMany
+	private List<Result> yearlyResults = new ArrayList<Result>();
 	
 	public void buyResources(Long number) {
 		
@@ -55,6 +57,45 @@ public class Company extends DataBaseObject {
 
 	public void setBankAccount(BankAccount bankAccount) {
 		this.bankAccount = bankAccount;
+	}
+	
+	public void setBudget(int year, Budget budget) {
+		if (budgetSubmitted(year))
+			this.yearlyBudgets.set(year, budget);
+		else
+			this.yearlyBudgets.add(year, budget);
+	}
+	
+	public Budget getBudget(int year) {
+		return this.yearlyBudgets.get(year);
+	}
+	
+	public boolean budgetSubmitted(int year) {
+		return yearlyBudgets.size() > year;
+	}
+
+	public List<Budget> getYearlyBudgets() {
+		return yearlyBudgets;
+	}
+
+	public void setYearlyBudgets(List<Budget> yearlyBudgets) {
+		this.yearlyBudgets = yearlyBudgets;
+	}
+
+	public List<Result> getYearlyResults() {
+		return yearlyResults;
+	}
+
+	public void setYearlyResults(List<Result> yearlyResults) {
+		this.yearlyResults = yearlyResults;
+	}
+	
+	public void addResult(int year, Result result) {
+		this.yearlyResults.add(year, result);
+	}
+	
+	public Result getResult(int year) {
+		return this.yearlyResults.get(year);
 	}
 
 }

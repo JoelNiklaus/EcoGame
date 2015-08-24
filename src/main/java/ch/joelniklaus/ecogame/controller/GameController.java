@@ -15,6 +15,7 @@ import ch.joelniklaus.ecogame.controller.pojos.BudgetForm;
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 import ch.joelniklaus.ecogame.controller.service.GameService;
 import ch.joelniklaus.ecogame.controller.service.PlayerService;
+import ch.joelniklaus.ecogame.model.Company;
 import ch.joelniklaus.ecogame.model.dao.GameDao;
 
 @Controller
@@ -165,37 +166,78 @@ public class GameController extends ParentController {
 	public String budget(Model model) {
 		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:/game/start";
-
-		model.addAttribute("budgetForm", new BudgetForm());
 		
+		int currentYear = gameService.getGameOfLoggedInPlayer().getYear();
+		Company company = authService.getLoggedInPlayer().getCompany();
+		
+		if (currentYear == 0)
+			model.addAttribute("budgetForm", new BudgetForm());
+		else if (company.budgetSubmitted(currentYear)) {
+			model.addAttribute("budgetForm", new BudgetForm(company.getBudget(currentYear)));
+			model.addAttribute("info",
+					"You already submitted your budget for this year, but you can update it if you want.");
+		} else {
+			model.addAttribute("budgetForm", new BudgetForm(company.getBudget(currentYear - 1)));
+			model.addAttribute("info",
+					"Here you see your budget from the previous year. Feel free to change whatever you like. ;)");
+		}
 		return "game/budget";
 	}
 	
 	@RequestMapping(value = "/budget", method = RequestMethod.POST)
-	public String budget(Model model, @Valid BudgetForm budgetForm) {
+	public String budget(Model model, @Valid BudgetForm budgetForm, BindingResult result) {
 		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:/game/start";
 
+		if (result.hasErrors())
+			return "game/budget";
+
 		try {
 			gameService.saveBudget(budgetForm);
-			model.addAttribute("success", "Changes successfully saved.");
+			model.addAttribute("success", "Budget successfully saved.");
+			
+			if (gameService.allBudgetsSubmitted()) {
+				gameService.passYear();
+
+				model.addAttribute("info",
+						"All players have submitted their budgets. You can now see the results of the past year.");
+			} else
+				model.addAttribute(
+						"info",
+						"Some players have not submitted their budgets yet. Please wait for them to submit their budgets in order to see the results of the past year.");
+			
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not save changes.");
+			e.printStackTrace();
 		}
-		
-		model.addAttribute("budgetForm", new BudgetForm());
 		
 		return "game/budget";
 	}
 
-	@RequestMapping(value = "/statistics")
-	public String statistics(Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/results")
+	public String results(Model model, RedirectAttributes redirectAttributes) {
 		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
 			return "redirect:/game/start";
 
-		model.addAttribute("company", authService.getLoggedInPlayer().getCompany());
+		model.addAttribute(
+				"result",
+				authService.getLoggedInPlayer().getCompany()
+						.getResult(gameService.getGameOfLoggedInPlayer().getYear()));
 		
-		return "game/statistics";
+		return "game/results";
+	}
+	
+	@RequestMapping(value = "/conjuncture")
+	public String conjuncture(Model model, RedirectAttributes redirectAttributes) {
+		if (!gameService.loggedInPlayerIsAlreadyPartOfGame())
+			return "redirect:/game/start";
+
+		model.addAttribute(
+				"conjuncture",
+				gameService.getGameOfLoggedInPlayer().getConjuncture(
+						gameService.getGameOfLoggedInPlayer().getYear()));
+		
+		return "game/conjuncture";
 	}
 	
 }

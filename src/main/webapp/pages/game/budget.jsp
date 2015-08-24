@@ -12,46 +12,215 @@
 
 <c:import url="../template/alerts.jsp" />
 
-<ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="game/budget">Budget</a></li>
-  <li role="presentation"><a href="game/statistics">Statistics</a></li>
-</ul>
-
 <br>
 
-<form:form class="form-horizontal" role="form" method="post" modelAttribute="budgetForm" action="budget"
+<form:form class="form-horizontal" role="form" method="post" modelAttribute="budgetForm" action="game/budget"
 	id="budgetForm" autocomplete="on">
 
-	<spring:bind path="numberOfResourcesToBuy">
+	<c:set var="name" value="resourceQuality" />
+	<spring:bind path="${name}">
 		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
-			<label class="control-label col-sm-3" for="numberOfResourcesToBuy">Purchase</label>
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
 			<div class="col-sm-9">
-				<form:input path="numberOfResourcesToBuy" class="form-control" id="numberOfResourcesToBuy" type="text" maxlength="45" placeholder="How many resources do you want to buy" />
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
 				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
-				<form:errors path="numberOfResourcesToBuy" class="help-block" element="span" />
+				<form:errors path="${name}" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
-	<spring:bind path="numberOfProductsToProduce">
+	
+	<c:set var="name" value="productPrice" />
+	<spring:bind path="${name}">
 		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
-			<label class="control-label col-sm-3" for="numberOfProductsToProduce">Production</label>
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
 			<div class="col-sm-9">
-				<form:input path="numberOfProductsToProduce" class="form-control" id="numberOfProductsToProduce" type="text" maxlength="45" placeholder="How many products do you want to produce" />
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
 				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
-				<form:errors path="numberOfProductsToProduce" class="help-block" element="span" />
+				<form:errors path="${name}" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
-	<spring:bind path="numberOfProductsToSell">
+	
+	<c:set var="name" value="productionVolume" />
+	<spring:bind path="${name}">
 		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
-			<label class="control-label col-sm-3" for="numberOfProductsToSell">Sale</label>
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
 			<div class="col-sm-9">
-				<form:input path="numberOfProductsToSell" class="form-control" id="numberOfProductsToSell" type="text" maxlength="45" placeholder="How many products do you want to sell" />
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
 				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
-				<form:errors path="numberOfProductsToSell" class="help-block" element="span" />
+				<form:errors path="${name}" class="help-block" element="span" />
 			</div>
 		</div>
 	</spring:bind>
+
+	<c:set var="name" value="machines" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="productionHalls" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="resourceWareHouses" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="productWareHouses" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="marketing" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="dividend" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="research" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="specialFaculties" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="productionPersonnel" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="productionPersonnelTraining" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="productionPersonnelWage" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+		<c:set var="name" value="representative" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="representativeTraining" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+	
+	<c:set var="name" value="representativeWage" />
+	<spring:bind path="${name}">
+		<div class="form-group has-feedback ${status.error ? 'has-error' : ''} ${submitted && !status.error ? 'has-success' : ''}">
+			<label class="control-label col-sm-3" for="${name}">${name}</label>
+			<div class="col-sm-9">
+				<form:input path="${name}" class="form-control" id="${name}" type="text" maxlength="45" placeholder="${name}" />
+				<span class="${status.error ? 'glyphicon glyphicon-remove' : ''} ${submitted && !status.error ? 'glyphicon glyphicon-ok' : ''} form-control-feedback"></span>
+				<form:errors path="${name}" class="help-block" element="span" />
+			</div>
+		</div>
+	</spring:bind>
+
 		<div class="form-group">			
 			<div class="col-sm-3">
 			<br>

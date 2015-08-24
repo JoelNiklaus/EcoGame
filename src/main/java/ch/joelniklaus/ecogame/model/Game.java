@@ -1,5 +1,6 @@
 package ch.joelniklaus.ecogame.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,10 +17,13 @@ public class Game extends DataBaseObject {
 
 	private Integer maxNumberOfPlayers;
 
+	private Integer year = 0;
+
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Player> players = new LinkedList<Player>();
-
-	private Integer year;
+	
+	@OneToMany
+	private List<Conjuncture> yearlyConjunctures = new ArrayList<Conjuncture>();
 
 	public Game() {
 
@@ -68,6 +72,26 @@ public class Game extends DataBaseObject {
 	
 	public void setYear(Integer year) {
 		this.year = year;
+	}
+
+	public void passYear() {
+		year++;
+	}
+	
+	public List<Conjuncture> getYearlyConjunctures() {
+		return yearlyConjunctures;
+	}
+	
+	public void setYearlyConjunctures(List<Conjuncture> yearlyConjunctures) {
+		this.yearlyConjunctures = yearlyConjunctures;
+	}
+	
+	public void addConjuncture(int year, Conjuncture conjuncture) {
+		this.yearlyConjunctures.add(year, conjuncture);
+	}
+
+	public Conjuncture getConjuncture(int year) {
+		return this.yearlyConjunctures.get(year);
 	}
 	
 }

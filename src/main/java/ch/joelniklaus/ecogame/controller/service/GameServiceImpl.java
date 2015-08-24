@@ -10,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.joelniklaus.ecogame.controller.exceptions.InvalidIdException;
 import ch.joelniklaus.ecogame.controller.pojos.BudgetForm;
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
+import ch.joelniklaus.ecogame.model.Budget;
 import ch.joelniklaus.ecogame.model.Company;
 import ch.joelniklaus.ecogame.model.Game;
 import ch.joelniklaus.ecogame.model.Player;
+import ch.joelniklaus.ecogame.model.Result;
+import ch.joelniklaus.ecogame.model.dao.BudgetDao;
 import ch.joelniklaus.ecogame.model.dao.CompanyDao;
 import ch.joelniklaus.ecogame.model.dao.GameDao;
 import ch.joelniklaus.ecogame.model.dao.PlayerDao;
@@ -27,16 +30,24 @@ public class GameServiceImpl implements GameService {
 	@Autowired
 	CompanyDao companyDao;
 	@Autowired
+	BudgetDao budgetDao;
+	@Autowired
 	AuthenticationService authService;
 
 	@Override
 	@Transactional
 	public BudgetForm saveBudget(BudgetForm budgetForm) {
+		int year = getGameOfLoggedInPlayer().getYear();
 		Company company = authService.getLoggedInPlayer().getCompany();
-		company.buyResources(budgetForm.getNumberOfResourcesToBuy());
-		company.produce(budgetForm.getNumberOfProductsToProduce());
-		company.sellProducts(budgetForm.getNumberOfProductsToSell());
-		
+		Budget budget = null;
+		if (company.budgetSubmitted(year))
+			budget = company.getBudget(year);
+		else
+			budget = new Budget();
+		budget.setVariables(budgetForm);
+		budgetDao.save(budget);
+
+		company.setBudget(year, budget);
 		companyDao.save(company);
 
 		return budgetForm;
@@ -137,6 +148,36 @@ public class GameServiceImpl implements GameService {
 			if (game.getPlayers().contains(authService.getLoggedInPlayer()))
 				return game;
 		return null;
+	}
+	
+	@Override
+	public boolean allBudgetsSubmitted() {
+		Game game = getGameOfLoggedInPlayer();
+		for (Player player : game.getPlayers())
+			if (!player.getCompany().budgetSubmitted(game.getYear()))
+				return false;
+		return true;
+	}
+
+	@Override
+	public Game passYear() {
+		Game game = getGameOfLoggedInPlayer();
+		game.passYear();
+		gameDao.save(game);
+		computeResults();
+		return game;
+	}
+	
+	private void computeResults() {
+		Game game = getGameOfLoggedInPlayer();
+		Company company = null;
+		for (Player player : game.getPlayers()) {
+			company = player.getCompany();
+			// TODO compute the results for the company here
+			Result result = new Result();
+			company.addResult(game.getYear(), result);
+			companyDao.save(company);
+		}
 	}
 
 	@Override

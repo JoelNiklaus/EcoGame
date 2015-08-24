@@ -54,7 +54,8 @@
 					<ul class="nav navbar-nav">
 						<c:if test="${not empty loggedInPlayer}">
 							<li><a href="game/budget">Budget</a></li>
-							<li><a href="game/statistics">Statistics</a></li>
+							<li><a href="game/results">Results</a></li>
+							<li><a href="game/conjuncture">Conjuncture</a></li>
 						</c:if>
 					</ul>
 					<c:if test="${empty loggedInPlayer}">

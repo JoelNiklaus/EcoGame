@@ -6,18 +6,13 @@
 
 <c:import url="../template/header.jsp" />
 
-<h1>Statistics
+<h1>Conjuncture
 	<a href="game/edit" class="btn btn-info pull-right" role="button">edit Game</a>
 </h1>
 
 <c:import url="../template/alerts.jsp" />
 
-<ul class="nav nav-tabs">
-  <li role="presentation"><a href="game/budget">Budget</a></li>
-  <li role="presentation" class="active"><a href="game/statistics">Statistics</a></li>
-</ul>
-
 <br>
-Balance: ${company.bankAccount.balance }0 CHF
+Random: ${conjuncture.random }
 
 <c:import url="../template/footer.jsp" />

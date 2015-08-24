@@ -34,5 +34,9 @@ public interface GameService {
 	public Game leaveGame();
 	
 	public BudgetForm saveBudget(BudgetForm budgetForm);
+
+	public Game passYear();
+	
+	public boolean allBudgetsSubmitted();
 	
 }
