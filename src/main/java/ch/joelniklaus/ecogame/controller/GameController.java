@@ -148,6 +148,7 @@ public class GameController extends ParentController {
 			return "redirect:/game/play";
 		} catch (Exception e) {
 			model.addAttribute("error", "Could not join game.");
+			e.printStackTrace();
 			return "game/join";
 		}
 	}
@@ -222,8 +223,17 @@ public class GameController extends ParentController {
 		model.addAttribute(
 				"result",
 				authService.getLoggedInPlayer().getCompany()
-						.getResult(gameService.getGameOfLoggedInPlayer().getYear()));
-		
+				.getResult(gameService.getGameOfLoggedInPlayer().getYear()));
+
+		String json = "["+
+				"['Year', 'Sales', 'Expenses'],"+
+				"['2013',  1000,      400],"+
+				"['2014',  1170,      460],"+
+				"['2015',  660,       1120],"+
+				"['2016',  1030,      540]"+
+				"]";
+		model.addAttribute("json", json);
+								
 		return "game/results";
 	}
 	

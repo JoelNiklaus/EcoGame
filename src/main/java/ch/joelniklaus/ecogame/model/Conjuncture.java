@@ -4,138 +4,166 @@ import javax.persistence.Entity;
 
 @Entity
 public class Conjuncture extends DataBaseObject {
-
-	private Long random;
-
-	private Long cashInterest;
-
-	private Long shortTermCreditInterest;
-
-	private Long longTermCreditInterest;
-
-	private Long devaluation;
-
-	private Long numberOfPeople;
-
-	private Long numberOfBuyingPeople;
-
-	private Long resourcePrices;
-
-	private Long resourceWareHousePrice;
-
-	private Long productWareHousePrice;
-
-	private Long productionHallPrice;
 	
-	private Long productionPersonnelMinimumWage;
+	private Double conjunctureChange = computeConjunctureChange();
 	
-	private Long representativeMinimumWage;
+	// TODO set starting values
 	
+	private Double cashInterest;
+	
+	private Double shortTermCreditInterest;
+	
+	private Double longTermCreditInterest;
+	
+	private Double devaluation;
+	
+	private Double numberOfPeople;
+	
+	private Double numberOfBuyingPeople;
+	
+	private Double resourcePrices;
+	
+	private Double resourceWareHousePrice;
+	
+	private Double productWareHousePrice;
+	
+	private Double productionHallPrice;
+
+	private Double productionPersonnelMinimumWage;
+
+	private Double representativeMinimumWage;
+
 	public Conjuncture() {
-		
+
 	}
 	
-	public Long getRandom() {
-		return random;
+	public Conjuncture(Conjuncture conjuncture) {
+		this.conjunctureChange = computeConjunctureChange();
+
+		this.cashInterest = conjuncture.cashInterest * conjunctureChange;
+		this.devaluation = conjuncture.devaluation * conjunctureChange;
+		this.longTermCreditInterest = conjuncture.longTermCreditInterest * conjunctureChange;
+		this.numberOfBuyingPeople = conjuncture.numberOfBuyingPeople * conjunctureChange;
+		this.numberOfPeople = conjuncture.numberOfPeople * conjunctureChange;
+		this.productionHallPrice = conjuncture.productionHallPrice * conjunctureChange;
+		this.productionPersonnelMinimumWage = conjuncture.productionPersonnelMinimumWage
+				* conjunctureChange;
+		this.productWareHousePrice = conjuncture.productWareHousePrice * conjunctureChange;
+		this.representativeMinimumWage = conjuncture.representativeMinimumWage * conjunctureChange;
+		this.resourcePrices = conjuncture.resourcePrices * conjunctureChange;
+		this.resourceWareHousePrice = conjuncture.resourceWareHousePrice * conjunctureChange;
+		this.shortTermCreditInterest = conjuncture.shortTermCreditInterest * conjunctureChange;
 	}
-	
-	public void setRandom(Long random) {
-		this.random = random;
+
+	public Double getRandom() {
+		return conjunctureChange;
 	}
-	
-	public Long getCashInterest() {
+
+	public void setRandom(Double random) {
+		this.conjunctureChange = random;
+	}
+
+	public Double getCashInterest() {
 		return cashInterest;
 	}
-	
-	public void setCashInterest(Long cashInterest) {
+
+	public void setCashInterest(Double cashInterest) {
 		this.cashInterest = cashInterest;
 	}
-	
-	public Long getShortTermCreditInterest() {
+
+	public Double getShortTermCreditInterest() {
 		return shortTermCreditInterest;
 	}
-	
-	public void setShortTermCreditInterest(Long shortTermCreditInterest) {
+
+	public void setShortTermCreditInterest(Double shortTermCreditInterest) {
 		this.shortTermCreditInterest = shortTermCreditInterest;
 	}
-	
-	public Long getLongTermCreditInterest() {
+
+	public Double getLongTermCreditInterest() {
 		return longTermCreditInterest;
 	}
-	
-	public void setLongTermCreditInterest(Long longTermCreditInterest) {
-		this.longTermCreditInterest = longTermCreditInterest;
+
+	public void setLongTermCreditInterest(Double LongTermCreditInterest) {
+		this.longTermCreditInterest = LongTermCreditInterest;
 	}
-	
-	public Long getDevaluation() {
+
+	public Double getDevaluation() {
 		return devaluation;
 	}
-	
-	public void setDevaluation(Long devaluation) {
+
+	public void setDevaluation(Double devaluation) {
 		this.devaluation = devaluation;
 	}
-	
-	public Long getNumberOfPeople() {
+
+	public Double getNumberOfPeople() {
 		return numberOfPeople;
 	}
-	
-	public void setNumberOfPeople(Long numberOfPeople) {
+
+	public void setNumberOfPeople(Double numberOfPeople) {
 		this.numberOfPeople = numberOfPeople;
 	}
-	
-	public Long getNumberOfBuyingPeople() {
+
+	public Double getNumberOfBuyingPeople() {
 		return numberOfBuyingPeople;
 	}
-	
-	public void setNumberOfBuyingPeople(Long numberOfBuyingPeople) {
+
+	public void setNumberOfBuyingPeople(Double numberOfBuyingPeople) {
 		this.numberOfBuyingPeople = numberOfBuyingPeople;
 	}
-	
-	public Long getResourcePrices() {
+
+	public Double getResourcePrices() {
 		return resourcePrices;
 	}
-	
-	public void setResourcePrices(Long resourcePrices) {
+
+	public void setResourcePrices(Double resourcePrices) {
 		this.resourcePrices = resourcePrices;
 	}
-	
-	public Long getResourceWareHousePrice() {
+
+	public Double getResourceWareHousePrice() {
 		return resourceWareHousePrice;
 	}
-	
-	public void setResourceWareHousePrice(Long resourceWareHousePrice) {
+
+	public void setResourceWareHousePrice(Double resourceWareHousePrice) {
 		this.resourceWareHousePrice = resourceWareHousePrice;
 	}
-	
-	public Long getProductWareHousePrice() {
+
+	public Double getProductWareHousePrice() {
 		return productWareHousePrice;
 	}
-	
-	public void setProductWareHousePrice(Long productWareHousePrice) {
+
+	public void setProductWareHousePrice(Double productWareHousePrice) {
 		this.productWareHousePrice = productWareHousePrice;
 	}
-	
-	public Long getProductionHallPrice() {
+
+	public Double getProductionHallPrice() {
 		return productionHallPrice;
 	}
-	
-	public void setProductionHallPrice(Long productionHallPrice) {
+
+	public void setProductionHallPrice(Double productionHallPrice) {
 		this.productionHallPrice = productionHallPrice;
 	}
-	
-	public Long getProductionPersonnelMinimumWage() {
+
+	public Double getProductionPersonnelMinimumWage() {
 		return productionPersonnelMinimumWage;
 	}
-	
-	public void setProductionPersonnelMinimumWage(Long productionPersonnelMinimumWage) {
+
+	public void setProductionPersonnelMinimumWage(Double productionPersonnelMinimumWage) {
 		this.productionPersonnelMinimumWage = productionPersonnelMinimumWage;
 	}
-	
-	public Long getRepresentativeMinimumWage() {
+
+	public Double getRepresentativeMinimumWage() {
 		return representativeMinimumWage;
 	}
-	
-	public void setRepresentativeMinimumWage(Long representativeMinimumWage) {
+
+	public void setRepresentativeMinimumWage(Double representativeMinimumWage) {
 		this.representativeMinimumWage = representativeMinimumWage;
 	}
+
+	/**
+	 * Computes a random number between 0.95 and 1.05.
+	 */
+	public Double computeConjunctureChange() {
+		return (Math.random() / 10.0) + 0.95;
+	}
+
 }

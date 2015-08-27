@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
 
@@ -19,10 +22,12 @@ public class Game extends DataBaseObject {
 
 	private Integer year = 0;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Player> players = new LinkedList<Player>();
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Conjuncture> yearlyConjunctures = new ArrayList<Conjuncture>();
 
 	public Game() {
@@ -30,6 +35,7 @@ public class Game extends DataBaseObject {
 	}
 
 	public Game(GameForm gameForm) {
+		addConjuncture(0, new Conjuncture());
 		this.name = gameForm.getName();
 		this.maxNumberOfPlayers = gameForm.getMaxNumberOfPlayers();
 	}
@@ -76,6 +82,10 @@ public class Game extends DataBaseObject {
 
 	public void passYear() {
 		year++;
+	}
+
+	public void computeConjuncture() {
+		addConjuncture(year, new Conjuncture(getConjuncture(year - 1)));
 	}
 	
 	public List<Conjuncture> getYearlyConjunctures() {

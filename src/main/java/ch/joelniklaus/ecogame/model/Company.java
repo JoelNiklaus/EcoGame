@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Company extends DataBaseObject {
@@ -15,23 +17,13 @@ public class Company extends DataBaseObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private BankAccount bankAccount;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Budget> yearlyBudgets = new ArrayList<Budget>();
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Result> yearlyResults = new ArrayList<Result>();
-	
-	public void buyResources(Long number) {
-		
-	}
-	
-	public void produce(Long number) {
-		
-	}
-	
-	public void sellProducts(Long number) {
-		
-	}
 	
 	public void pay(Double amount) {
 		bankAccount.charge(amount);
@@ -42,11 +34,11 @@ public class Company extends DataBaseObject {
 	}
 	
 	public Company() {
-
+		addResult(0, new Result());
+		setBudget(0, new Budget());
 	}
 
-	public Company(Long id, String name, BankAccount bankAccount) {
-		super();
+	public Company(Long id, BankAccount bankAccount) {
 		this.id = id;
 		this.bankAccount = bankAccount;
 	}
