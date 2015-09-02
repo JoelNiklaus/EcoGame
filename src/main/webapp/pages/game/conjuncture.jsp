@@ -12,7 +12,6 @@
 
 <c:import url="../template/alerts.jsp" />
 
-<br>
-Random: ${conjuncture.random }
+<c:import url="../template/charts.jsp" />
 
 <c:import url="../template/footer.jsp" />

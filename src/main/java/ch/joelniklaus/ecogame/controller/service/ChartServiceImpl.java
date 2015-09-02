@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ch.joelniklaus.ecogame.model.Player;
-
 @Service
 public class ChartServiceImpl implements ChartService {
 	/**
@@ -14,16 +12,16 @@ public class ChartServiceImpl implements ChartService {
 	 * "]";
 	 */
 	@Override
-	public String buildJsonArray(List<Player> players, List<List<Object>> data) {
+	public String buildJsonArray(List<String> titles, List<List<Object>> data) {
 		StringBuilder json = new StringBuilder();
-
+		
 		json.append("[");
-
+		
 		json.append("['Year'");
-		for (Player player : players)
-			json.append(", '" + player.getUsername() + "'");
+		for (String title : titles)
+			json.append(", '" + title + "'");
 		json.append("]");
-
+		
 		int yearCounter = 2015;
 		for (List<Object> list : data) {
 			json.append(",['" + yearCounter + "'");
@@ -32,9 +30,9 @@ public class ChartServiceImpl implements ChartService {
 				json.append(", " + object.toString());
 			json.append("]");
 		}
-
+		
 		json.append("]");
-
+		
 		return json.toString();
 	}
 }

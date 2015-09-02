@@ -105,17 +105,16 @@ public class Game extends DataBaseObject {
 		return this.yearlyConjunctures.get(year);
 	}
 	
-	// TODO still has to be implemented or structure of conjuncture/results has to be changed
 	// List<Object> = One year containing data of each company
-	public List<List<Object>> getData() {
-		List<List<Object>> data = new LinkedList<List<Object>>();
-		List<Object> year = null;
-		for (int i = 0; i < this.year; i++) {
-			year = new LinkedList<Object>();
-			for (Player player : this.players)
-				year.add(player.getCompany().getResult(i).getBalance());
-			data.add(year);
-		}
-		return data;
-	}
+	// public List<List<Object>> getData() {
+	// List<List<Object>> data = new LinkedList<List<Object>>();
+	// List<Object> year = null;
+	// for (int i = 0; i < this.year; i++) {
+	// year = new LinkedList<Object>();
+	// for (Player player : this.players)
+	// year.add(player.getCompany().getResult(i).getBalance());
+	// data.add(year);
+	// }
+	// return data;
+	// }
 }

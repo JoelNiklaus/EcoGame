@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.joelniklaus.ecogame.controller.pojos.BudgetForm;
 import ch.joelniklaus.ecogame.controller.pojos.GameForm;
+import ch.joelniklaus.ecogame.model.ChartInformation;
 import ch.joelniklaus.ecogame.model.Game;
 import ch.joelniklaus.ecogame.model.Player;
 
@@ -38,5 +39,9 @@ public interface GameService {
 	public Game passYear();
 	
 	public boolean allBudgetsSubmitted();
+
+	public List<ChartInformation> buildResultChartInformation();
+
+	public List<ChartInformation> buildConjunctureChartInformation();
 	
 }
