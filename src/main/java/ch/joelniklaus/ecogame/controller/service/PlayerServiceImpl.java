@@ -12,28 +12,29 @@ import ch.joelniklaus.ecogame.model.dao.PlayerDao;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
-	
+
 	@Autowired
 	BankAccountDao bankAccountDao;
 	@Autowired
 	CompanyDao companyDao;
 	@Autowired
 	PlayerDao playerDao;
-	
+
 	public static final Double STARTING_BALANCE = 1000000.00;
-	
+
 	@Override
 	public Player initPlayer(Player player) {
 		BankAccount bankAccount = new BankAccount(STARTING_BALANCE);
 		bankAccountDao.save(bankAccount);
-		
+
 		Company company = new Company();
+		company.setName(player.getUsername());
 		company.setBankAccount(bankAccount);
 		companyDao.save(company);
-		
+
 		player.setCompany(company);
 		playerDao.save(player);
-		
+
 		return player;
 	}
 }

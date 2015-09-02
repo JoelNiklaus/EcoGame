@@ -22,7 +22,7 @@ import ch.joelniklaus.ecogame.model.dao.PlayerDao;
 
 @Service
 public class GameServiceImpl implements GameService {
-
+	
 	@Autowired
 	GameDao gameDao;
 	@Autowired
@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService {
 	BudgetDao budgetDao;
 	@Autowired
 	AuthenticationService authService;
-	
+
 	@Override
 	@Transactional
 	public BudgetForm saveBudget(BudgetForm budgetForm) {
@@ -46,13 +46,13 @@ public class GameServiceImpl implements GameService {
 			budget = new Budget();
 		budget.setVariables(budgetForm);
 		budgetDao.save(budget);
-		
+
 		company.setBudget(year, budget);
 		companyDao.save(company);
-		
+
 		return budgetForm;
 	}
-
+	
 	@Override
 	@Transactional
 	public GameForm createGame(GameForm gameForm) {
@@ -60,11 +60,11 @@ public class GameServiceImpl implements GameService {
 		Player loggedInPlayer = authService.getLoggedInPlayer();
 		game.addPlayer(loggedInPlayer);
 		gameDao.save(game);
-
+		
 		gameForm.setId(game.getId());
 		return gameForm;
 	}
-	
+
 	@Override
 	@Transactional
 	public GameForm editGame(GameForm gameForm) {
@@ -74,7 +74,7 @@ public class GameServiceImpl implements GameService {
 		gameDao.save(game);
 		return gameForm;
 	}
-	
+
 	@Override
 	@Transactional
 	public Game joinGame(Long id) {
@@ -84,7 +84,7 @@ public class GameServiceImpl implements GameService {
 		if (game == null)
 			throw new InvalidIdException("Could not find game to join.");
 		Player loggedInPlayer = authService.getLoggedInPlayer();
-		
+
 		int year = game.getYear();
 		Company company = loggedInPlayer.getCompany();
 		for (int y = 1; y < year; y++) {
@@ -92,12 +92,12 @@ public class GameServiceImpl implements GameService {
 			company.setBudget(y, new Budget());
 		}
 		companyDao.save(company);
-		
+
 		game.addPlayer(loggedInPlayer);
 		gameDao.save(game);
 		return game;
 	}
-
+	
 	@Override
 	@Transactional
 	public Game deleteGame(Long id) {
@@ -105,7 +105,7 @@ public class GameServiceImpl implements GameService {
 		gameDao.delete(game);
 		return game;
 	}
-
+	
 	@Override
 	@Transactional
 	public Player kickPlayer(Long id) {
@@ -115,7 +115,7 @@ public class GameServiceImpl implements GameService {
 		game = gameDao.save(game);
 		return player;
 	}
-	
+
 	@Override
 	@Transactional
 	public Game leaveGame() {
@@ -127,7 +127,7 @@ public class GameServiceImpl implements GameService {
 			gameDao.delete(game);
 		return game;
 	}
-	
+
 	@Override
 	public List<Game> getJoinableGames() {
 		List<Game> joinableGames = new LinkedList<Game>();
@@ -136,23 +136,23 @@ public class GameServiceImpl implements GameService {
 				joinableGames.add(game);
 		return joinableGames;
 	}
-
+	
 	@Override
 	public List<Player> getPlayersOfGameOfLoggedInPlayer() {
 		Game game = getGameOfLoggedInPlayer();
 		return game.getPlayers();
 	}
-	
+
 	@Override
 	public boolean loggedInPlayerIsAlreadyPartOfGame() {
 		return getGameOfLoggedInPlayer() != null;
 	}
-
+	
 	@Override
 	public GameForm getGameFormOfLoggedInPlayer() {
 		return new GameForm(getGameOfLoggedInPlayer());
 	}
-
+	
 	@Override
 	public Game getGameOfLoggedInPlayer() {
 		for (Game game : gameDao.findAll())
@@ -160,7 +160,7 @@ public class GameServiceImpl implements GameService {
 				return game;
 		return null;
 	}
-
+	
 	@Override
 	public boolean allBudgetsSubmitted() {
 		Game game = getGameOfLoggedInPlayer();
@@ -169,19 +169,17 @@ public class GameServiceImpl implements GameService {
 				return false;
 		return true;
 	}
-	
+
 	@Override
 	public Game passYear() {
 		Game game = getGameOfLoggedInPlayer();
-		
-		computeResults();
 		game.passYear();
-		game.computeConjuncture();
-		
 		gameDao.save(game);
+
+		computeResults();
 		return game;
 	}
-
+	
 	private void computeResults() {
 		Game game = getGameOfLoggedInPlayer();
 		Company company = null;
@@ -189,16 +187,13 @@ public class GameServiceImpl implements GameService {
 			company = player.getCompany();
 			int year = game.getYear();
 			// TODO compute the results for the company here
-			Result previousResult = new Result();
-			if (year > 0)
-				previousResult = company.getResult(year - 1);
+			Result previousResult = company.getResult(year - 1);
 			Result result = new Result();
-			
 			company.addResult(year, result);
 			companyDao.save(company);
 		}
 	}
-	
+
 	@Override
 	public boolean nameAlreadyExists(String name) {
 		if (gameDao.findByName(name) != null)

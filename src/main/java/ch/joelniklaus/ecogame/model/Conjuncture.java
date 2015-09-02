@@ -9,29 +9,29 @@ public class Conjuncture extends DataBaseObject {
 	
 	// TODO set starting values
 	
-	private Double cashInterest;
+	private Double cashInterest = 0.001;
 	
-	private Double shortTermCreditInterest;
+	private Double shortTermCreditInterest = 0.008;
 	
-	private Double longTermCreditInterest;
+	private Double longTermCreditInterest = 0.005;
 	
-	private Double devaluation;
+	private Double devaluation = 0.01;
 	
-	private Double numberOfPeople;
+	private Long numberOfPeople = 1000000L;
 	
-	private Double numberOfBuyingPeople;
+	private Long numberOfBuyingPeople = 100000L;
 	
-	private Double resourcePrices;
+	private Double resourcePrices = 25.5;
 	
-	private Double resourceWareHousePrice;
+	private Double resourceWareHousePrice = 100000.0;
 	
-	private Double productWareHousePrice;
+	private Double productWareHousePrice = 200000.0;
 	
-	private Double productionHallPrice;
+	private Double productionHallPrice = 500000.0;
 
-	private Double productionPersonnelMinimumWage;
+	private Double productionPersonnelMinimumWage = 48000.0;
 
-	private Double representativeMinimumWage;
+	private Double representativeMinimumWage = 120000.0;
 
 	public Conjuncture() {
 
@@ -43,8 +43,8 @@ public class Conjuncture extends DataBaseObject {
 		this.cashInterest = conjuncture.cashInterest * conjunctureChange;
 		this.devaluation = conjuncture.devaluation * conjunctureChange;
 		this.longTermCreditInterest = conjuncture.longTermCreditInterest * conjunctureChange;
-		this.numberOfBuyingPeople = conjuncture.numberOfBuyingPeople * conjunctureChange;
-		this.numberOfPeople = conjuncture.numberOfPeople * conjunctureChange;
+		this.numberOfBuyingPeople = (long) (conjuncture.numberOfBuyingPeople * conjunctureChange);
+		this.numberOfPeople = (long) (conjuncture.numberOfPeople * conjunctureChange);
 		this.productionHallPrice = conjuncture.productionHallPrice * conjunctureChange;
 		this.productionPersonnelMinimumWage = conjuncture.productionPersonnelMinimumWage
 				* conjunctureChange;
@@ -95,19 +95,19 @@ public class Conjuncture extends DataBaseObject {
 		this.devaluation = devaluation;
 	}
 
-	public Double getNumberOfPeople() {
+	public Long getNumberOfPeople() {
 		return numberOfPeople;
 	}
 
-	public void setNumberOfPeople(Double numberOfPeople) {
+	public void setNumberOfPeople(Long numberOfPeople) {
 		this.numberOfPeople = numberOfPeople;
 	}
 
-	public Double getNumberOfBuyingPeople() {
+	public Long getNumberOfBuyingPeople() {
 		return numberOfBuyingPeople;
 	}
 
-	public void setNumberOfBuyingPeople(Double numberOfBuyingPeople) {
+	public void setNumberOfBuyingPeople(Long numberOfBuyingPeople) {
 		this.numberOfBuyingPeople = numberOfBuyingPeople;
 	}
 

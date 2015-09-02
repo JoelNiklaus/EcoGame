@@ -12,11 +12,6 @@
 
 <c:import url="../template/alerts.jsp" />
 
-<br>
-<c:forEach items="${results}" var="result">
-<c:out value="${result.balance}"></c:out>
-</c:forEach>
-
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
